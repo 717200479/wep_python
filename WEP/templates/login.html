@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | ArabTech</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    /* الإعدادات العامة وتأثيرات ثلاثية */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0d1b2a; /* لون ليلي */
+      overflow-x: hidden;
+      perspective: 1000px;
+    }
+    /* عنصر Canvas لخلفية Three.js */
+    canvas#bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    /* تنسيق نموذج تسجيل الدخول داخل حاوية */
+    .login-container {
+      margin-top: 8%;
+      padding: 2rem;
+      background: rgba(0, 0, 0, 0.7); /* خلفية داكنة شفافة */
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+      border-radius: 10px;
+      transform: translateZ(0);
+      animation: fadeInUp 1s ease-out;
+      color: #fff;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-control {
+      border-radius: 5px;
+    }
+    .btn-primary {
+      border-radius: 5px;
+      transition: transform 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <!-- خلفية ثلاثية باستخدام Three.js -->
+  <canvas id="bgCanvas"></canvas>
+  
+  <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="login-container col-md-6 col-lg-4">
+      <h2 class="mb-4 text-center">Login</h2>
+      <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+          <label class="form-check-label" for="rememberMe">تذكرني</label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+      </form>
+      <p class="mt-3 text-center">Don't have an account? <a href="{{ url_for('register') }}" class="text-white">Register here</a></p>
+    </div>
+  </div>
+  
+  <!-- مكتبة Three.js للتأثيرات الثلاثية الأبعاد -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script>
+    // إعداد مشهد ثلاثي الأبعاد بخلفية ليلية مع نجوم
+    const canvas = document.getElementById('bgCanvas');
+    const scene = new THREE.Scene();
+    // تعيين خلفية داكنة
+    scene.background = new THREE.Color(0x0d1b2a);
+    
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    // إنشاء نجوم باستخدام نقاط
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsCount = 1000;
+    const positions = new Float32Array(starsCount * 3);
+    for (let i = 0; i < starsCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 200;
+    }
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.7 });
+    const starField = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(starField);
+    
+    camera.position.z = 5;
+    
+    function animate() {
+      requestAnimationFrame(animate);
+      // دوران بسيط للنجوم لإضفاء تأثير ديناميكي
+      starField.rotation.y += 0.0005;
+      renderer.render(scene, camera);
+    }
+    animate();
+    
+    // التأقلم مع تغيير حجم النافذة
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>

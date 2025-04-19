@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArabTech - تجربة ثلاثية الأبعاد</title>
+  <!-- Bootstrap & Font Awesome -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <style>
+    /* تعريف متغيرات الألوان */
+    :root {
+      --dark-bg: #0d1b2a;
+      --header-bg: linear-gradient(135deg, #0d1b2a, #1b263b);
+      --nav-bg: #1b263b;
+      --card-bg: #1b263b;
+      --border-color: #415a77;
+      --btn-green: #28a745;
+      --btn-green-hover: #218838;
+      --text-light: #fff;
+      --accent-color: #00c6ff;
+    }
+    /* الإعدادات العامة */
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--dark-bg);
+      overflow-x: hidden;
+      perspective: 1000px;
+      color: var(--text-light);
+    }
+    canvas#bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    /* تنسيق الهيدر */
+    header {
+      background: var(--header-bg);
+      padding: 100px 0;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+      transform: translateZ(0);
+      transform-style: preserve-3d;
+    }
+    header h1 {
+      font-size: 4rem;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.6);
+      animation: fadeInDown 1.5s ease-out;
+    }
+    header p {
+      font-size: 1.5rem;
+      animation: fadeInUp 1.5s ease-out;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-50px) rotateX(15deg); }
+      to { opacity: 1; transform: translateY(0) rotateX(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px) rotateX(-15deg); }
+      to { opacity: 1; transform: translateY(0) rotateX(0); }
+    }
+    /* تنسيق قائمة التنقل */
+    nav.navbar {
+      background: var(--nav-bg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    nav.navbar .nav-link {
+      color: var(--text-light) !important;
+      font-size: 1.1rem;
+    }
+    nav.navbar .nav-link:hover {
+      text-decoration: underline;
+    }
+    /* تنسيق الحقول المشتركة لشريط البحث والقائمة */
+    .input-group, select.form-control {
+      max-width: 500px;
+      margin: 0 auto 1.5rem;
+      background: rgba(27,38,59,0.8);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+    }
+    .input-group .form-control,
+    select.form-control {
+      background: transparent;
+      border: none;
+      color: var(--text-light);
+    }
+    .input-group .form-control::placeholder {
+      color: #ced4da;
+    }
+    .input-group-text {
+      background: rgba(65,90,119,0.8);
+      border: none;
+      color: var(--text-light);
+    }
+    /* تنسيق الكروت */
+    .card {
+      transition: transform 0.3s, box-shadow 0.3s;
+      margin-bottom: 1.5rem;
+      transform-style: preserve-3d;
+      background: var(--card-bg);
+      border: none;
+      color: var(--text-light);
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+    }
+    .card-title { font-size: 1.25rem; font-weight: bold; }
+    .card-text { color: #ced4da; }
+    .price { font-weight: bold; font-size: 1.2rem; color: #f1f1f1; }
+    .requirements { color: #adb5bd; font-style: italic; }
+    /* تنسيق الأزرار */
+    .btn-custom {
+      background-color: var(--btn-green);
+      color: var(--text-light);
+      border-radius: 30px;
+      padding: 10px 30px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      font-weight: bold;
+      transform-style: preserve-3d;
+      border: none;
+    }
+    .btn-custom:hover {
+      background-color: var(--btn-green-hover);
+      transform: translateZ(10px);
+    }
+    /* رؤوس الأقسام */
+    .section-header {
+      margin-top: 40px;
+      font-weight: bold;
+      text-decoration: underline;
+      font-size: 2.5rem;
+      transform: translateZ(20px);
+      color: var(--accent-color);
+      text-align: center;
+    }
+    /* تنسيق الفوتر */
+    footer {
+      background: var(--nav-bg);
+      color: var(--text-light);
+      padding: 20px 0;
+      text-align: center;
+    }
+    footer a {
+      color: var(--text-light);
+      text-decoration: underline;
+    }
+    /* ضمان ظهور المحتوى فوق الخلفية */
+    .container {
+      z-index: 1;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <!-- خلفية ثلاثية باستخدام Three.js -->
+  <canvas id="bgCanvas"></canvas>
+  
+  <header>
+    <div class="container">
+      <h1><i class="fas fa-laptop"></i> ArabTech</h1>
+      <p>بوابتك نحو التميز الرقمي بتصميم ثلاثي الأبعاد</p>
+    </div>
+  </header>
+  
+  <nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('tools_boxes') }}">
+            <i class="fas fa-tools"></i> Tools & Boxes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('imei_services') }}">
+            <i class="fas fa-mobile-alt"></i> IMEI Services
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('remote') }}">
+            <i class="fas fa-desktop"></i> Remote
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('manage_services') }}">
+            <i class="fas fa-cogs"></i> Manage Services
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('user_details') }}">
+            <i class="fas fa-user"></i> My Account
+          </a>
+        </li>
+      </ul>
+      <div class="ml-auto">
+        <a href="{{ url_for('login') }}" class="btn btn-outline-light mr-2">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+        <a href="{{ url_for('register') }}" class="btn btn-custom">
+          <i class="fas fa-user-plus"></i> Register
+        </a>
+      </div>
+    </div>
+  </nav>
+  
+  <main class="container">
+    <section id="section1" class="mb-5">
+      <h2 class="section-header"><i class="fas fa-tools"></i> Tools & Boxes</h2>
+      <p>استكشف أدواتنا المتميزة وتفعيل الصناديق المصممة للمهنيين.</p>
+      <a href="{{ url_for('tools_boxes') }}" class="btn btn-custom">Learn More</a>
+    </section>
+    <section id="section2" class="mb-5">
+      <h2 class="section-header"><i class="fas fa-mobile-alt"></i> IMEI Services</h2>
+      <p>افتح وطور جهازك مع حلول IMEI الموثوقة لدينا.</p>
+      <a href="{{ url_for('imei_services') }}" class="btn btn-custom">Discover More</a>
+    </section>
+    <section id="section3" class="mb-5">
+      <h2 class="section-header"><i class="fas fa-desktop"></i> Remote</h2>
+      <p>اكتشف مجموعة واسعة من الخدمات المصممة لتلبية احتياجاتك.</p>
+      <a href="{{ url_for('remote') }}" class="btn btn-custom">Explore Services</a>
+    </section>
+    {% if balance is not none %}
+    <section class="mb-5">
+      <h2 class="section-header"><i class="fas fa-wallet"></i> Your Balance</h2>
+      <p>Current Balance: <strong>{{ balance }}</strong></p>
+    </section>
+    {% endif %}
+  </main>
+  
+  <footer>
+    <p>&copy; 2024 ArabTech. All rights reserved. | <a href="mailto:contact@arabtech.com">Contact Us</a></p>
+  </footer>
+  
+  <!-- السكربتات -->
+  <script src="https://code.jquery.com/jquery-3.5.2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script>
+    // إنشاء خلفية سماء ليلية ديناميكية باستخدام النجوم
+    const canvas = document.getElementById('bgCanvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0d1b2a);
+    
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsCount = 1500;
+    const positions = new Float32Array(starsCount * 3);
+    for (let i = 0; i < starsCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 300;
+    }
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.7 });
+    const starField = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(starField);
+    
+    camera.position.z = 5;
+    
+    function animate() {
+      requestAnimationFrame(animate);
+      starField.rotation.y += 0.0005;
+      renderer.render(scene, camera);
+    }
+    animate();
+    
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>

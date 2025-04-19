@@ -1,0 +1,97 @@
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e91010; /* يمكن استخدام لون أكثر هدوءًا */
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background: linear-gradient(90deg, #00509e, #0d7dec);
+    color: #17bb84; /* تحسين تباين النص */
+    text-align: center;
+    padding: 30px; /* زيادة padding لتحسين الشكل */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header p {
+    margin: 10px 0 0; /* تحسين الهوامش */
+    font-size: 1.2em;
+}
+
+/* Navigation */
+nav {
+    background-color: #10b42b;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 15px 0; /* تحسين padding */
+}
+
+nav ul li {
+    margin: 0 20px; /* زيادة المسافة بين العناصر */
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 10px 15px; /* زيادة padding لجعل الروابط أكثر وضوحًا */
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.2s; /* إضافة تأثير التحريك */
+}
+
+nav ul li a:hover {
+    background-color: #004080;
+    transform: scale(1.05); /* تأثير تكبير عند التحويم */
+}
+
+/* Main Content */
+main {
+    padding: 20px;
+}
+
+section {
+    margin: 20px 0;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* تحسين الظل */
+}
+
+section h2 {
+    margin-top: 0;
+    color: #00509e;
+    font-size: 1.8em; /* زيادة حجم العنوان */
+}
+
+/* Footer */
+footer {
+    background-color: #00274d;
+    color: white;
+    text-align: center;
+    padding: 15px; /* زيادة padding ليكون أكثر راحة */
+    font-size: 0.9em;
+}
+
+footer a {
+    color: #80d4ff;
+    text-decoration: none;
+    transition: color 0.3s; /* إضافة تأثير عند التحويم */
+}
+
+footer a:hover {
+    text-decoration: underline;
+    color: #ffffff; /* تغيير اللون عند التحويم */
+}

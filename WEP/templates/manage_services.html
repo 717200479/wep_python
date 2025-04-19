@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام إدارة الخدمات المتقدم</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* تعريف متغيرات الألوان */
+    :root {
+      --dark-bg: #0d1b2a;
+      --header-bg: linear-gradient(135deg, #0d1b2a, #1b263b);
+      --nav-bg: #1b263b;
+      --card-bg: #1b263b;
+      --border-color: #415a77;
+      --btn-green: #28a745;
+      --btn-green-hover: #218838;
+      --text-light: #fff;
+      --accent-color: #00c6ff;
+    }
+    /* الإعدادات العامة */
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: var(--dark-bg);
+      overflow-x: hidden;
+      perspective: 1000px;
+      color: var(--text-light);
+    }
+    /* تنسيق الهيدر */
+    header {
+      background: var(--header-bg);
+      padding: 100px 0;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+      transform: translateZ(0);
+      transform-style: preserve-3d;
+    }
+    header h1 {
+      font-size: 4rem;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.6);
+      animation: fadeInDown 1.5s ease-out;
+    }
+    header p {
+      font-size: 1.5rem;
+      animation: fadeInUp 1.5s ease-out;
+    }
+    /* تنسيق قائمة التنقل */
+    nav.navbar {
+      background: var(--nav-bg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    nav.navbar .nav-link {
+      color: var(--text-light) !important;
+      font-size: 1.1rem;
+    }
+    nav.navbar .nav-link:hover {
+      text-decoration: underline;
+    }
+    /* تنسيق الكروت */
+    .card {
+      transition: transform 0.3s, box-shadow 0.3s;
+      margin-bottom: 1.5rem;
+      transform-style: preserve-3d;
+      background: var(--card-bg);
+      border: none;
+      color: var(--text-light);
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+    }
+    .card-title { font-size: 1.25rem; font-weight: bold; }
+    .card-text { color: #ced4da; }
+    /* تنسيق الأزرار */
+    .btn-custom {
+      background-color: var(--btn-green);
+      color: var(--text-light);
+      border-radius: 30px;
+      padding: 10px 30px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      font-weight: bold;
+      transform-style: preserve-3d;
+      border: none;
+    }
+    .btn-custom:hover {
+      background-color: var(--btn-green-hover);
+      transform: translateZ(10px);
+    }
+    /* تنسيق الفوتر */
+    footer {
+      background: var(--nav-bg);
+      color: var(--text-light);
+      padding: 20px 0;
+      text-align: center;
+    }
+    footer a {
+      color: var(--text-light);
+      text-decoration: underline;
+    }
+  </style>
+
+    <style>
+        :root {
+            --primary-color: #2a5d84;
+            --secondary-color: #4a90e2;
+            --accent-color: #ff6b6b;
+            --success-color: #28a745;
+        }
+
+        body {
+            background: #f8f9fa;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 20px;
+        }
+
+        .main-title {
+            color: var(--primary-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem;
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: 15px 15px 0 0;
+            padding: 1.5rem;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.2);
+        }
+
+        .btn {
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #000;
+        }
+
+        .btn-danger {
+            background: var(--accent-color);
+        }
+
+        .table-custom {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin: 1rem 0;
+        }
+
+        .table-custom th {
+            background: var(--primary-color) !important;
+            color: white !important;
+            font-weight: 700;
+            padding: 1rem !important;
+            border: none;
+        }
+
+        .table-custom td {
+            vertical-align: middle !important;
+            padding: 1rem !important;
+            border-color: #f1f1f1;
+        }
+
+        .table-custom tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .alert-custom {
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: none;
+        }
+
+        .fa-icon {
+            margin-left: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .table-responsive {
+                overflow-x: auto;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1><i class="fas fa-cogs"></i> نظام إدارة الخدمات</h1>
+      <p>إدارة الخدمات بكفاءة وسهولة</p>
+    </div>
+  </header>
+  
+  <nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('tools_boxes') }}">
+            <i class="fas fa-tools"></i> Tools & Boxes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('imei_services') }}">
+            <i class="fas fa-mobile-alt"></i> IMEI Services
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('remote') }}">
+            <i class="fas fa-desktop"></i> Remote
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('manage_services') }}">
+            <i class="fas fa-cogs"></i> Manage Services
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('user_details') }}">
+            <i class="fas fa-user"></i> My Account
+          </a>
+        </li>
+      </ul>
+      <div class="ml-auto">
+        <a href="{{ url_for('login') }}" class="btn btn-outline-light mr-2">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+        <a href="{{ url_for('register') }}" class="btn btn-custom">
+          <i class="fas fa-user-plus"></i> Register
+        </a>
+      </div>
+    </div>
+  </nav>
+
+
+        <!-- قسم إضافة خدمة جديدة -->
+        <main class="container">
+          <section id="add-service" class="mb-5">
+            <div class="card">
+              <div class="card-header">
+                <h2><i class="fas fa-plus-circle"></i> إضافة خدمة جديدة</h2>
+              </div>
+              <div class="card-body">
+                <form method="POST">
+                  <div class="form-group">
+                    <label for="brand">العلامة التجارية:</label>
+                    <select name="brand" id="brand" class="form-control" required>
+                      <option value="">اختر العلامة التجارية</option>
+                      <option value="samsung">Samsung</option>
+                      <option value="huawei">Huawei</option>
+                      <option value="apple">Apple</option>
+                      <option value="xiaomi">Xiaomi</option>
+                      <option value="oppo">Oppo</option>
+                      <option value="oneplus">OnePlus</option>
+                      <option value="nokia">Nokia</option>
+                      <option value="sony">Sony</option>
+                      <option value="google">Google</option>
+                      <option value="lg">LG</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" name="name" class="form-control" placeholder="اسم الخدمة" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="number" step="0.01" name="price" class="form-control" placeholder="السعر" required>
+                  </div>
+                  <div class="form-group">
+                    <textarea name="description" class="form-control" placeholder="الوصف" rows="3" required></textarea>
+                  </div>
+                  <div class="form-group">
+                    <textarea name="requirements" class="form-control" placeholder="المتطلبات" rows="2"></textarea>
+                  </div>
+                  <button type="submit" name="add" class="btn btn-custom">
+                    <i class="fas fa-plus"></i> إضافة خدمة
+                  </button>
+                </form>
+              </div>
+            </div>
+          </section>
+
+
+        <!-- قسم زيادة الرصيد -->
+          <section id="increase-credit" class="mb-5">
+            <div class="card">
+              <div class="card-header">
+                <h2><i class="fas fa-wallet"></i> زيادة رصيد المستخدم</h2>
+              </div>
+              <div class="card-body">
+                <form method="POST" action="{{ url_for('increase_credit') }}">
+                  <div class="form-group">
+                    <input type="text" name="username" class="form-control" placeholder="اسم المستخدم" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="كلمة المرور" required>
+                  </div>
+                  <div class="form-group">
+                    <input type="number" step="0.01" name="credit" class="form-control" placeholder="المبلغ المطلوب إضافته" required>
+                  </div>
+                  <button type="submit" class="btn btn-success">
+                    <i class="fas fa-plus-circle"></i> زيادة الرصيد
+                  </button>
+                </form>
+              </div>
+            </div>
+          </section>
+
+
+        <!-- قائمة الخدمات -->
+          <section id="service-list" class="mb-5">
+            <div class="card">
+              <div class="card-header">
+                <h2><i class="fas fa-list-alt"></i> قائمة الخدمات</h2>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-custom">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>العلامة التجارية</th>
+                        <th>اسم الخدمة</th>
+                        <th>السعر</th>
+                        <th>الوصف</th>
+                        <th>المتطلبات</th>
+                        <th>الإجراءات</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for service in services %}
+                      <tr>
+                        <form method="POST">
+                          <td>{{ service[0] }}</td>
+                          <td>
+                            <select name="brand" class="form-control" required>
+                              <option value="{{ service[1] }}">{{ service[1] }}</option>
+                              <option value="Samsung">Samsung</option>
+                              <option value="Huawei">Huawei</option>
+                              <option value="Apple">Apple</option>
+                              <option value="Xiaomi">Xiaomi</option>
+                              <option value="Oppo">Oppo</option>
+                              <option value="OnePlus">OnePlus</option>
+                              <option value="Nokia">Nokia</option>
+                              <option value="Sony">Sony</option>
+                              <option value="Google">Google</option>
+                              <option value="LG">LG</option>
+                            </select>
+                          </td>
+                          <td><input type="text" name="name" class="form-control" value="{{ service[2] }}" required></td>
+                          <td><input type="number" step="0.01" name="price" class="form-control" value="{{ service[3] }}" required></td>
+                          <td><textarea name="description" class="form-control" required>{{ service[4] }}</textarea></td>
+                          <td><textarea name="requirements" class="form-control">{{ service[5] }}</textarea></td>
+                          <td>
+                            <input type="hidden" name="service_id" value="{{ service[0] }}">
+                            <button type="submit" name="edit" class="btn btn-warning btn-sm mb-1">
+                              <i class="fas fa-edit"></i> تعديل
+                            </button>
+                            <button type="submit" name="delete" class="btn btn-danger btn-sm">
+                              <i class="fas fa-trash"></i> حذف
+                            </button>
+                          </td>
+                        </form>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+        <!-- قائمة المستخدمين -->
+          <section id="user-list" class="mb-5">
+            <div class="card">
+              <div class="card-header">
+                <h2><i class="fas fa-users"></i> قائمة المستخدمين</h2>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-custom">
+                    <thead>
+                      <tr>
+                        <th>اسم المستخدم</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>رقم الهاتف</th>
+                        <th>الرصيد</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for user in users %}
+                      <tr>
+                        <td><a href="{{ url_for('user_details', username=user[0]) }}" class="text-primary">{{ user[0] }}</a></td>
+                        <td>{{ user[1] }}</td>
+                        <td>{{ user[2] }}</td>
+                        <td>{{ user[3] }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+        <!-- الرسائل العارضة -->
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert alert-info mt-4">
+              {% for message in messages %}
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-info-circle mr-2"></i>
+                  {{ message }}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+      </main>
+      
+      <footer>
+        <p>&copy; 2024 ArabTech. All rights reserved. | <a href="mailto:contact@arabtech.com">Contact Us</a></p>
+      </footer>
+      
+      <script src="https://code.jquery.com/jquery-3.5.2.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+      <script>
+        // تأكيد قبل الحذف
+        document.querySelectorAll('.btn-danger').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            if (!confirm('هل أنت متأكد من رغبتك في حذف هذا العنصر؟')) {
+              e.preventDefault();
+            }
+          });
+        });
+      </script>
+
+    <script>
+        // تأثيرات الحقول
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('input-focused');
+            });
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('input-focused');
+            });
+        });
+    </script>
+
+</body>
+</html>
