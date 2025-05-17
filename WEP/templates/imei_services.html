@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}خدمات IMEI{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="mb-4">خدمات IMEI</h2>
+            
+            <!-- عرض الخدمات -->
+            <div class="row">
+                {% for service in services %}
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ service[1] }}</h5>
+                            <p class="card-text">{{ service[3] }}</p>
+                            <p class="text-primary"><strong>السعر: ${{ service[2] }}</strong></p>
+                            {% if service[4] %}
+                            <p class="text-muted"><small>المتطلبات: {{ service[4] }}</small></p>
+                            {% endif %}
+                            <button class="btn btn-primary" onclick="requestService({{ service[0] }})">
+                                طلب الخدمة
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <!-- نموذج طلب الخدمة -->
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">طلب خدمة IMEI</h5>
+                </div>
+                <div class="card-body">
+                    <form id="imeiRequestForm" method="POST">
+                        <div class="mb-3">
+                            <label for="device" class="form-label">نوع الجهاز</label>
+                            <input type="text" class="form-control" id="device" name="device" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imei" class="form-label">رقم IMEI</label>
+                            <input type="text" class="form-control" id="imei" name="imei" required 
+                                   pattern="[0-9]{15}" title="يجب أن يتكون رقم IMEI من 15 رقم">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">تقديم الطلب</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal طلب الخدمة -->
+<div class="modal fade" id="requestServiceModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">طلب خدمة IMEI</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="serviceRequestForm">
+                    <input type="hidden" id="serviceId">
+                    <div class="mb-3">
+                        <label for="modalDevice" class="form-label">نوع الجهاز</label>
+                        <input type="text" class="form-control" id="modalDevice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="modalImei" class="form-label">رقم IMEI</label>
+                        <input type="text" class="form-control" id="modalImei" required 
+                               pattern="[0-9]{15}" title="يجب أن يتكون رقم IMEI من 15 رقم">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-primary" onclick="submitServiceRequest()">تأكيد الطلب</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function requestService(serviceId) {
+    document.getElementById('serviceId').value = serviceId;
+    new bootstrap.Modal(document.getElementById('requestServiceModal')).show();
+}
+
+function submitServiceRequest() {
+    const serviceId = document.getElementById('serviceId').value;
+    const device = document.getElementById('modalDevice').value;
+    const imei = document.getElementById('modalImei').value;
+    
+    if (!device || !imei) {
+        alert('يرجى ملء جميع الحقول المطلوبة');
+        return;
+    }
+    
+    if (!/^\d{15}$/.test(imei)) {
+        alert('يرجى إدخال رقم IMEI صحيح (15 رقم)');
+        return;
+    }
+    
+    // إرسال الطلب
+    fetch('/api/imei-requests', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            service_id: serviceId,
+            device: device,
+            imei: imei
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('تم تقديم طلب الخدمة بنجاح');
+            location.reload();
+        } else {
+            alert('حدث خطأ: ' + data.error);
+        }
+    })
+    .catch(error => {
+        alert('حدث خطأ في الاتصال');
+    });
+}
+</script>
+{% endblock %}

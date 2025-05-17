@@ -1,0 +1,402 @@
+{% extends "base.html" %}
+{% block title %}إدارة الخدمات{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- معلومات الجلسة والتوكن -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <!-- معلومات الجلسة -->
+                        <div class="col-md-4">
+                            <h5 class="card-title">معلومات الجلسة</h5>
+                            {% if expiration_time %}
+                            <p>وقت انتهاء الصلاحية: {{ expiration_time }}</p>
+                            <p>الوقت المتبقي: {{ time_remaining_hours }} ساعة</p>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" 
+                                     style="width: {{ time_remaining_percentage }}%"
+                                     aria-valuenow="{{ time_remaining_percentage }}" 
+                                     aria-valuemin="0" aria-valuemax="100">
+                                    {{ time_remaining_percentage|round|int }}%
+                                </div>
+                            </div>
+                            {% else %}
+                            <p>لا توجد جلسة نشطة</p>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- التوكنات النشطة -->
+                        <div class="col-md-4">
+                            <h5 class="card-title">التوكنات النشطة</h5>
+                            {% if active_tokens %}
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>الجهاز</th>
+                                            <th>تاريخ الإنشاء</th>
+                                            <th>تاريخ الانتهاء</th>
+                                            <th>الحالة</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for token in active_tokens %}
+                                        <tr>
+                                            <td>{{ token.device_info }}</td>
+                                            <td>{{ token.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                            <td>{{ token.expiry_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                                            <td>
+                                                {% if token.is_active %}
+                                                <span class="badge bg-success">نشط</span>
+                                                {% else %}
+                                                <span class="badge bg-danger">غير نشط</span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            {% else %}
+                            <p>لا توجد توكنات نشطة</p>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- النشاطات الأخيرة -->
+                        <div class="col-md-4">
+                            <h5 class="card-title">النشاطات الأخيرة</h5>
+                            {% if activities %}
+                            <div class="list-group">
+                                {% for activity in activities %}
+                                <div class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ activity.description }}</h6>
+                                        <small>{{ activity.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+                                    </div>
+                                    <span class="badge bg-{{ activity.status_class }}">{{ activity.status }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <p>لا توجد نشاطات حديثة</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- إضافة خدمة جديدة -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">إضافة خدمة جديدة</h5>
+        </div>
+        <div class="card-body">
+            <form id="addServiceForm">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="serviceType" class="form-label">نوع الخدمة</label>
+                            <select class="form-select" id="serviceType" name="serviceType" required>
+                                <option value="">اختر نوع الخدمة</option>
+                                <option value="remote">Remote</option>
+                                <option value="imei">IMEI</option>
+                                <option value="tools">Tools</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="brand" class="form-label">العلامة التجارية</label>
+                            <select class="form-select" id="brand" name="brand" style="display: none;">
+                                <option value="">اختر العلامة التجارية</option>
+                                <option value="samsung">Samsung</option>
+                                <option value="lg">LG</option>
+                                <option value="sony">Sony</option>
+                                <option value="panasonic">Panasonic</option>
+                                <option value="sharp">Sharp</option>
+                                <option value="philips">Philips</option>
+                                <option value="toshiba">Toshiba</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">اسم الخدمة</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-3">
+                            <label for="price" class="form-label">السعر</label>
+                            <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="description" class="form-label">الوصف</label>
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label for="requirements" class="form-label">المتطلبات</label>
+                            <textarea class="form-control" id="requirements" name="requirements" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">إضافة الخدمة</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- قائمة الخدمات -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">الخدمات المتاحة</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>النوع</th>
+                            <th>الاسم</th>
+                            <th>السعر</th>
+                            <th>الوصف</th>
+                            <th>المتطلبات</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for service in services %}
+                        <tr>
+                            <td>{{ service[1] }}</td>
+                            <td>{{ service[2] }}</td>
+                            <td>${{ service[3] }}</td>
+                            <td>{{ service[4] }}</td>
+                            <td>{{ service[5] }}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary" onclick="editService({{ service[0] }})">تعديل</button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteService({{ service[0] }})">حذف</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal تعديل الخدمة -->
+<div class="modal fade" id="editServiceModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">تعديل الخدمة</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editServiceForm">
+                    <input type="hidden" id="editServiceId">
+                    <div class="mb-3">
+                        <label for="editServiceType" class="form-label">نوع الخدمة</label>
+                        <select class="form-select" id="editServiceType" name="serviceType" required>
+                            <option value="remote">Remote</option>
+                            <option value="imei">IMEI</option>
+                            <option value="tools">Tools</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editName" class="form-label">اسم الخدمة</label>
+                        <input type="text" class="form-control" id="editName" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editPrice" class="form-label">السعر</label>
+                        <input type="number" class="form-control" id="editPrice" name="price" step="0.01" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editDescription" class="form-label">الوصف</label>
+                        <textarea class="form-control" id="editDescription" name="description" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editRequirements" class="form-label">المتطلبات</label>
+                        <textarea class="form-control" id="editRequirements" name="requirements" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-primary" onclick="updateService()">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// إظهار/إخفاء قائمة العلامات التجارية
+document.getElementById('serviceType').addEventListener('change', function() {
+    const brandSelect = document.getElementById('brand');
+    if (this.value === 'remote') {
+        brandSelect.style.display = 'block';
+        brandSelect.required = true;
+    } else {
+        brandSelect.style.display = 'none';
+        brandSelect.required = false;
+    }
+});
+
+// إضافة خدمة جديدة
+document.getElementById('addServiceForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const serviceType = formData.get('serviceType');
+    
+    // إذا كان نوع الخدمة remote، أضف العلامة التجارية للبيانات
+    if (serviceType === 'remote') {
+        const brand = document.getElementById('brand').value;
+        if (!brand) {
+            alert('الرجاء اختيار العلامة التجارية');
+            return;
+        }
+        formData.append('brand', brand);
+    }
+    
+    try {
+        const response = await fetch('/api/services', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            alert('تم إضافة الخدمة بنجاح');
+            location.reload();
+        } else {
+            alert('حدث خطأ: ' + data.error);
+        }
+    } catch (error) {
+        alert('حدث خطأ في الاتصال');
+    }
+});
+
+// تعديل خدمة
+async function editService(serviceId) {
+    try {
+        const response = await fetch(`/api/services/${serviceId}`);
+        const service = await response.json();
+        
+        document.getElementById('editServiceId').value = service.id;
+        document.getElementById('editServiceType').value = service.category;
+        document.getElementById('editName').value = service.name;
+        document.getElementById('editPrice').value = service.price;
+        document.getElementById('editDescription').value = service.description;
+        document.getElementById('editRequirements').value = service.requirements;
+        
+        new bootstrap.Modal(document.getElementById('editServiceModal')).show();
+    } catch (error) {
+        alert('حدث خطأ في جلب بيانات الخدمة');
+    }
+}
+
+// تحديث الخدمة
+async function updateService() {
+    const serviceId = document.getElementById('editServiceId').value;
+    const data = {
+        category: document.getElementById('editServiceType').value,
+        name: document.getElementById('editName').value,
+        price: document.getElementById('editPrice').value,
+        description: document.getElementById('editDescription').value,
+        requirements: document.getElementById('editRequirements').value
+    };
+    
+    try {
+        const response = await fetch(`/api/services/${serviceId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('تم تحديث الخدمة بنجاح');
+            location.reload();
+        } else {
+            alert('حدث خطأ: ' + result.error);
+        }
+    } catch (error) {
+        alert('حدث خطأ في الاتصال');
+    }
+}
+
+// حذف خدمة
+async function deleteService(serviceId) {
+    if (!confirm('هل أنت متأكد من حذف هذه الخدمة؟')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/services/${serviceId}/toggle`, {
+            method: 'POST'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('تم حذف الخدمة بنجاح');
+            location.reload();
+        } else {
+            alert('حدث خطأ: ' + result.error);
+        }
+    } catch (error) {
+        alert('حدث خطأ في الاتصال');
+    }
+}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.badge {
+    font-size: 0.9em;
+    padding: 0.5em 1em;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}
+
+.btn-sm {
+    margin: 0 2px;
+}
+
+.btn-group .btn {
+    border-radius: 0;
+}
+
+.btn-group .btn:first-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.btn-group .btn:last-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+</style>
+{% endblock %} 

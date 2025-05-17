@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2>حسابي</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>معلومات الحساب</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>اسم المستخدم:</strong> {{ user.username }}</p>
+                    <p><strong>البريد الإلكتروني:</strong> {{ user.email }}</p>
+                    <p><strong>رقم الهاتف:</strong> {{ user.phone }}</p>
+                    <p><strong>الرصيد:</strong> {{ user.credit }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>جلسات تسجيل الدخول النشطة</h3>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>الجهاز</th>
+                                    <th>تاريخ التسجيل</th>
+                                    <th>آخر استخدام</th>
+                                    <th>تاريخ الانتهاء</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for token in active_tokens %}
+                                <tr>
+                                    <td>{{ token.device_info or 'غير معروف' }}</td>
+                                    <td>{{ token.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>{{ token.last_used_at.strftime('%Y-%m-%d %H:%M') if token.last_used_at else 'لم يستخدم بعد' }}</td>
+                                    <td>{{ token.expiry_time.strftime('%Y-%m-%d %H:%M') }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

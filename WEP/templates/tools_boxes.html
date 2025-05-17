@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>أدوات وصناديق - تجربة ثلاثية الأبعاد</title>
+  <!-- Bootstrap وFont Awesome -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!-- خط جوجل لمظهر احترافي -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+  <style>
+    /* إعدادات عامة مع طابع ليلي */
+    body {
+      margin: 0;
+      background: #0d1b2a; /* لون ليلي */
+      font-family: 'Roboto', sans-serif;
+      overflow-x: hidden;
+      perspective: 1000px;
+    }
+    /* عنصر Canvas لخلفية Three.js */
+    canvas#bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+    /* الهيدر بتدرج ليلي مع تأثير ثلاثي */
+    header {
+      background: linear-gradient(135deg, #0d1b2a, #1b263b);
+      color: #fff;
+      padding: 80px 0;
+      text-align: center;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+      transform: translateZ(0);
+      transform-style: preserve-3d;
+    }
+    header h1 {
+      margin: 0;
+      font-weight: bold;
+      font-size: 3rem;
+      text-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      animation: fadeInDown 1.5s ease-out;
+    }
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px) rotateX(15deg);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) rotateX(0);
+      }
+    }
+    h2 {
+      margin: 2rem 0;
+      font-weight: bold;
+      text-align: center;
+      color: #ffffff;
+    }
+    /* تنسيق شريط البحث والاختيار */
+    .input-group, select.form-control {
+      max-width: 500px;
+      margin: 0 auto 1.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+      color: #fff;
+    }
+    .input-group .form-control {
+      background: transparent;
+      border: none;
+      color: #fff;
+    }
+    .input-group .form-control::placeholder {
+      color: #ddd;
+    }
+    .input-group-text {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: #fff;
+    }
+    /* تصميم الكروت بتنسيق ليلي مع تأثير حركة ثلاثي */
+    .card {
+      transition: transform 0.3s, box-shadow 0.3s;
+      margin-bottom: 1.5rem;
+      transform-style: preserve-3d;
+      background: #1b263b;
+      border: none;
+      color: #fff;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+    }
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+    }
+    .card-text {
+      color: #ced4da;
+    }
+    .price {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #f1f1f1;
+    }
+    .requirements {
+      color: #adb5bd;
+      font-style: italic;
+    }
+    /* تنسيق الفوتر */
+    footer {
+      background: #0d1b2a;
+      color: #fff;
+      padding: 1rem 0;
+      text-align: center;
+    }
+    footer a {
+      color: #fff;
+      text-decoration: underline;
+    }
+    /* لضمان ظهور المحتوى فوق الخلفية */
+    .container {
+      z-index: 1;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+  <!-- خلفية ثلاثية باستخدام Canvas وThree.js -->
+  <canvas id="bgCanvas"></canvas>
+  
+  <header>
+    <div class="container">
+      <h1><i class="fas fa-tools"></i> استكشف أدوات وصناديق</h1>
+    </div>
+  </header>
+
+  <div class="container">
+    <h2>اختر العلامة التجارية</h2>
+    
+    <!-- شريط البحث -->
+    <div class="input-group mb-4">
+      <input type="text" id="searchInput" class="form-control" placeholder="ابحث عن خدمة..." onkeyup="filterServices()">
+      <div class="input-group-append">
+        <span class="input-group-text"><i class="fas fa-search"></i></span>
+      </div>
+    </div>
+    
+    <!-- اختيار العلامة التجارية -->
+    <select id="brandSelect" class="form-control mb-4" onchange="showServices()">
+      <option value="">اختر العلامة التجارية</option>
+      {% for brand in brands %}
+        <option value="{{ brand[0] }}">{{ brand[0] }}</option>
+      {% endfor %}
+    </select>
+
+    <div id="servicesContainer" class="row justify-content-center"></div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2023 أدوات وصناديق. جميع الحقوق محفوظة.</p>
+      <p>
+        <a href="#" class="text-white"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- سكربتات Bootstrap -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script>
+    let servicesData = []; // مصفوفة لتخزين بيانات الخدمات
+
+    function showServices() {
+      const brand = document.getElementById('brandSelect').value;
+      const servicesContainer = document.getElementById('servicesContainer');
+      servicesContainer.innerHTML = ''; // مسح الخدمات السابقة
+
+      if (brand) {
+        fetch(`/services/${brand}`)
+          .then(response => response.json())
+          .then(data => {
+            servicesData = data; // تخزين البيانات
+            displayServices(data); // عرض الخدمات
+          });
+      } else {
+        servicesContainer.innerHTML = '<p class="text-warning">يرجى اختيار علامة تجارية لرؤية الخدمات.</p>';
+      }
+    }
+
+    function displayServices(services) {
+      const servicesContainer = document.getElementById('servicesContainer');
+      servicesContainer.innerHTML = ''; // مسح الخدمات السابقة
+
+      services.forEach(service => {
+        const serviceCard = `
+          <div class="col-md-4 service-card">
+            <div class="card shadow">
+              <div class="card-body">
+                <h5 class="card-title">${service.name}</h5>
+                <p class="card-text">${service.description}</p>
+                <p class="price">السعر: $${service.price}</p>
+                <p class="requirements">المتطلبات: ${service.requirements}</p>
+                <a href="https://wa.me/967717200479" class="btn btn-primary" target="_blank">
+                  <i class="fas fa-shopping-cart"></i> شراء الخدمة
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+        servicesContainer.innerHTML += serviceCard;
+      });
+    }
+
+    function filterServices() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const filteredServices = servicesData.filter(service => 
+        service.name.toLowerCase().includes(input)
+      );
+      displayServices(filteredServices);
+    }
+  </script>
+  
+  <!-- مكتبة Three.js للتأثيرات الثلاثية الأبعاد -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script>
+    // إعداد مشهد ثلاثي الأبعاد مع تأثير شبكة من النجوم لمحاكاة سماء ليلية ديناميكية
+    const canvas = document.getElementById('bgCanvas');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // إنشاء شبكة نقاط (نجوم)
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsCount = 800;
+    const positions = new Float32Array(starsCount * 3);
+    for (let i = 0; i < starsCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 150;
+    }
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.7 });
+    const starField = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(starField);
+
+    camera.position.z = 5;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      // دوران بسيط للنجوم لإضفاء حركة ديناميكية
+      starField.rotation.y += 0.0005;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // التأقلم مع تغيير حجم النافذة
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>

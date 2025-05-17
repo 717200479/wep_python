@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | ArabTech</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+  <style>
+    /* الإعدادات العامة والتأثيرات */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #0d1b2a;
+      overflow-x: hidden;
+      perspective: 1000px;
+    }
+
+    /* خلفية Three.js */
+    canvas#bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    /* نموذج تسجيل الدخول */
+    .login-container {
+      margin-top: 8%;
+      padding: 2rem;
+      background: linear-gradient(145deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9));
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+      border-radius: 15px;
+      transform: translateZ(0);
+      animation: fadeInUp 1s ease-out;
+      color: #fff;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* زر تسجيل الدخول */
+    .btn-primary {
+      background: linear-gradient(145deg, #ff7e5f, #feb47b);
+      border: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(255, 126, 95, 0.5);
+    }
+
+    /* حقول النموذج */
+    .form-control {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      color: #fff;
+    }
+
+    .form-control:focus {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: #ff7e5f;
+      box-shadow: 0 0 8px rgba(255, 126, 95, 0.5);
+    }
+
+    /* تأثيرات إضافية */
+    .login-container h2 {
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #ff7e5f;
+    }
+
+    .login-container p {
+      text-align: center;
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .login-container a {
+      color: #ff7e5f;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .login-container a:hover {
+      color: #feb47b;
+    }
+  </style>
+</head>
+<body>
+  <!-- خلفية ثلاثية باستخدام Three.js -->
+  <canvas id="bgCanvas"></canvas>
+
+  <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="login-container col-md-6 col-lg-4">
+      <h2>تسجيل الدخول</h2>
+      <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-group mb-3">
+          <label for="username" class="form-label">اسم المستخدم</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group mb-3">
+          <label for="password" class="form-label">كلمة المرور</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div class="form-check mb-3">
+          <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+          <label class="form-check-label" for="rememberMe">تذكرني</label>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">دخول</button>
+      </form>
+      <p>ليس لديك حساب؟ <a href="{{ url_for('register') }}">سجل الآن</a></p>
+    </div>
+  </div>
+
+  <!-- مكتبة Three.js للتأثيرات الثلاثية الأبعاد -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script>
+    // إعداد مشهد ثلاثي الأبعاد بخلفية ليلية مع نجوم
+    const canvas = document.getElementById('bgCanvas');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x0d1b2a);
+
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    // إنشاء نجوم باستخدام نقاط
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsCount = 2000;
+    const positions = new Float32Array(starsCount * 3);
+    for (let i = 0; i < starsCount * 3; i++) {
+      positions[i] = (Math.random() - 0.5) * 300;
+    }
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff, size: 0.5 });
+    const starField = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(starField);
+
+    camera.position.z = 5;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      starField.rotation.y += 0.0005;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // التأقلم مع تغيير حجم النافذة
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>

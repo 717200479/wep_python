@@ -1,0 +1,281 @@
+2025-04-19 17:28:32,766 - werkzeug - INFO -  * Restarting with stat
+2025-04-19 17:28:33,992 - werkzeug - WARNING -  * Debugger is active!
+2025-04-19 17:28:34,012 - werkzeug - INFO -  * Debugger PIN: 133-999-359
+2025-04-19 17:28:34,092 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-25 17:40:33,670 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 17:40:34,470 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 17:40:34,489 - werkzeug - INFO -  * Debugger PIN: 836-123-594
+2025-04-25 17:40:34,534 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-25 17:40:54,395 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:40:54] "GET / HTTP/1.1" 200 -
+2025-04-25 17:40:58,953 - model - INFO - Accessed login page.
+2025-04-25 17:40:58,985 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:40:58] "GET /login HTTP/1.1" 200 -
+2025-04-25 17:40:59,108 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:40:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-25 17:41:02,664 - model - INFO - Accessed login page.
+2025-04-25 17:41:02,676 - model - WARNING - Login failed for admin: Invalid credentials.
+2025-04-25 17:41:02,676 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:41:02] "POST /login HTTP/1.1" 200 -
+2025-04-25 17:41:11,352 - model - INFO - Accessed registration page.
+2025-04-25 17:41:11,376 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:41:11] "GET /register HTTP/1.1" 200 -
+2025-04-25 17:41:19,468 - model - INFO - Accessed registration page.
+2025-04-25 17:41:19,468 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:41:19] "GET /register HTTP/1.1" 200 -
+2025-04-25 17:42:03,086 - model - INFO - Accessed registration page.
+2025-04-25 17:42:03,087 - model - INFO - User registered: admin
+2025-04-25 17:42:03,087 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:42:03] "[32mPOST /register HTTP/1.1[0m" 302 -
+2025-04-25 17:42:03,106 - model - INFO - Accessed login page.
+2025-04-25 17:42:03,106 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:42:03] "GET /login HTTP/1.1" 200 -
+2025-04-25 17:42:16,257 - model - INFO - Accessed login page.
+2025-04-25 17:42:16,271 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:42:16] "[35m[1mPOST /login HTTP/1.1[0m" 500 -
+2025-04-25 17:42:16,337 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:42:16] "GET /login?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-04-25 17:42:16,344 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:42:16] "GET /login?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-04-25 17:42:16,355 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:42:16] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-04-25 17:42:16,386 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:42:16] "GET /login?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2025-04-25 17:42:16,411 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:42:16] "GET /login?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-04-25 17:43:30,157 - werkzeug - INFO -  * Detected change in 'e:\\level_four_IT\\WEP3latest\\WEP3latest\\WEP\\controller.py', reloading
+2025-04-25 17:43:30,193 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 17:43:30,980 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 17:43:30,988 - werkzeug - INFO -  * Debugger PIN: 836-123-594
+2025-04-25 17:43:31,026 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-25 17:46:21,456 - werkzeug - INFO -  * Detected change in 'e:\\level_four_IT\\WEP3latest\\WEP3latest\\WEP\\database_setup.py', reloading
+2025-04-25 17:46:21,499 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 17:46:22,363 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 17:46:22,373 - werkzeug - INFO -  * Debugger PIN: 836-123-594
+2025-04-25 17:46:22,418 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-25 17:47:26,194 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 17:47:26,961 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 17:47:26,970 - werkzeug - INFO -  * Debugger PIN: 836-123-594
+2025-04-25 17:47:27,016 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-25 17:47:51,509 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 17:47:52,264 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 17:47:52,272 - werkzeug - INFO -  * Debugger PIN: 836-123-594
+2025-04-25 17:47:52,311 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-25 17:48:03,574 - model - INFO - Accessed login page.
+2025-04-25 17:48:03,581 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:48:03] "GET /login HTTP/1.1" 200 -
+2025-04-25 17:48:06,810 - model - INFO - Accessed login page.
+2025-04-25 17:48:06,815 - model - WARNING - Login failed for admin: Invalid credentials.
+2025-04-25 17:48:06,816 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:48:06] "POST /login HTTP/1.1" 200 -
+2025-04-25 17:48:18,611 - model - INFO - Accessed login page.
+2025-04-25 17:48:18,612 - model - WARNING - Login failed for admin: Invalid credentials.
+2025-04-25 17:48:18,614 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:48:18] "POST /login HTTP/1.1" 200 -
+2025-04-25 17:48:22,465 - model - INFO - Accessed registration page.
+2025-04-25 17:48:22,472 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:48:22] "GET /register HTTP/1.1" 200 -
+2025-04-25 17:48:33,360 - model - INFO - Accessed registration page.
+2025-04-25 17:48:33,360 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:48:33] "GET /register HTTP/1.1" 200 -
+2025-04-25 17:48:44,335 - model - INFO - Accessed registration page.
+2025-04-25 17:48:44,337 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:48:44] "POST /register HTTP/1.1" 200 -
+2025-04-25 17:48:56,790 - model - INFO - Accessed registration page.
+2025-04-25 17:48:56,791 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:48:56] "POST /register HTTP/1.1" 200 -
+2025-04-25 17:49:10,560 - model - INFO - Accessed registration page.
+2025-04-25 17:49:10,572 - model - INFO - User registered: admin
+2025-04-25 17:49:10,574 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:49:10] "[32mPOST /register HTTP/1.1[0m" 302 -
+2025-04-25 17:49:10,581 - model - INFO - Accessed login page.
+2025-04-25 17:49:10,582 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:49:10] "GET /login HTTP/1.1" 200 -
+2025-04-25 17:49:18,268 - model - INFO - Accessed login page.
+2025-04-25 17:49:18,282 - model - INFO - User logged in: admin with UUID token: 8f03c6eb-ad46-4a3a-9642-098ad96d34ac and JWT token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NDU2Nzg5NTh9.dR2WOcmDAdjpmgLj48RaPk_hJFHbK3eFiRGpkD22h_c
+2025-04-25 17:49:18,284 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:49:18] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-04-25 17:49:18,302 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:49:18] "[35m[1mGET /balance HTTP/1.1[0m" 500 -
+2025-04-25 17:49:18,359 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:49:18] "GET /balance?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-04-25 17:49:18,359 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:49:18] "GET /balance?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-04-25 17:49:18,370 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:49:18] "GET /balance?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-04-25 17:49:18,378 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:49:18] "GET /balance?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2025-04-25 17:49:59,466 - werkzeug - INFO -  * Detected change in 'e:\\level_four_IT\\WEP3latest\\WEP3latest\\WEP\\controller.py', reloading
+2025-04-25 17:49:59,494 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 17:50:00,190 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 17:50:00,199 - werkzeug - INFO -  * Debugger PIN: 836-123-594
+2025-04-25 17:50:00,237 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-25 17:50:03,357 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:50:03] "GET /balance HTTP/1.1" 200 -
+2025-04-25 17:50:19,000 - model - INFO - Fetched user details for user ID 1
+2025-04-25 17:50:19,033 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:50:19] "GET /user_details HTTP/1.1" 200 -
+2025-04-25 17:52:07,177 - werkzeug - INFO -  * Detected change in 'e:\\level_four_IT\\WEP3latest\\WEP3latest\\WEP\\controller.py', reloading
+2025-04-25 17:52:07,206 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 17:52:18,309 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 17:52:19,153 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 17:52:19,161 - werkzeug - INFO -  * Debugger PIN: 836-123-594
+2025-04-25 17:52:19,203 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-25 17:53:08,088 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:53:08] "GET /balance HTTP/1.1" 200 -
+2025-04-25 17:53:34,192 - werkzeug - INFO -  * Detected change in 'e:\\level_four_it\\wep3latest\\wep3latest\\WEP\\controller.py', reloading
+2025-04-25 17:53:34,217 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 17:53:34,941 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 17:53:34,949 - werkzeug - INFO -  * Debugger PIN: 836-123-594
+2025-04-25 17:53:34,986 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-25 17:56:32,372 - werkzeug - INFO -  * Detected change in 'e:\\level_four_it\\wep3latest\\wep3latest\\WEP\\controller.py', reloading
+2025-04-25 17:56:32,477 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 17:57:06,899 - werkzeug - INFO -  * Restarting with stat
+2025-04-25 17:57:08,092 - werkzeug - WARNING -  * Debugger is active!
+2025-04-25 17:57:08,117 - werkzeug - INFO -  * Debugger PIN: 836-123-594
+2025-04-25 17:57:08,222 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-25 17:57:10,984 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:57:10] "GET /balance HTTP/1.1" 200 -
+2025-04-25 17:57:15,262 - model - INFO - Accessed login page.
+2025-04-25 17:57:15,273 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:57:15] "GET /login HTTP/1.1" 200 -
+2025-04-25 17:57:32,718 - model - INFO - Accessed login page.
+2025-04-25 17:57:32,741 - model - INFO - User logged in: admin with UUID token: 5fa16af4-da32-4bbd-af4c-884f978c4252 and JWT token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE3NDU2Nzk0NTJ9.z9m6GCJWNmQC8d2uy2Pr8EOsQ2u07leWygL-pl38cZw
+2025-04-25 17:57:32,749 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:57:32] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-04-25 17:57:32,783 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:57:32] "GET /balance HTTP/1.1" 200 -
+2025-04-25 17:57:44,926 - model - INFO - Accessed registration page.
+2025-04-25 17:57:44,947 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:57:44] "GET /register HTTP/1.1" 200 -
+2025-04-25 17:57:50,601 - model - INFO - Accessed registration page.
+2025-04-25 17:57:50,602 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:57:50] "GET /register HTTP/1.1" 200 -
+2025-04-25 17:58:13,249 - model - INFO - Accessed registration page.
+2025-04-25 17:58:13,254 - model - ERROR - User registration failed: UNIQUE constraint failed: users.phone
+2025-04-25 17:58:13,255 - model - ERROR - Database error: UNIQUE constraint failed: users.phone
+2025-04-25 17:58:13,256 - model - WARNING - Registration failed for ali: User already exists.
+2025-04-25 17:58:13,260 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:58:13] "POST /register HTTP/1.1" 200 -
+2025-04-25 17:58:40,447 - model - INFO - Accessed registration page.
+2025-04-25 17:58:40,452 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:58:40] "POST /register HTTP/1.1" 200 -
+2025-04-25 17:58:59,437 - model - INFO - Accessed registration page.
+2025-04-25 17:58:59,439 - model - ERROR - User registration failed: UNIQUE constraint failed: users.phone
+2025-04-25 17:58:59,439 - model - ERROR - Database error: UNIQUE constraint failed: users.phone
+2025-04-25 17:58:59,440 - model - WARNING - Registration failed for ali osama: User already exists.
+2025-04-25 17:58:59,442 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:58:59] "POST /register HTTP/1.1" 200 -
+2025-04-25 17:59:28,867 - model - INFO - Accessed registration page.
+2025-04-25 17:59:28,869 - model - ERROR - User registration failed: UNIQUE constraint failed: users.phone
+2025-04-25 17:59:28,869 - model - ERROR - Database error: UNIQUE constraint failed: users.phone
+2025-04-25 17:59:28,870 - model - WARNING - Registration failed for osama sadeq: User already exists.
+2025-04-25 17:59:28,875 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:59:28] "POST /register HTTP/1.1" 200 -
+2025-04-25 17:59:39,521 - model - INFO - Accessed registration page.
+2025-04-25 17:59:39,522 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 17:59:39] "GET /register HTTP/1.1" 200 -
+2025-04-25 18:00:08,550 - model - INFO - Accessed registration page.
+2025-04-25 18:00:08,564 - model - INFO - User registered: Osama
+2025-04-25 18:00:08,571 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:00:08] "[32mPOST /register HTTP/1.1[0m" 302 -
+2025-04-25 18:00:08,592 - model - INFO - Accessed login page.
+2025-04-25 18:00:08,595 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:00:08] "GET /login HTTP/1.1" 200 -
+2025-04-25 18:00:42,959 - model - INFO - Accessed login page.
+2025-04-25 18:00:42,964 - model - WARNING - Login failed for osama: Invalid credentials.
+2025-04-25 18:00:42,966 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:00:42] "POST /login HTTP/1.1" 200 -
+2025-04-25 18:00:59,533 - model - INFO - Accessed login page.
+2025-04-25 18:00:59,536 - model - WARNING - Login failed for osama: Invalid credentials.
+2025-04-25 18:00:59,540 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:00:59] "POST /login HTTP/1.1" 200 -
+2025-04-25 18:01:04,286 - model - INFO - Accessed login page.
+2025-04-25 18:01:04,288 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:01:04] "GET /login HTTP/1.1" 200 -
+2025-04-25 18:01:10,833 - werkzeug - INFO - 127.0.0.1 - - [25/Apr/2025 18:01:10] "GET / HTTP/1.1" 200 -
+2025-05-17 20:57:25,114 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 20:57:26,354 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 20:57:26,372 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 20:57:26,450 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 20:57:33,539 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 20:57:33] "GET / HTTP/1.1" 200 -
+2025-05-17 20:57:33,746 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 20:57:33] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-05-17 20:57:37,234 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 20:57:37] "GET /login HTTP/1.1" 200 -
+2025-05-17 20:57:39,726 - model - WARNING - Failed login attempt for username: mohammedali
+2025-05-17 20:57:39,729 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 20:57:39] "POST /login HTTP/1.1" 200 -
+2025-05-17 20:57:41,243 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 20:57:41] "GET /register HTTP/1.1" 200 -
+2025-05-17 20:57:49,572 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 20:57:49] "GET /login HTTP/1.1" 200 -
+2025-05-17 20:58:44,433 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\model.py', reloading
+2025-05-17 20:58:44,510 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 20:58:46,714 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 20:58:46,741 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 20:58:46,875 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 20:59:03,797 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\controller.py', reloading
+2025-05-17 20:59:03,874 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 20:59:06,400 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 20:59:06,417 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 20:59:06,479 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 20:59:15,342 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\model.py', reloading
+2025-05-17 20:59:15,450 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 20:59:18,582 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 20:59:18,626 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 20:59:18,840 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 20:59:21,202 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\model.py', reloading
+2025-05-17 20:59:21,293 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 20:59:23,548 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 20:59:23,559 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 20:59:23,618 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 20:59:32,671 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\app.py', reloading
+2025-05-17 20:59:32,712 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 20:59:34,494 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 20:59:34,510 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 20:59:34,590 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 20:59:41,007 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\tests\\unittest_test.py', reloading
+2025-05-17 20:59:41,060 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 20:59:42,882 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 20:59:42,897 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 20:59:42,956 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 20:59:48,278 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\tests\\test_controller.py', reloading
+2025-05-17 20:59:48,328 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 20:59:50,093 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 20:59:50,106 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 20:59:50,166 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 21:00:23,502 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\model.py', reloading
+2025-05-17 21:00:23,573 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 21:00:25,508 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 21:00:25,522 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 21:00:25,585 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 21:00:37,764 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\controller.py', reloading
+2025-05-17 21:00:37,802 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 21:00:39,603 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 21:00:39,618 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 21:00:39,695 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 21:01:02,991 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:01:02] "GET /login HTTP/1.1" 200 -
+2025-05-17 21:01:17,499 - model - INFO - „Õ«Ê·…  ”ÃÌ· œŒÊ· ··„” Œœ„: adminuser
+2025-05-17 21:01:17,504 - model - ERROR - Œÿ√ ›Ì «· Õﬁﬁ „‰ ﬂ·„… «·„—Ê—: Unicode-objects must be encoded before checking
+2025-05-17 21:01:17,505 - model - WARNING - ›‘·  ”ÃÌ· «·œŒÊ·: ﬂ·„… „—Ê— €Ì— ’ÕÌÕ… - adminuser
+2025-05-17 21:01:17,509 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:01:17] "POST /login HTTP/1.1" 200 -
+2025-05-17 21:01:20,620 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:01:20] "GET /register HTTP/1.1" 200 -
+2025-05-17 21:01:28,705 - model - INFO - New user registered: mohammedali
+2025-05-17 21:01:28,707 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:01:28] "[32mPOST /register HTTP/1.1[0m" 302 -
+2025-05-17 21:01:28,719 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:01:28] "GET /login HTTP/1.1" 200 -
+2025-05-17 21:01:30,445 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:01:30] "GET /register HTTP/1.1" 200 -
+2025-05-17 21:01:35,591 - model - INFO - „Õ«Ê·…  ”ÃÌ· œŒÊ· ··„” Œœ„: mohammedali
+2025-05-17 21:01:36,335 - model - INFO -  „  ”ÃÌ· œŒÊ· «·„” Œœ„ »‰Ã«Õ: mohammedali
+2025-05-17 21:01:36,337 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:01:36] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-17 21:01:36,382 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:01:36] "GET / HTTP/1.1" 200 -
+2025-05-17 21:02:20,627 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:02:20] "GET /user_details HTTP/1.1" 200 -
+2025-05-17 21:03:45,659 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 21:03:47,719 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 21:03:47,738 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 21:03:47,827 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 21:03:58,847 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:03:58] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-05-17 21:03:58,897 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:03:58] "GET / HTTP/1.1" 200 -
+2025-05-17 21:04:01,576 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:04:01] "GET /login HTTP/1.1" 200 -
+2025-05-17 21:04:09,283 - model - INFO - „Õ«Ê·…  ”ÃÌ· œŒÊ· ··„” Œœ„: mohammedali
+2025-05-17 21:04:09,592 - model - INFO -  „  ”ÃÌ· œŒÊ· «·„” Œœ„ »‰Ã«Õ: mohammedali
+2025-05-17 21:04:09,593 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:04:09] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-17 21:04:09,609 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:04:09] "GET / HTTP/1.1" 200 -
+2025-05-17 21:04:31,229 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 21:04:32,591 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 21:04:32,601 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 21:04:32,646 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 21:04:32,803 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:04:32] "GET / HTTP/1.1" 200 -
+2025-05-17 21:04:34,971 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:04:34] "GET /admin/services HTTP/1.1" 200 -
+2025-05-17 21:07:05,107 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 21:07:05] "GET /admin/services HTTP/1.1" 200 -
+2025-05-17 21:20:45,393 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\tests\\test_examples.py', reloading
+2025-05-17 21:20:45,428 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 21:20:46,852 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 21:20:46,862 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 21:20:46,908 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 21:21:32,778 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\tests\\test_example.py', reloading
+2025-05-17 21:21:32,812 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 21:21:34,226 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 21:21:34,236 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 21:21:34,283 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 21:23:09,024 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\tests\\test_example.py', reloading
+2025-05-17 21:23:09,054 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 21:23:10,367 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 21:23:10,376 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 21:23:10,418 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 21:26:16,144 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\app.py', reloading
+2025-05-17 21:26:16,172 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 21:26:17,485 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 21:26:17,495 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 21:26:17,540 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 21:26:18,615 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\app.py', reloading
+2025-05-17 21:26:18,640 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 21:26:19,977 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 21:26:19,988 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-17 21:26:20,036 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 22:03:49,278 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 22:03:51,484 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 22:03:51,503 - werkzeug - INFO -  * Debugger PIN: 133-999-359
+2025-05-17 22:03:51,691 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-17 22:03:55,734 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 22:03:55] "GET / HTTP/1.1" 200 -
+2025-05-17 22:03:55,978 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 22:03:55] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-05-17 22:05:23,289 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 22:05:23] "GET /login HTTP/1.1" 200 -
+2025-05-17 22:06:18,340 - model - INFO - „Õ«Ê·…  ”ÃÌ· œŒÊ· ··„” Œœ„: mohammedali
+2025-05-17 22:06:19,226 - model - INFO -  „  ”ÃÌ· œŒÊ· «·„” Œœ„ »‰Ã«Õ: mohammedali
+2025-05-17 22:06:19,230 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 22:06:19] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-17 22:06:19,275 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 22:06:19] "GET / HTTP/1.1" 200 -
+2025-05-17 22:08:11,872 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 22:08:11] "[32mGET /logout HTTP/1.1[0m" 302 -
+2025-05-17 22:08:11,903 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 22:08:11] "GET / HTTP/1.1" 200 -
+2025-05-17 22:08:14,849 - werkzeug - INFO - 127.0.0.1 - - [17/May/2025 22:08:14] "GET /register HTTP/1.1" 200 -
+2025-05-17 22:11:55,953 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP\\controller.py', reloading
+2025-05-17 22:11:56,009 - werkzeug - INFO -  * Restarting with stat
+2025-05-17 22:11:58,424 - werkzeug - WARNING -  * Debugger is active!
+2025-05-17 22:11:58,438 - werkzeug - INFO -  * Debugger PIN: 133-999-359
+2025-05-17 22:11:58,497 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}حسابي{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- بطاقة معلومات المستخدم -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-user-circle"></i> معلومات الحساب</h5>
+                </div>
+                <div class="card-body text-center">
+                    <i class="fas fa-user-circle fa-3x mb-3 text-primary"></i>
+                    <h4>{{ current_user.username }}</h4>
+                    <p class="text-muted">{{ current_user.email }}</p>
+                    <h5 class="text-success">الرصيد: {{ current_user.credit }} $</h5>
+                    {% if current_user.is_admin %}
+                        <span class="badge bg-primary">مدير النظام</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- معلومات الجلسة -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-clock"></i> معلومات الجلسة</h5>
+                </div>
+                <div class="card-body">
+                    {% if expiration_time %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-calendar-alt"></i>
+                            تاريخ انتهاء الجلسة: {{ expiration_time }}
+                        </div>
+                        <div class="progress mb-3">
+                            <div class="progress-bar bg-info" role="progressbar" 
+                                 style="width: {{ time_remaining_percentage }}%" 
+                                 aria-valuenow="{{ time_remaining_seconds }}" aria-valuemin="0" 
+                                 aria-valuemax="{{ session_max_seconds }}">
+                                {{ time_remaining_hours }} ساعة متبقية
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            لا توجد جلسة نشطة
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- الأجهزة النشطة -->
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-mobile-alt"></i> الأجهزة النشطة</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>الجهاز</th>
+                                    <th>تاريخ التسجيل</th>
+                                    <th>تاريخ الانتهاء</th>
+                                    <th>الحالة</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for token in active_tokens %}
+                                <tr>
+                                    <td>{{ token.device_info }}</td>
+                                    <td>{{ token.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                    <td>{{ token.expiry_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                    <td>
+                                        {% if token.is_active %}
+                                            <span class="badge bg-success">نشط</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">منتهي</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .progress {
+        height: 1.5rem;
+        border-radius: 1rem;
+    }
+
+    .progress-bar {
+        transition: width 0.3s ease;
+    }
+
+    .card {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+        border-radius: 0.5rem;
+    }
+
+    .card-header {
+        background-color: rgba(0, 0, 0, 0.03);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    }
+
+    .table th {
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // تحديث شريط التقدم كل دقيقة
+    setInterval(function() {
+        let progressBar = document.querySelector('.progress-bar');
+        if (progressBar) {
+            let currentWidth = parseFloat(progressBar.style.width);
+            progressBar.style.width = (currentWidth - (100 / (24 * 60))) + '%';
+        }
+    }, 60000);
+</script>
+{% endblock %}

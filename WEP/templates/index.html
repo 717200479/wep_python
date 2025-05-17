@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}الصفحة الرئيسية{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    {% if current_user.is_authenticated %}
+        <!-- بطاقة معلومات المستخدم -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-circle fa-3x mb-3 text-primary"></i>
+                        <h4>{{ current_user.username }}</h4>
+                        <p class="text-muted">{{ current_user.email }}</p>
+                        <h5 class="text-success">الرصيد: {{ current_user.credit }} $</h5>
+                        {% if current_user.is_admin %}
+                            <span class="badge bg-primary">مدير النظام</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- معلومات الجلسة -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-clock"></i> معلومات الجلسة
+                        </h5>
+                        {% if expiration_time %}
+                            <p class="mb-2">
+                                <i class="fas fa-calendar-alt"></i>
+                                تاريخ انتهاء الجلسة: {{ expiration_time }}
+                            </p>
+                            {% set time_remaining = ((expiration_time|string|strptime('%Y-%m-%d %H:%M:%S') - now)|string|int) %}
+                            <div class="progress">
+                                <div class="progress-bar bg-info" role="progressbar" 
+                                     style="width: {{ (time_remaining / (24*60*60)) * 100 }}%" 
+                                     aria-valuenow="{{ time_remaining }}" aria-valuemin="0" 
+                                     aria-valuemax="{{ 24*60*60 }}">
+                                    {{ (time_remaining / (60*60))|round(1) }} ساعة متبقية
+                                </div>
+                            </div>
+                        {% else %}
+                            <p class="text-warning">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                لا توجد جلسة نشطة
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الخدمات المتاحة -->
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-tools fa-3x mb-3 text-primary"></i>
+                        <h5 class="card-title">الأدوات والصناديق</h5>
+                        <p class="card-text">استكشف مجموعة متنوعة من الأدوات والصناديق المتاحة</p>
+                        <a href="{{ url_for('tools_boxes') }}" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> استعرض الأدوات
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-mobile-alt fa-3x mb-3 text-success"></i>
+                        <h5 class="card-title">خدمات IMEI</h5>
+                        <p class="card-text">خدمات متخصصة للتحقق من IMEI وإدارته</p>
+                        <a href="{{ url_for('imei_services') }}" class="btn btn-success">
+                            <i class="fas fa-arrow-right"></i> استكشف الخدمات
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-globe fa-3x mb-3 text-info"></i>
+                        <h5 class="card-title">الخدمات عن بعد</h5>
+                        <p class="card-text">خدمات متقدمة للدعم والإدارة عن بعد</p>
+                        <a href="{{ url_for('remote') }}" class="btn btn-info text-white">
+                            <i class="fas fa-arrow-right"></i> اكتشف المزيد
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <!-- صفحة الترحيب للزوار -->
+        <div class="text-center py-5">
+            <h1 class="display-4 mb-4">مرحباً بك في نظام WEP</h1>
+            <p class="lead mb-4">نظام متكامل لإدارة الخدمات والأدوات بكفاءة عالية</p>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="d-grid gap-3">
+                        <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                        </a>
+                        <a href="{{ url_for('register') }}" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-user-plus"></i> إنشاء حساب جديد
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // تحديث شريط التقدم كل دقيقة
+    setInterval(function() {
+        let progressBar = document.querySelector('.progress-bar');
+        if (progressBar) {
+            let currentWidth = parseFloat(progressBar.style.width);
+            progressBar.style.width = (currentWidth - (100 / (24 * 60))) + '%';
+        }
+    }, 60000);
+</script>
+{% endblock %}

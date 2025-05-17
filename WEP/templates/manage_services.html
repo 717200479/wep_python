@@ -1,0 +1,461 @@
+{% extends "base.html" %}
+{% block title %}إدارة الخدمات{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    {% if current_user.is_admin %}
+        <div class="row">
+            <!-- سجل النشاطات -->
+            <div class="col-12 mb-4">
+                <div class="card activity-card">
+                    <div class="card-header bg-gradient">
+                        <h5 class="mb-0">
+                            <i class="fas fa-history fa-pulse"></i> 
+                            سجل النشاطات الأخيرة
+                            <span class="badge bg-light text-dark float-end" id="activityCount">0</span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover animate-table">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-calendar-alt"></i> التاريخ</th>
+                                        <th><i class="fas fa-info-circle"></i> النشاط</th>
+                                        <th><i class="fas fa-check-circle"></i> الحالة</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="activity-list">
+                                    {% for activity in activities %}
+                                    <tr class="activity-item">
+                                        <td>{{ activity.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                                        <td>{{ activity.description }}</td>
+                                        <td><span class="badge bg-{{ activity.status_class }} fade-in">{{ activity.status }}</span></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- إدارة الخدمات -->
+            <div class="col-12">
+                <div class="card service-card">
+                    <div class="card-header bg-gradient">
+                        <h5 class="mb-0">
+                            <i class="fas fa-cogs fa-spin"></i> 
+                            إدارة الخدمات
+                            <button class="btn btn-light btn-sm float-end" id="addServiceBtn">
+                                <i class="fas fa-plus"></i> إضافة خدمة جديدة
+                            </button>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- نموذج إضافة خدمة جديدة -->
+                        <form method="POST" class="service-form mb-4" id="addServiceForm">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h6 class="mb-3"><i class="fas fa-plus-circle"></i> إضافة خدمة جديدة</h6>
+                                    <div class="row g-3">
+                                        <div class="col-md-3">
+                                            <label class="form-label">
+                                                <i class="fas fa-trademark"></i> العلامة التجارية
+                                            </label>
+                                            <select name="brand" class="form-select custom-select" required>
+                                                <option value="">اختر العلامة التجارية</option>
+                                                <option value="Samsung">Samsung - سامسونج</option>
+                                                <option value="Apple">Apple - آبل</option>
+                                                <option value="Huawei">Huawei - هواوي</option>
+                                                <option value="Xiaomi">Xiaomi - شاومي</option>
+                                                <option value="Oppo">Oppo - أوبو</option>
+                                                <option value="OnePlus">OnePlus - ون بلس</option>
+                                                <option value="Nokia">Nokia - نوكيا</option>
+                                                <option value="Sony">Sony - سوني</option>
+                                                <option value="Google">Google - جوجل</option>
+                                                <option value="LG">LG - إل جي</option>
+                                                <option value="Vivo">Vivo - فيفو</option>
+                                                <option value="Realme">Realme - ريلمي</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">
+                                                <i class="fas fa-tag"></i> اسم الخدمة
+                                            </label>
+                                            <input type="text" name="name" class="form-control custom-input" placeholder="مثال: فك قفل الشاشة" required>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">
+                                                <i class="fas fa-dollar-sign"></i> السعر
+                                            </label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" name="price" class="form-control custom-input" placeholder="0.00" step="0.01" min="0" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">
+                                                <i class="fas fa-align-left"></i> الوصف
+                                            </label>
+                                            <textarea name="description" class="form-control custom-textarea" placeholder="وصف مختصر للخدمة" rows="2" required></textarea>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label class="form-label">
+                                                <i class="fas fa-list-ul"></i> المتطلبات
+                                            </label>
+                                            <textarea name="requirements" class="form-control custom-textarea" placeholder="المتطلبات الأساسية" rows="2" required></textarea>
+                                        </div>
+                                        <div class="col-12">
+                                            <button type="submit" name="add" class="btn btn-primary btn-animated">
+                                                <i class="fas fa-plus"></i> إضافة خدمة
+                                            </button>
+                                            <button type="button" class="btn btn-secondary btn-animated" id="cancelAdd">
+                                                <i class="fas fa-times"></i> إلغاء
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- جدول الخدمات -->
+                        <div class="table-responsive">
+                            <table class="table table-hover animate-table" id="servicesTable">
+                                <thead>
+                                    <tr>
+                                        <th><i class="fas fa-trademark"></i> العلامة التجارية</th>
+                                        <th><i class="fas fa-tag"></i> اسم الخدمة</th>
+                                        <th><i class="fas fa-dollar-sign"></i> السعر</th>
+                                        <th><i class="fas fa-align-left"></i> الوصف</th>
+                                        <th><i class="fas fa-list-ul"></i> المتطلبات</th>
+                                        <th><i class="fas fa-cog"></i> الإجراءات</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for service in services %}
+                                    <tr class="service-row">
+                                        <td>{{ service[1] }}</td>
+                                        <td>{{ service[2] }}</td>
+                                        <td>${{ "%.2f"|format(service[3]|float) }}</td>
+                                        <td>{{ service[4] }}</td>
+                                        <td>{{ service[5] }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-sm btn-warning btn-animated" data-bs-toggle="modal" data-bs-target="#editModal{{ service[0] }}">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <form method="POST" class="d-inline">
+                                                    <input type="hidden" name="service_id" value="{{ service[0] }}">
+                                                    <button type="submit" name="delete" class="btn btn-sm btn-danger btn-animated delete-btn">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- نافذة تعديل الخدمة -->
+                                    <div class="modal fade" id="editModal{{ service[0] }}" tabindex="-1">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-gradient">
+                                                    <h5 class="modal-title">
+                                                        <i class="fas fa-edit"></i> تعديل الخدمة
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <form method="POST">
+                                                    <div class="modal-body">
+                                                        <input type="hidden" name="service_id" value="{{ service[0] }}">
+                                                        <div class="row g-3">
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">
+                                                                    <i class="fas fa-trademark"></i> العلامة التجارية
+                                                                </label>
+                                                                <select name="brand" class="form-select custom-select" required>
+                                                                    <option value="{{ service[1] }}" selected>{{ service[1] }}</option>
+                                                                    <option value="Samsung">Samsung - سامسونج</option>
+                                                                    <option value="Apple">Apple - آبل</option>
+                                                                    <option value="Huawei">Huawei - هواوي</option>
+                                                                    <option value="Xiaomi">Xiaomi - شاومي</option>
+                                                                    <option value="Oppo">Oppo - أوبو</option>
+                                                                    <option value="OnePlus">OnePlus - ون بلس</option>
+                                                                    <option value="Nokia">Nokia - نوكيا</option>
+                                                                    <option value="Sony">Sony - سوني</option>
+                                                                    <option value="Google">Google - جوجل</option>
+                                                                    <option value="LG">LG - إل جي</option>
+                                                                    <option value="Vivo">Vivo - فيفو</option>
+                                                                    <option value="Realme">Realme - ريلمي</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <label class="form-label">
+                                                                    <i class="fas fa-tag"></i> اسم الخدمة
+                                                                </label>
+                                                                <input type="text" name="name" class="form-control custom-input" value="{{ service[2] }}" required>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">
+                                                                    <i class="fas fa-dollar-sign"></i> السعر
+                                                                </label>
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text">$</span>
+                                                                    <input type="number" name="price" class="form-control custom-input" value="{{ service[3] }}" step="0.01" min="0" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">
+                                                                    <i class="fas fa-align-left"></i> الوصف
+                                                                </label>
+                                                                <textarea name="description" class="form-control custom-textarea" rows="3" required>{{ service[4] }}</textarea>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">
+                                                                    <i class="fas fa-list-ul"></i> المتطلبات
+                                                                </label>
+                                                                <textarea name="requirements" class="form-control custom-textarea" rows="3" required>{{ service[5] }}</textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary btn-animated" data-bs-dismiss="modal">
+                                                            <i class="fas fa-times"></i> إلغاء
+                                                        </button>
+                                                        <button type="submit" name="edit" class="btn btn-primary btn-animated">
+                                                            <i class="fas fa-save"></i> حفظ التغييرات
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="alert alert-danger fade-in">
+            <i class="fas fa-exclamation-triangle"></i>
+            عذراً، لا يمكنك الوصول إلى هذه الصفحة. يجب أن تكون مدير نظام.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* تأثيرات عامة */
+    .fade-in {
+        animation: fadeIn 0.5s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* تنسيق البطاقات */
+    .card {
+        box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.1);
+        border-radius: 1rem;
+        margin-bottom: 1.5rem;
+        border: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+        border-radius: 1rem 1rem 0 0 !important;
+        padding: 1rem 1.5rem;
+    }
+
+    .bg-gradient {
+        background: linear-gradient(45deg, #2196F3, #1976D2);
+        color: white;
+    }
+
+    /* تنسيق الجداول */
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table th {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.875rem;
+        border-top: none;
+    }
+
+    .animate-table tr {
+        transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .animate-table tr:hover {
+        transform: scale(1.01);
+        background-color: rgba(33, 150, 243, 0.05);
+    }
+
+    /* تنسيق الأزرار */
+    .btn-animated {
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-animated:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn-animated:active {
+        transform: translateY(1px);
+    }
+
+    .btn-group {
+        gap: 0.5rem;
+    }
+
+    /* تنسيق النماذج */
+    .custom-select, .custom-input, .custom-textarea {
+        border-radius: 0.5rem;
+        border: 1px solid #dee2e6;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .custom-select:focus,
+    .custom-input:focus,
+    .custom-textarea:focus {
+        border-color: #2196F3;
+        box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25);
+    }
+
+    /* تنسيق الشارات */
+    .badge {
+        padding: 0.5em 1em;
+        border-radius: 2rem;
+        font-weight: 500;
+    }
+
+    /* تأثيرات إضافية */
+    .fa-pulse {
+        animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+
+    .fa-spin {
+        animation: spin 2s infinite linear;
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* تنسيق النوافذ المنبثقة */
+    .modal-content {
+        border-radius: 1rem;
+        border: none;
+    }
+
+    .modal-header {
+        border-radius: 1rem 1rem 0 0;
+    }
+
+    /* تحسينات للأجهزة المحمولة */
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 1rem;
+        }
+
+        .table {
+            font-size: 0.875rem;
+        }
+
+        .btn-group {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // تحديث عداد النشاطات
+    const activityCount = document.querySelectorAll('.activity-item').length;
+    document.getElementById('activityCount').textContent = activityCount;
+
+    // التحكم في نموذج إضافة الخدمة
+    const addServiceBtn = document.getElementById('addServiceBtn');
+    const addServiceForm = document.getElementById('addServiceForm');
+    const cancelAddBtn = document.getElementById('cancelAdd');
+
+    // إخفاء النموذج عند بدء التحميل
+    if (addServiceForm) {
+        addServiceForm.style.display = 'none';
+    }
+
+    // إظهار النموذج عند النقر على زر الإضافة
+    if (addServiceBtn) {
+        addServiceBtn.addEventListener('click', function() {
+            if (addServiceForm) {
+                addServiceForm.style.display = 'block';
+                addServiceForm.classList.add('fade-in');
+                addServiceBtn.style.display = 'none';
+            }
+        });
+    }
+
+    // إخفاء النموذج عند النقر على زر الإلغاء
+    if (cancelAddBtn) {
+        cancelAddBtn.addEventListener('click', function() {
+            if (addServiceForm) {
+                addServiceForm.style.display = 'none';
+                addServiceBtn.style.display = 'block';
+            }
+        });
+    }
+
+    // تأكيد حذف الخدمة
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            if (!confirm('هل أنت متأكد من حذف هذه الخدمة؟')) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    // تنسيق السعر
+    const priceInputs = document.querySelectorAll('input[name="price"]');
+    priceInputs.forEach(input => {
+        input.addEventListener('input', function() {
+            if (this.value) {
+                this.value = parseFloat(this.value).toFixed(2);
+            }
+        });
+    });
+
+    // تأثيرات حركية للجدول
+    const tableRows = document.querySelectorAll('.service-row');
+    tableRows.forEach((row, index) => {
+        row.style.animation = `fadeIn 0.3s ease forwards ${index * 0.1}s`;
+        row.style.opacity = '0';
+    });
+});
+</script>
+{% endblock %}
