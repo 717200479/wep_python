@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 2025-05-18 10:18:47,469 - werkzeug - INFO -  * Restarting with stat
 2025-05-18 10:18:48,957 - werkzeug - WARNING -  * Debugger is active!
 2025-05-18 10:18:48,973 - werkzeug - INFO -  * Debugger PIN: 299-829-411
@@ -216,3 +217,334 @@
 2025-05-18 11:13:09,394 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 11:13:09] "GET / HTTP/1.1" 200 -
 2025-05-18 11:13:14,075 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 11:13:14] "GET /admin/dashboard HTTP/1.1" 200 -
 2025-05-18 11:14:41,012 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 11:14:41] "GET /admin/services HTTP/1.1" 200 -
+=======
+2025-02-12 20:50:40,936 - INFO - Database initialized.
+2025-02-12 20:50:40,960 - INFO -  * Restarting with stat
+2025-02-12 20:50:42,010 - INFO - Database initialized.
+2025-02-12 20:50:42,026 - WARNING -  * Debugger is active!
+2025-02-12 20:50:42,038 - INFO -  * Debugger PIN: 133-999-359
+2025-02-12 20:50:42,104 - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-02-12 20:50:44,559 - INFO - 127.0.0.1 - - [12/Feb/2025 20:50:44] "GET / HTTP/1.1" 200 -
+2025-02-12 20:50:44,654 - INFO - 127.0.0.1 - - [12/Feb/2025 20:50:44] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-02-12 20:50:44,732 - INFO - 127.0.0.1 - - [12/Feb/2025 20:50:44] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-02-12 20:51:40,531 - INFO - 127.0.0.1 - - [12/Feb/2025 20:51:40] "GET / HTTP/1.1" 200 -
+2025-02-12 20:51:40,585 - INFO - 127.0.0.1 - - [12/Feb/2025 20:51:40] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-02-12 20:51:48,884 - INFO - 127.0.0.1 - - [12/Feb/2025 20:51:48] "GET /imei_services HTTP/1.1" 200 -
+2025-02-12 20:51:48,954 - INFO - 127.0.0.1 - - [12/Feb/2025 20:51:48] "[33mGET /css/style.css HTTP/1.1[0m" 404 -
+2025-02-12 20:51:51,412 - INFO - 127.0.0.1 - - [12/Feb/2025 20:51:51] "[33mGET /Remote.html HTTP/1.1[0m" 404 -
+2025-02-12 20:51:53,951 - INFO - 127.0.0.1 - - [12/Feb/2025 20:51:53] "[33mGET /index.html HTTP/1.1[0m" 404 -
+2025-02-12 20:51:58,341 - INFO - 127.0.0.1 - - [12/Feb/2025 20:51:58] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-12 20:52:03,920 - INFO - 127.0.0.1 - - [12/Feb/2025 20:52:03] "[32mGET /user_details HTTP/1.1[0m" 302 -
+2025-02-12 20:52:03,974 - INFO - 127.0.0.1 - - [12/Feb/2025 20:52:03] "GET /login HTTP/1.1" 200 -
+2025-02-12 20:52:23,206 - INFO - 127.0.0.1 - - [12/Feb/2025 20:52:23] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-12 21:00:15,852 - INFO - Database initialized.
+2025-02-12 21:00:15,905 - INFO -  * Restarting with stat
+2025-02-12 21:00:16,895 - INFO - Database initialized.
+2025-02-12 21:00:16,926 - WARNING -  * Debugger is active!
+2025-02-12 21:00:16,945 - INFO -  * Debugger PIN: 133-999-359
+2025-02-12 21:00:17,016 - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-02-12 21:00:26,560 - INFO - 127.0.0.1 - - [12/Feb/2025 21:00:26] "GET / HTTP/1.1" 200 -
+2025-02-12 21:00:26,626 - INFO - 127.0.0.1 - - [12/Feb/2025 21:00:26] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-02-12 21:00:34,716 - INFO - 127.0.0.1 - - [12/Feb/2025 21:00:34] "GET /register HTTP/1.1" 200 -
+2025-02-12 21:00:52,070 - INFO - 127.0.0.1 - - [12/Feb/2025 21:00:52] "GET /imei_services HTTP/1.1" 200 -
+2025-02-12 21:00:52,131 - INFO - 127.0.0.1 - - [12/Feb/2025 21:00:52] "[33mGET /css/style.css HTTP/1.1[0m" 404 -
+2025-02-12 21:03:01,957 - INFO - 127.0.0.1 - - [12/Feb/2025 21:03:01] "GET /imei_services HTTP/1.1" 200 -
+2025-02-12 21:03:02,002 - INFO - 127.0.0.1 - - [12/Feb/2025 21:03:02] "[33mGET /css/style.css HTTP/1.1[0m" 404 -
+2025-02-12 21:03:03,432 - INFO - 127.0.0.1 - - [12/Feb/2025 21:03:03] "[33mGET /index.html HTTP/1.1[0m" 404 -
+2025-02-12 21:03:10,602 - INFO - 127.0.0.1 - - [12/Feb/2025 21:03:10] "GET / HTTP/1.1" 200 -
+2025-02-12 21:03:10,659 - INFO - 127.0.0.1 - - [12/Feb/2025 21:03:10] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-02-12 21:03:12,780 - INFO - 127.0.0.1 - - [12/Feb/2025 21:03:12] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-12 21:03:15,550 - INFO - 127.0.0.1 - - [12/Feb/2025 21:03:15] "GET /imei_services HTTP/1.1" 200 -
+2025-02-12 21:03:15,644 - INFO - 127.0.0.1 - - [12/Feb/2025 21:03:15] "[33mGET /css/style.css HTTP/1.1[0m" 404 -
+2025-02-12 21:03:18,499 - INFO - 127.0.0.1 - - [12/Feb/2025 21:03:18] "GET /remote HTTP/1.1" 200 -
+2025-02-12 21:03:21,628 - INFO - 127.0.0.1 - - [12/Feb/2025 21:03:21] "GET /services/apple HTTP/1.1" 200 -
+2025-02-12 21:04:00,076 - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP3\\WEP\\controller.py', reloading
+2025-02-12 21:04:00,199 - INFO -  * Restarting with stat
+2025-02-12 21:04:01,243 - INFO - Database initialized.
+2025-02-12 21:04:01,259 - WARNING -  * Debugger is active!
+2025-02-12 21:04:01,265 - INFO -  * Debugger PIN: 133-999-359
+2025-02-12 21:04:01,312 - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-02-12 21:04:06,238 - INFO - 127.0.0.1 - - [12/Feb/2025 21:04:06] "[35m[1mGET /imei_services HTTP/1.1[0m" 500 -
+2025-02-12 21:04:06,390 - INFO - 127.0.0.1 - - [12/Feb/2025 21:04:06] "GET /imei_services?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-02-12 21:04:06,429 - INFO - 127.0.0.1 - - [12/Feb/2025 21:04:06] "GET /imei_services?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-02-12 21:04:06,517 - INFO - 127.0.0.1 - - [12/Feb/2025 21:04:06] "GET /imei_services?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-02-12 21:04:06,532 - INFO - 127.0.0.1 - - [12/Feb/2025 21:04:06] "GET /imei_services?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2025-02-12 21:04:06,556 - INFO - 127.0.0.1 - - [12/Feb/2025 21:04:06] "GET /imei_services?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-02-12 21:04:16,097 - INFO - 127.0.0.1 - - [12/Feb/2025 21:04:16] "[35m[1mGET /imei_services HTTP/1.1[0m" 500 -
+2025-02-12 21:04:16,214 - INFO - 127.0.0.1 - - [12/Feb/2025 21:04:16] "GET /imei_services?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2025-02-12 21:04:16,219 - INFO - 127.0.0.1 - - [12/Feb/2025 21:04:16] "GET /imei_services?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2025-02-12 21:04:16,243 - INFO - 127.0.0.1 - - [12/Feb/2025 21:04:16] "GET /imei_services?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+2025-02-12 21:04:16,251 - INFO - 127.0.0.1 - - [12/Feb/2025 21:04:16] "GET /imei_services?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2025-02-12 21:05:09,984 - INFO - Database initialized.
+2025-02-12 21:05:10,040 - INFO -  * Restarting with stat
+2025-02-12 21:05:11,487 - INFO - Database initialized.
+2025-02-12 21:05:11,500 - WARNING -  * Debugger is active!
+2025-02-12 21:05:11,509 - INFO -  * Debugger PIN: 133-999-359
+2025-02-12 21:05:11,561 - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-02-12 21:05:11,810 - INFO - 127.0.0.1 - - [12/Feb/2025 21:05:11] "GET /imei_services HTTP/1.1" 200 -
+2025-02-12 21:05:11,984 - INFO - 127.0.0.1 - - [12/Feb/2025 21:05:11] "[33mGET /css/style.css HTTP/1.1[0m" 404 -
+2025-02-12 21:05:23,468 - INFO - 127.0.0.1 - - [12/Feb/2025 21:05:23] "[33mGET /Tools%20&%20Boxes.html HTTP/1.1[0m" 404 -
+2025-02-12 21:10:00,718 - INFO - Database initialized.
+2025-02-12 21:10:00,747 - INFO -  * Restarting with stat
+2025-02-12 21:10:01,545 - INFO - Database initialized.
+2025-02-12 21:10:01,567 - WARNING -  * Debugger is active!
+2025-02-12 21:10:01,573 - INFO -  * Debugger PIN: 133-999-359
+2025-02-12 21:10:01,619 - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-02-12 21:10:05,171 - INFO - 127.0.0.1 - - [12/Feb/2025 21:10:05] "GET /imei_services HTTP/1.1" 200 -
+2025-02-12 21:10:05,217 - INFO - 127.0.0.1 - - [12/Feb/2025 21:10:05] "[33mGET /css/style.css HTTP/1.1[0m" 404 -
+2025-02-12 21:10:07,540 - INFO - 127.0.0.1 - - [12/Feb/2025 21:10:07] "[33mGET /Tools%20&%20Boxes.html HTTP/1.1[0m" 404 -
+2025-02-12 21:10:12,260 - INFO - 127.0.0.1 - - [12/Feb/2025 21:10:12] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-12 21:11:58,420 - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP3\\WEP\\controller.py', reloading
+2025-02-12 21:11:58,467 - INFO -  * Restarting with stat
+2025-02-12 21:11:59,383 - INFO - Database initialized.
+2025-02-12 21:11:59,404 - WARNING -  * Debugger is active!
+2025-02-12 21:11:59,432 - INFO -  * Debugger PIN: 133-999-359
+2025-02-12 21:11:59,513 - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-02-12 21:12:46,714 - INFO - 127.0.0.1 - - [12/Feb/2025 21:12:46] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-12 21:13:24,308 - INFO - 127.0.0.1 - - [12/Feb/2025 21:13:24] "GET /imei_services HTTP/1.1" 200 -
+2025-02-12 21:13:24,371 - INFO - 127.0.0.1 - - [12/Feb/2025 21:13:24] "[33mGET /css/style.css HTTP/1.1[0m" 404 -
+2025-02-12 21:13:31,963 - INFO - 127.0.0.1 - - [12/Feb/2025 21:13:31] "[33mGET /index.html HTTP/1.1[0m" 404 -
+2025-02-12 21:13:36,101 - INFO - 127.0.0.1 - - [12/Feb/2025 21:13:36] "GET / HTTP/1.1" 200 -
+2025-02-12 21:13:36,188 - INFO - 127.0.0.1 - - [12/Feb/2025 21:13:36] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2025-02-12 21:13:43,773 - INFO - 127.0.0.1 - - [12/Feb/2025 21:13:43] "GET /admin/services HTTP/1.1" 200 -
+2025-02-12 21:18:02,703 - INFO - 127.0.0.1 - - [12/Feb/2025 21:18:02] "GET /admin/services HTTP/1.1" 200 -
+2025-02-12 21:20:19,481 - INFO - 127.0.0.1 - - [12/Feb/2025 21:20:19] "GET /admin/services HTTP/1.1" 200 -
+2025-02-12 21:22:55,462 - INFO - 127.0.0.1 - - [12/Feb/2025 21:22:55] "GET /admin/services HTTP/1.1" 200 -
+2025-02-12 21:23:08,847 - INFO - 127.0.0.1 - - [12/Feb/2025 21:23:08] "GET /admin/services HTTP/1.1" 200 -
+2025-02-12 21:23:13,391 - INFO - 127.0.0.1 - - [12/Feb/2025 21:23:13] "GET /admin/services HTTP/1.1" 200 -
+2025-02-12 21:30:42,995 - INFO - 127.0.0.1 - - [12/Feb/2025 21:30:42] "GET /admin/services HTTP/1.1" 200 -
+2025-02-12 21:32:55,706 - INFO - 127.0.0.1 - - [12/Feb/2025 21:32:55] "GET /admin/services HTTP/1.1" 200 -
+2025-02-12 21:33:12,954 - INFO - 127.0.0.1 - - [12/Feb/2025 21:33:12] "GET /admin/services HTTP/1.1" 200 -
+2025-02-12 21:39:07,457 - INFO - 127.0.0.1 - - [12/Feb/2025 21:39:07] "GET /admin/services HTTP/1.1" 200 -
+2025-02-12 21:42:47,586 - INFO - 127.0.0.1 - - [12/Feb/2025 21:42:47] "GET / HTTP/1.1" 200 -
+2025-02-12 21:42:57,409 - INFO - 127.0.0.1 - - [12/Feb/2025 21:42:57] "[31m[1mGET /increase_credit HTTP/1.1[0m" 405 -
+2025-02-12 21:43:06,079 - INFO - 127.0.0.1 - - [12/Feb/2025 21:43:06] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-12 21:43:23,626 - INFO - 127.0.0.1 - - [12/Feb/2025 21:43:23] "[31m[1mGET /increase_credit HTTP/1.1[0m" 405 -
+2025-02-12 21:49:30,985 - INFO - 127.0.0.1 - - [12/Feb/2025 21:49:30] "GET / HTTP/1.1" 200 -
+2025-02-12 21:49:51,668 - INFO - 127.0.0.1 - - [12/Feb/2025 21:49:51] "GET /remote HTTP/1.1" 200 -
+2025-02-12 21:51:03,699 - INFO - 127.0.0.1 - - [12/Feb/2025 21:51:03] "GET /remote HTTP/1.1" 200 -
+2025-02-12 21:51:13,083 - INFO - 127.0.0.1 - - [12/Feb/2025 21:51:13] "GET /services/apple HTTP/1.1" 200 -
+2025-02-12 21:51:27,790 - INFO - 127.0.0.1 - - [12/Feb/2025 21:51:27] "GET /imei_services HTTP/1.1" 200 -
+2025-02-12 21:51:27,900 - INFO - 127.0.0.1 - - [12/Feb/2025 21:51:27] "[33mGET /css/style.css HTTP/1.1[0m" 404 -
+2025-02-12 21:51:30,278 - INFO - 127.0.0.1 - - [12/Feb/2025 21:51:30] "[33mGET /index.html HTTP/1.1[0m" 404 -
+2025-02-12 21:51:32,348 - INFO - 127.0.0.1 - - [12/Feb/2025 21:51:32] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-12 21:54:36,604 - INFO - 127.0.0.1 - - [12/Feb/2025 21:54:36] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-12 21:55:15,304 - INFO - 127.0.0.1 - - [12/Feb/2025 21:55:15] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-12 21:55:23,907 - INFO - 127.0.0.1 - - [12/Feb/2025 21:55:23] "GET / HTTP/1.1" 200 -
+2025-02-12 21:56:33,251 - INFO - 127.0.0.1 - - [12/Feb/2025 21:56:33] "GET /login HTTP/1.1" 200 -
+2025-02-12 21:57:33,587 - INFO - 127.0.0.1 - - [12/Feb/2025 21:57:33] "GET /login HTTP/1.1" 200 -
+2025-02-12 21:58:36,101 - INFO - 127.0.0.1 - - [12/Feb/2025 21:58:36] "GET /register HTTP/1.1" 200 -
+2025-02-12 21:58:51,099 - INFO - 127.0.0.1 - - [12/Feb/2025 21:58:51] "GET /remote HTTP/1.1" 200 -
+2025-02-12 21:59:48,417 - INFO - 127.0.0.1 - - [12/Feb/2025 21:59:48] "GET / HTTP/1.1" 200 -
+2025-02-12 22:00:44,667 - INFO - 127.0.0.1 - - [12/Feb/2025 22:00:44] "GET / HTTP/1.1" 200 -
+2025-02-12 22:00:46,880 - INFO - 127.0.0.1 - - [12/Feb/2025 22:00:46] "GET /remote HTTP/1.1" 200 -
+2025-02-12 22:02:04,918 - INFO - 127.0.0.1 - - [12/Feb/2025 22:02:04] "GET / HTTP/1.1" 200 -
+2025-02-12 22:03:19,029 - INFO - 127.0.0.1 - - [12/Feb/2025 22:03:19] "GET / HTTP/1.1" 200 -
+2025-02-12 22:03:56,981 - INFO - 127.0.0.1 - - [12/Feb/2025 22:03:56] "GET / HTTP/1.1" 200 -
+2025-02-12 22:05:32,582 - INFO - 127.0.0.1 - - [12/Feb/2025 22:05:32] "GET / HTTP/1.1" 200 -
+2025-02-12 22:05:48,898 - INFO - 127.0.0.1 - - [12/Feb/2025 22:05:48] "[32mGET /user_details HTTP/1.1[0m" 302 -
+2025-02-12 22:05:48,918 - INFO - 127.0.0.1 - - [12/Feb/2025 22:05:48] "GET /login HTTP/1.1" 200 -
+2025-02-12 22:05:51,500 - INFO - User logged in: admin
+2025-02-12 22:05:51,500 - INFO - 127.0.0.1 - - [12/Feb/2025 22:05:51] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-02-12 22:05:51,532 - INFO - 127.0.0.1 - - [12/Feb/2025 22:05:51] "GET /balance HTTP/1.1" 200 -
+2025-02-12 22:05:53,685 - INFO - Fetched user details for user ID 1
+2025-02-12 22:05:53,705 - INFO - 127.0.0.1 - - [12/Feb/2025 22:05:53] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:07:19,574 - INFO - Fetched user details for user ID 1
+2025-02-12 22:07:19,603 - INFO - 127.0.0.1 - - [12/Feb/2025 22:07:19] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:08:55,939 - INFO - Fetched user details for user ID 1
+2025-02-12 22:08:55,983 - INFO - 127.0.0.1 - - [12/Feb/2025 22:08:55] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:09:59,438 - INFO - Fetched user details for user ID 1
+2025-02-12 22:09:59,477 - INFO - 127.0.0.1 - - [12/Feb/2025 22:09:59] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:12:01,773 - INFO - Fetched user details for user ID 1
+2025-02-12 22:12:01,814 - INFO - 127.0.0.1 - - [12/Feb/2025 22:12:01] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:14:00,691 - INFO - Fetched user details for user ID 1
+2025-02-12 22:14:00,692 - INFO - 127.0.0.1 - - [12/Feb/2025 22:14:00] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:14:01,754 - INFO - Fetched user details for user ID 1
+2025-02-12 22:14:01,755 - INFO - 127.0.0.1 - - [12/Feb/2025 22:14:01] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:14:02,602 - INFO - Fetched user details for user ID 1
+2025-02-12 22:14:02,603 - INFO - 127.0.0.1 - - [12/Feb/2025 22:14:02] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:14:03,466 - INFO - Fetched user details for user ID 1
+2025-02-12 22:14:03,468 - INFO - 127.0.0.1 - - [12/Feb/2025 22:14:03] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:14:05,034 - INFO - Fetched user details for user ID 1
+2025-02-12 22:14:05,036 - INFO - 127.0.0.1 - - [12/Feb/2025 22:14:05] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:14:06,072 - INFO - Fetched user details for user ID 1
+2025-02-12 22:14:06,073 - INFO - 127.0.0.1 - - [12/Feb/2025 22:14:06] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:14:30,037 - INFO - Fetched user details for user ID 1
+2025-02-12 22:14:30,074 - INFO - 127.0.0.1 - - [12/Feb/2025 22:14:30] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:16:11,860 - INFO - Fetched user details for user ID 1
+2025-02-12 22:16:11,864 - INFO - 127.0.0.1 - - [12/Feb/2025 22:16:11] "GET /user_details HTTP/1.1" 200 -
+2025-02-12 22:16:22,143 - INFO - 127.0.0.1 - - [12/Feb/2025 22:16:22] "GET /admin/services HTTP/1.1" 200 -
+2025-02-12 22:16:30,261 - INFO - 127.0.0.1 - - [12/Feb/2025 22:16:30] "GET /imei_services HTTP/1.1" 200 -
+2025-02-12 22:16:30,324 - INFO - 127.0.0.1 - - [12/Feb/2025 22:16:30] "[33mGET /css/style.css HTTP/1.1[0m" 404 -
+2025-02-12 22:16:32,695 - INFO - 127.0.0.1 - - [12/Feb/2025 22:16:32] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-12 22:16:35,231 - INFO - 127.0.0.1 - - [12/Feb/2025 22:16:35] "GET /remote HTTP/1.1" 200 -
+2025-02-12 22:16:38,422 - INFO - 127.0.0.1 - - [12/Feb/2025 22:16:38] "GET /services/apple HTTP/1.1" 200 -
+2025-02-13 14:18:02,681 - INFO - Database initialized.
+2025-02-13 14:18:02,706 - INFO -  * Restarting with stat
+2025-02-13 14:18:03,589 - INFO - Database initialized.
+2025-02-13 14:18:03,603 - WARNING -  * Debugger is active!
+2025-02-13 14:18:03,613 - INFO -  * Debugger PIN: 133-999-359
+2025-02-13 14:18:03,653 - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-02-13 14:18:08,703 - INFO - 127.0.0.1 - - [13/Feb/2025 14:18:08] "GET / HTTP/1.1" 200 -
+2025-02-13 14:18:09,341 - INFO - 127.0.0.1 - - [13/Feb/2025 14:18:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-02-13 14:18:15,804 - INFO - 127.0.0.1 - - [13/Feb/2025 14:18:15] "GET /admin/services HTTP/1.1" 200 -
+2025-02-13 14:48:25,915 - INFO - 127.0.0.1 - - [13/Feb/2025 14:48:25] "GET / HTTP/1.1" 200 -
+2025-02-13 14:48:30,088 - INFO - 127.0.0.1 - - [13/Feb/2025 14:48:30] "GET /admin/services HTTP/1.1" 200 -
+2025-02-13 14:59:13,674 - INFO - Database initialized.
+2025-02-13 14:59:13,721 - INFO -  * Restarting with stat
+2025-02-13 14:59:15,008 - INFO - Database initialized.
+2025-02-13 14:59:15,025 - WARNING -  * Debugger is active!
+2025-02-13 14:59:15,037 - INFO -  * Debugger PIN: 133-999-359
+2025-02-13 14:59:15,077 - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-02-13 14:59:24,440 - INFO - 127.0.0.1 - - [13/Feb/2025 14:59:24] "GET / HTTP/1.1" 200 -
+2025-02-13 14:59:28,789 - INFO - 127.0.0.1 - - [13/Feb/2025 14:59:28] "GET /admin/services HTTP/1.1" 200 -
+2025-02-13 14:59:45,386 - INFO - Accessed remote services page.
+2025-02-13 14:59:45,411 - INFO - 127.0.0.1 - - [13/Feb/2025 14:59:45] "GET /remote HTTP/1.1" 200 -
+2025-02-13 14:59:49,066 - INFO - 127.0.0.1 - - [13/Feb/2025 14:59:49] "GET /imei_services HTTP/1.1" 200 -
+2025-02-13 14:59:49,208 - INFO - 127.0.0.1 - - [13/Feb/2025 14:59:49] "[33mGET /css/style.css HTTP/1.1[0m" 404 -
+2025-02-13 14:59:52,339 - INFO - Accessed remote services page.
+2025-02-13 14:59:52,344 - INFO - 127.0.0.1 - - [13/Feb/2025 14:59:52] "GET /remote HTTP/1.1" 200 -
+2025-02-13 15:00:18,002 - INFO - Accessed remote services page.
+2025-02-13 15:00:18,007 - INFO - 127.0.0.1 - - [13/Feb/2025 15:00:18] "GET /remote HTTP/1.1" 200 -
+2025-02-13 15:02:26,720 - INFO - Accessed remote services page.
+2025-02-13 15:02:26,724 - INFO - 127.0.0.1 - - [13/Feb/2025 15:02:26] "GET /remote HTTP/1.1" 200 -
+2025-02-13 15:02:29,875 - INFO - 127.0.0.1 - - [13/Feb/2025 15:02:29] "GET /imei_services HTTP/1.1" 200 -
+2025-02-13 15:02:33,688 - INFO - Accessed remote services page.
+2025-02-13 15:02:33,693 - INFO - 127.0.0.1 - - [13/Feb/2025 15:02:33] "GET /remote HTTP/1.1" 200 -
+2025-02-13 15:02:36,585 - INFO - 127.0.0.1 - - [13/Feb/2025 15:02:36] "GET /imei_services HTTP/1.1" 200 -
+2025-02-13 15:02:41,591 - INFO - Accessed remote services page.
+2025-02-13 15:02:41,599 - INFO - 127.0.0.1 - - [13/Feb/2025 15:02:41] "GET /remote HTTP/1.1" 200 -
+2025-02-13 15:02:43,863 - INFO - 127.0.0.1 - - [13/Feb/2025 15:02:43] "GET /services/apple HTTP/1.1" 200 -
+2025-02-13 15:02:52,737 - INFO - 127.0.0.1 - - [13/Feb/2025 15:02:52] "GET /imei_services HTTP/1.1" 200 -
+2025-02-13 15:03:07,126 - INFO - 127.0.0.1 - - [13/Feb/2025 15:03:07] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-13 15:03:16,431 - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP3latest\\WEP\\controller.py', reloading
+2025-02-13 15:03:16,489 - INFO -  * Restarting with stat
+2025-02-13 15:09:25,052 - INFO - Database initialized.
+2025-02-13 15:09:25,097 - INFO -  * Restarting with stat
+2025-02-13 15:09:26,260 - INFO - Database initialized.
+2025-02-13 15:09:26,288 - WARNING -  * Debugger is active!
+2025-02-13 15:09:26,317 - INFO -  * Debugger PIN: 133-999-359
+2025-02-13 15:09:26,409 - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-02-13 15:09:29,174 - INFO - 127.0.0.1 - - [13/Feb/2025 15:09:29] "GET / HTTP/1.1" 200 -
+2025-02-13 15:09:31,564 - INFO - 127.0.0.1 - - [13/Feb/2025 15:09:31] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-13 15:10:25,425 - INFO - 127.0.0.1 - - [13/Feb/2025 15:10:25] "GET / HTTP/1.1" 200 -
+2025-02-13 15:10:32,223 - INFO - Accessed IMEI services page.
+2025-02-13 15:10:32,247 - INFO - 127.0.0.1 - - [13/Feb/2025 15:10:32] "GET /imei_services HTTP/1.1" 200 -
+2025-02-13 15:10:44,161 - INFO - 127.0.0.1 - - [13/Feb/2025 15:10:44] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-13 15:15:08,073 - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\WEP3latest\\WEP\\controller.py', reloading
+2025-02-13 15:15:08,138 - INFO -  * Restarting with stat
+2025-02-13 16:58:23,766 - INFO -  * Restarting with stat
+2025-02-13 16:58:24,683 - WARNING -  * Debugger is active!
+2025-02-13 16:58:24,699 - INFO -  * Debugger PIN: 133-999-359
+2025-02-13 16:58:24,743 - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-02-13 16:58:33,416 - INFO - 127.0.0.1 - - [13/Feb/2025 16:58:33] "GET / HTTP/1.1" 200 -
+2025-02-13 16:58:42,704 - INFO - Accessed Tools & Boxes page.
+2025-02-13 16:58:42,710 - INFO - 127.0.0.1 - - [13/Feb/2025 16:58:42] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-13 16:58:43,674 - INFO - 127.0.0.1 - - [13/Feb/2025 16:58:43] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-02-13 16:58:50,983 - INFO - Accessed IMEI services page.
+2025-02-13 16:58:50,991 - INFO - 127.0.0.1 - - [13/Feb/2025 16:58:50] "GET /imei_services HTTP/1.1" 200 -
+2025-02-13 16:58:54,788 - INFO - Accessed Tools & Boxes page.
+2025-02-13 16:58:54,789 - INFO - 127.0.0.1 - - [13/Feb/2025 16:58:54] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-13 16:58:59,048 - INFO - 127.0.0.1 - - [13/Feb/2025 16:58:59] "[32mGET /user_details HTTP/1.1[0m" 302 -
+2025-02-13 16:58:59,054 - INFO - Accessed login page.
+2025-02-13 16:58:59,057 - INFO - 127.0.0.1 - - [13/Feb/2025 16:58:59] "GET /login HTTP/1.1" 200 -
+2025-02-13 16:59:02,208 - INFO - 127.0.0.1 - - [13/Feb/2025 16:59:02] "GET /admin/services HTTP/1.1" 200 -
+2025-02-13 16:59:18,014 - INFO - 127.0.0.1 - - [13/Feb/2025 16:59:18] "[32mGET /user_details HTTP/1.1[0m" 302 -
+2025-02-13 16:59:18,021 - INFO - Accessed login page.
+2025-02-13 16:59:18,021 - INFO - 127.0.0.1 - - [13/Feb/2025 16:59:18] "GET /login HTTP/1.1" 200 -
+2025-02-13 16:59:19,412 - INFO - Accessed login page.
+2025-02-13 16:59:19,416 - INFO - User logged in: admin
+2025-02-13 16:59:19,418 - INFO - 127.0.0.1 - - [13/Feb/2025 16:59:19] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-02-13 16:59:19,426 - INFO - 127.0.0.1 - - [13/Feb/2025 16:59:19] "GET /balance HTTP/1.1" 200 -
+2025-02-13 16:59:21,034 - INFO - 127.0.0.1 - - [13/Feb/2025 16:59:21] "GET /admin/services HTTP/1.1" 200 -
+2025-02-13 16:59:28,687 - INFO - Accessed Tools & Boxes page.
+2025-02-13 16:59:28,688 - INFO - 127.0.0.1 - - [13/Feb/2025 16:59:28] "GET /tools_boxes HTTP/1.1" 200 -
+2025-02-13 16:59:31,576 - INFO - Fetched user details for user ID 1
+2025-02-13 16:59:31,581 - INFO - 127.0.0.1 - - [13/Feb/2025 16:59:31] "GET /user_details HTTP/1.1" 200 -
+2025-02-13 16:59:34,580 - INFO - Fetched user details for user ID 1
+2025-02-13 16:59:34,581 - INFO - 127.0.0.1 - - [13/Feb/2025 16:59:34] "GET /user_details HTTP/1.1" 200 -
+2025-02-13 17:04:25,477 - INFO - Fetched user details for user ID 1
+2025-02-13 17:04:25,519 - INFO - 127.0.0.1 - - [13/Feb/2025 17:04:25] "GET /user_details HTTP/1.1" 200 -
+2025-02-13 17:08:12,193 - INFO - Fetched user details for user ID 1
+2025-02-13 17:08:12,230 - INFO - 127.0.0.1 - - [13/Feb/2025 17:08:12] "GET /user_details HTTP/1.1" 200 -
+2025-02-13 17:10:13,667 - INFO - Fetched user details for user ID 1
+2025-02-13 17:10:13,713 - INFO - 127.0.0.1 - - [13/Feb/2025 17:10:13] "GET /user_details HTTP/1.1" 200 -
+2025-02-13 17:32:42,433 - INFO - Fetched user details for user ID 1
+2025-02-13 17:32:42,434 - INFO - 127.0.0.1 - - [13/Feb/2025 17:32:42] "GET /user_details HTTP/1.1" 200 -
+2025-02-13 17:35:17,914 - INFO - Fetched user details for user ID 1
+2025-02-13 17:35:17,956 - INFO - 127.0.0.1 - - [13/Feb/2025 17:35:17] "GET /user_details HTTP/1.1" 200 -
+2025-02-13 17:38:55,499 - INFO - Fetched user details for user ID 1
+2025-02-13 17:38:55,537 - INFO - 127.0.0.1 - - [13/Feb/2025 17:38:55] "GET /user_details HTTP/1.1" 200 -
+2025-02-13 17:39:13,759 - INFO - 127.0.0.1 - - [13/Feb/2025 17:39:13] "GET / HTTP/1.1" 200 -
+2025-02-13 17:39:17,071 - INFO - 127.0.0.1 - - [13/Feb/2025 17:39:17] "GET /admin/services HTTP/1.1" 200 -
+2025-02-13 17:39:43,104 - INFO - 127.0.0.1 - - [13/Feb/2025 17:39:43] "GET /admin/services HTTP/1.1" 200 -
+2025-02-13 17:39:45,646 - INFO - Accessed remote services page.
+2025-02-13 17:39:45,651 - INFO - 127.0.0.1 - - [13/Feb/2025 17:39:45] "GET /remote HTTP/1.1" 200 -
+2025-02-13 17:39:49,806 - INFO - 127.0.0.1 - - [13/Feb/2025 17:39:49] "GET /services/apple HTTP/1.1" 200 -
+2025-02-13 20:47:09,423 - INFO - 127.0.0.1 - - [13/Feb/2025 20:47:09] "GET / HTTP/1.1" 200 -
+2025-02-13 20:47:09,751 - INFO - 127.0.0.1 - - [13/Feb/2025 20:47:09] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-02-13 20:47:21,266 - INFO - 127.0.0.1 - - [13/Feb/2025 20:47:21] "[32mGET /user_details HTTP/1.1[0m" 302 -
+2025-02-13 20:47:21,282 - INFO - Accessed login page.
+2025-02-13 20:47:21,282 - INFO - 127.0.0.1 - - [13/Feb/2025 20:47:21] "GET /login HTTP/1.1" 200 -
+2025-02-13 20:47:24,179 - INFO - Accessed IMEI services page.
+2025-02-13 20:47:24,179 - INFO - 127.0.0.1 - - [13/Feb/2025 20:47:24] "GET /imei_services HTTP/1.1" 200 -
+2025-04-10 21:10:32,661 - INFO - Database initialized.
+2025-04-10 21:10:32,683 - INFO -  * Restarting with stat
+2025-04-10 21:10:33,451 - INFO - Database initialized.
+2025-04-10 21:10:33,465 - WARNING -  * Debugger is active!
+2025-04-10 21:10:33,477 - INFO -  * Debugger PIN: 836-123-594
+2025-04-10 21:10:33,520 - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-10 21:10:35,846 - INFO - 127.0.0.1 - - [10/Apr/2025 21:10:35] "GET /balance HTTP/1.1" 200 -
+2025-04-10 21:10:37,544 - INFO - Fetched user details for user ID 1
+2025-04-10 21:10:37,552 - INFO - 127.0.0.1 - - [10/Apr/2025 21:10:37] "GET /user_details HTTP/1.1" 200 -
+2025-04-10 21:44:51,145 - model - ERROR - Database error: no such table: users
+2025-04-19 15:59:22,813 - model - INFO - Accessed IMEI services page.
+2025-04-19 15:59:22,820 - model - INFO - Accessed registration page.
+2025-04-19 16:10:50,131 - werkzeug - INFO -  * Restarting with stat
+2025-04-19 16:10:50,826 - werkzeug - WARNING -  * Debugger is active!
+2025-04-19 16:10:50,835 - werkzeug - INFO -  * Debugger PIN: 133-999-359
+2025-04-19 16:10:50,872 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-19 16:11:47,896 - werkzeug - INFO -  * Restarting with stat
+2025-04-19 16:11:48,634 - werkzeug - WARNING -  * Debugger is active!
+2025-04-19 16:11:48,645 - werkzeug - INFO -  * Debugger PIN: 133-999-359
+2025-04-19 16:11:48,686 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-19 16:11:56,341 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:11:56] "GET / HTTP/1.1" 200 -
+2025-04-19 16:11:58,141 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:11:58] "GET / HTTP/1.1" 200 -
+2025-04-19 16:11:59,429 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:11:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-19 16:11:59,431 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:11:59] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-04-19 16:12:01,043 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:12:01] "GET / HTTP/1.1" 200 -
+2025-04-19 16:12:10,155 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:12:10] "[32mGET /user_details HTTP/1.1[0m" 302 -
+2025-04-19 16:12:10,160 - model - INFO - Accessed login page.
+2025-04-19 16:12:10,194 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:12:10] "GET /login HTTP/1.1" 200 -
+2025-04-19 16:12:16,876 - model - INFO - Accessed login page.
+2025-04-19 16:12:16,886 - model - WARNING - Login failed for texttocourse_1: Invalid credentials.
+2025-04-19 16:12:16,887 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:12:16] "POST /login HTTP/1.1" 200 -
+2025-04-19 16:12:27,614 - model - INFO - Accessed registration page.
+2025-04-19 16:12:27,620 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:12:27] "GET /register HTTP/1.1" 200 -
+2025-04-19 16:13:11,852 - model - INFO - Accessed registration page.
+2025-04-19 16:13:11,852 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:13:11] "POST /register HTTP/1.1" 200 -
+2025-04-19 16:15:07,799 - werkzeug - INFO -  * Detected change in 'e:\\level_four_it\\wep3latest\\wep3latest\\WEP\\controller.py', reloading
+2025-04-19 16:15:07,839 - werkzeug - INFO -  * Restarting with stat
+2025-04-19 16:15:08,670 - werkzeug - WARNING -  * Debugger is active!
+2025-04-19 16:15:08,680 - werkzeug - INFO -  * Debugger PIN: 133-999-359
+2025-04-19 16:15:08,719 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-19 16:15:14,684 - werkzeug - INFO -  * Restarting with stat
+2025-04-19 16:15:15,372 - werkzeug - WARNING -  * Debugger is active!
+2025-04-19 16:15:15,380 - werkzeug - INFO -  * Debugger PIN: 133-999-359
+2025-04-19 16:15:15,416 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-04-19 16:15:23,429 - model - INFO - Accessed registration page.
+2025-04-19 16:15:23,442 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:15:23] "POST /register HTTP/1.1" 200 -
+2025-04-19 16:15:50,873 - model - INFO - Accessed registration page.
+2025-04-19 16:15:50,883 - model - INFO - User registered: mohammed
+2025-04-19 16:15:50,884 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:15:50] "[32mPOST /register HTTP/1.1[0m" 302 -
+2025-04-19 16:15:50,888 - model - INFO - Accessed login page.
+2025-04-19 16:15:50,890 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:15:50] "GET /login HTTP/1.1" 200 -
+2025-04-19 16:16:03,225 - model - INFO - Accessed login page.
+2025-04-19 16:16:03,228 - model - INFO - User logged in: mohammed
+2025-04-19 16:16:03,229 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:16:03] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-04-19 16:16:03,244 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:16:03] "GET /balance HTTP/1.1" 200 -
+2025-04-19 16:16:05,504 - model - INFO - Fetched user details for user ID 4
+2025-04-19 16:16:05,544 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:16:05] "GET /user_details HTTP/1.1" 200 -
+2025-04-19 16:20:29,009 - model - INFO - Fetched user details for user ID 4
+2025-04-19 16:20:29,019 - werkzeug - INFO - 127.0.0.1 - - [19/Apr/2025 16:20:29] "GET /user_details HTTP/1.1" 200 -
+>>>>>>> cccaacd336cadf923ad193e292b3b25cc18ad818

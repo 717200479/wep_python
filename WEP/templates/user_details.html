@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base.html" %}
 {% block title %}حسابي{% endblock %}
 
@@ -133,3 +134,244 @@
     }, 60000);
 </script>
 {% endblock %}
+=======
+<!DOCTYPE html>
+<html lang="ar" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المستخدم</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #121212, #000);
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* تأثير التدرج الديناميكي [[7]] */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #ff980020, #ff572220);
+            z-index: 0;
+            animation: gradientShift 15s infinite alternate;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .card {
+            position: relative;
+            background: rgba(44, 44, 44, 0.9);
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            z-index: 1;
+            animation: fadeIn 1.2s ease-in-out;
+            transform-style: preserve-3d; /* تفاعل ثلاثي الأبعاد [[5]] */
+            transition: transform 0.6s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        .card:hover {
+            transform: rotate(-5deg) scale(1.02);
+            box-shadow: 0 15px 50px rgba(255, 87, 34, 0.4);
+        }
+
+        h2 {
+            color: #ffea00;
+            font-weight: bold;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 12px;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        p:hover {
+            color: #ffea00;
+        }
+
+        p::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffea00, transparent);
+            bottom: -4px;
+            left: 0;
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        p:hover::after {
+            transform: scaleX(1);
+        }
+
+        .icon {
+            color: #ffea00;
+            font-size: 20px;
+            transition: transform 0.3s, color 0.3s;
+            margin-left: 5px;
+        }
+
+        .icon:hover {
+            transform: rotate(15deg) scale(1.2);
+            color: #ff5722;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff9800, #ff5722);
+            border: none;
+            padding: 14px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease-in-out;
+            color: white;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(255, 87, 34, 0.5);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s ease-in-out;
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #ff5722, #ff9800);
+            transform: scale(1.08);
+            box-shadow: 0 6px 15px rgba(255, 87, 34, 0.7);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 8px rgba(255, 87, 34, 0.6);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50% }
+            100% { background-position: 100% 50% }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starsCanvas"></canvas>
+    
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">تفاصيل المستخدم</h2>
+            <p><i class="fas fa-user icon"></i> <strong>اسم المستخدم:</strong> {{ user[0] }}</p>
+            <p><i class="fas fa-envelope icon"></i> <strong>البريد الإلكتروني:</strong> {{ user[1] }}</p>
+            <p><i class="fas fa-phone icon"></i> <strong>الهاتف:</strong> {{ user[2] }}</p>
+            <p><i class="fas fa-wallet icon"></i> <strong>الرصيد:</strong> {{ user[3] }}</p>
+            <a href="{{ url_for('home') }}" class="btn btn-primary mt-4">العودة إلى الصفحة الرئيسية</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // تفاعل مؤشر الفأرة مع البطاقة [[5]]
+        document.querySelector('.card').addEventListener('mousemove', (e) => {
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            e.target.style.transformOrigin = `${x}px ${y}px`;
+        });
+
+        // إعداد Three.js مع تحسين الأداء [[1]]
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: document.getElementById("starsCanvas"), 
+            alpha: true 
+        });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        camera.position.z = 5;
+
+        function addStar() {
+            const geometry = new THREE.SphereGeometry(0.1, 24, 24);
+            const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const star = new THREE.Mesh(geometry, material);
+            const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+            star.position.set(x, y, z);
+            scene.add(star);
+        }
+
+        Array(300).fill().forEach(addStar);
+
+        function animate() {
+            requestAnimationFrame(animate);
+            scene.rotation.y += 0.0005;
+            scene.rotation.x += 0.0002;
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
+>>>>>>> cccaacd336cadf923ad193e292b3b25cc18ad818

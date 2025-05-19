@@ -1,5 +1,8 @@
 import sqlite3
+<<<<<<< HEAD
 from datetime import datetime, timedelta
+=======
+>>>>>>> cccaacd336cadf923ad193e292b3b25cc18ad818
 
 def init_db():
     conn = sqlite3.connect('users.db')
@@ -8,6 +11,7 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+<<<<<<< HEAD
             username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
             email TEXT UNIQUE NOT NULL,
@@ -15,6 +19,14 @@ def init_db():
             credit REAL DEFAULT 0,
             is_admin BOOLEAN DEFAULT 0,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+=======
+            username TEXT NOT NULL UNIQUE,
+            password TEXT NOT NULL,
+            email TEXT NOT NULL UNIQUE,
+            phone TEXT NOT NULL UNIQUE,
+            credit INTEGER DEFAULT 0,
+            is_admin BOOLEAN DEFAULT 0
+>>>>>>> cccaacd336cadf923ad193e292b3b25cc18ad818
         )
     ''')
 
@@ -30,6 +42,7 @@ def init_db():
         )
     ''')
 
+<<<<<<< HEAD
     # إنشاء جدول النشاطات
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS activities (
@@ -118,8 +131,14 @@ def init_db():
         ON tokens(user_id, is_active)
     ''')
 
+=======
+>>>>>>> cccaacd336cadf923ad193e292b3b25cc18ad818
     conn.commit()
     conn.close()
 
 if __name__ == '__main__':
+<<<<<<< HEAD
     init_db()  # تهيئة قاعدة البيانات عند تشغيل البرنامج
+=======
+    init_db()
+>>>>>>> cccaacd336cadf923ad193e292b3b25cc18ad818
