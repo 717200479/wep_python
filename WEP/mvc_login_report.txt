@@ -1,0 +1,220 @@
+تقرير محاكاة نمط MVC في عملية تسجيل الدخول
+=====================================
+
+1. View (العرض)
+--------------
+هذا هو الجزء الذي يتفاعل معه المستخدم مباشرة. يتم تعريف واجهة المستخدم في ملف HTML.
+
+```html
+<!-- templates/login.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>تسجيل الدخول</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <h2>تسجيل الدخول</h2>
+        <form action="{{ url_for('login') }}" method="POST">
+            <div class="form-group">
+                <label for="username">اسم المستخدم:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">كلمة المرور:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">دخول</button>
+        </form>
+    </div>
+</body>
+</html>
+```
+
+2. Controller (المتحكم)
+----------------------
+يقوم بمعالجة طلب تسجيل الدخول والتحقق من البيانات.
+
+```python
+# controller.py
+from flask import request, session, redirect, url_for, render_template
+from model import User
+
+class LoginController:
+    def __init__(self):
+        self.user_model = User()
+
+    def login(self):
+        if request.method == 'POST':
+            username = request.form.get('username')
+            password = request.form.get('password')
+            
+            # التحقق من البيانات
+            user = self.user_model.authenticate(username, password)
+            
+            if user:
+                # إنشاء جلسة للمستخدم
+                session['user_id'] = user.id
+                session['username'] = user.username
+                return redirect(url_for('dashboard'))
+            else:
+                return render_template('login.html', error='بيانات الدخول غير صحيحة')
+        
+        return render_template('login.html')
+
+# تعريف المسار
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    controller = LoginController()
+    return controller.login()
+```
+
+3. Model (النموذج)
+----------------
+يحتوي على منطق الأعمال والتفاعل مع قاعدة البيانات.
+
+```python
+# model.py
+import sqlite3
+import hashlib
+from datetime import datetime
+
+class User:
+    def __init__(self):
+        self.db_path = 'users.db'
+
+    def authenticate(self, username, password):
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            
+            # تشفير كلمة المرور
+            hashed_password = hashlib.sha256(password.encode()).hexdigest()
+            
+            # البحث عن المستخدم
+            cursor.execute('''
+                SELECT id, username, password 
+                FROM users 
+                WHERE username = ? AND password = ?
+            ''', (username, hashed_password))
+            
+            user = cursor.fetchone()
+            
+            if user:
+                return {
+                    'id': user[0],
+                    'username': user[1]
+                }
+            
+            return None
+            
+        except Exception as e:
+            print(f"خطأ في المصادقة: {str(e)}")
+            return None
+            
+        finally:
+            if conn:
+                conn.close()
+
+    def create_user(self, username, password):
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            
+            # تشفير كلمة المرور
+            hashed_password = hashlib.sha256(password.encode()).hexdigest()
+            
+            # إضافة المستخدم
+            cursor.execute('''
+                INSERT INTO users (username, password, created_at)
+                VALUES (?, ?, ?)
+            ''', (username, hashed_password, datetime.now()))
+            
+            conn.commit()
+            return True
+            
+        except Exception as e:
+            print(f"خطأ في إنشاء المستخدم: {str(e)}")
+            return False
+            
+        finally:
+            if conn:
+                conn.close()
+```
+
+4. تدفق البيانات في عملية تسجيل الدخول
+------------------------------------
+1. يبدأ المستخدم بفتح صفحة تسجيل الدخول (View)
+2. يقوم بإدخال بياناته (اسم المستخدم وكلمة المرور)
+3. يتم إرسال البيانات إلى المتحكم (Controller)
+4. يقوم المتحكم بطلب التحقق من النموذج (Model)
+5. يقوم النموذج بالتحقق من البيانات في قاعدة البيانات
+6. يتم إرجاع النتيجة إلى المتحكم
+7. يقوم المتحكم بتوجيه المستخدم إلى الصفحة المناسبة
+
+5. مثال على تدفق البيانات
+------------------------
+```python
+# تسلسل الأحداث عند تسجيل الدخول
+
+# 1. المستخدم يفتح صفحة تسجيل الدخول
+GET /login
+↓
+# 2. المتحكم يعرض صفحة تسجيل الدخول
+LoginController.login() → render_template('login.html')
+↓
+# 3. المستخدم يدخل بياناته ويضغط زر الدخول
+POST /login
+{
+    'username': 'user123',
+    'password': 'pass123'
+}
+↓
+# 4. المتحكم يتلقى البيانات
+LoginController.login()
+↓
+# 5. المتحكم يطلب التحقق من النموذج
+User.authenticate('user123', 'pass123')
+↓
+# 6. النموذج يتحقق من البيانات
+SELECT * FROM users WHERE username = 'user123'
+↓
+# 7. النموذج يرجع النتيجة للمتحكم
+return user_data
+↓
+# 8. المتحكم يتخذ القرار المناسب
+if user_data:
+    session['user_id'] = user_data['id']
+    redirect('/dashboard')
+else:
+    render_template('login.html', error='بيانات غير صحيحة')
+```
+
+6. مميزات استخدام MVC في هذا المثال
+--------------------------------
+1. فصل واضح للمسؤوليات:
+   - View: عرض واجهة المستخدم
+   - Controller: معالجة الطلبات
+   - Model: التعامل مع قاعدة البيانات
+
+2. قابلية الصيانة:
+   - يمكن تعديل واجهة المستخدم دون التأثير على المنطق
+   - يمكن تغيير قاعدة البيانات دون التأثير على الواجهة
+
+3. إعادة الاستخدام:
+   - يمكن استخدام نفس النموذج في عمليات أخرى
+   - يمكن إعادة استخدام المتحكم مع واجهات مختلفة
+
+4. سهولة الاختبار:
+   - يمكن اختبار كل مكون على حدة
+   - سهولة اكتشاف وتصحيح الأخطاء
+
+7. توصيات للتحسين
+---------------
+1. إضافة طبقة Service بين Controller و Model
+2. استخدام ORM مثل SQLAlchemy
+3. إضافة نظام للتحقق من صحة البيانات
+4. تحسين معالجة الأخطاء
+5. إضافة نظام للتوثيق
+6. استخدام نمط Repository للتعامل مع قاعدة البيانات 

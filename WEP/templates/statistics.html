@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+
+{% block title %}الإحصائيات{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">لوحة الإحصائيات</h2>
+
+    <!-- بطاقات الإحصائيات -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">إجمالي المستخدمين</h5>
+                    <h3 id="total-users">0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">المستخدمين النشطين</h5>
+                    <h3 id="active-users">0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">إجمالي الطلبات</h5>
+                    <h3 id="total-requests">0</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">إجمالي الإيرادات</h5>
+                    <h3 id="total-revenue">$0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الرسوم البيانية -->
+    <div class="row">
+        <!-- نمو المستخدمين -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">نمو المستخدمين</h5>
+                    <canvas id="userGrowthChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- الخدمات الأكثر طلباً -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">الخدمات الأكثر طلباً</h5>
+                    <canvas id="popularServicesChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- حالة الطلبات -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">حالة الطلبات</h5>
+                    <canvas id="requestStatusChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- الإيرادات اليومية -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">الإيرادات اليومية</h5>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// تهيئة الألوان
+const colors = {
+    primary: '#2196F3',
+    success: '#4CAF50',
+    warning: '#FFC107',
+    danger: '#F44336',
+    info: '#00BCD4'
+};
+
+// دالة لتنسيق الأرقام
+function formatNumber(num) {
+    return new Intl.NumberFormat('ar-SA').format(num);
+}
+
+// دالة لتحديث البطاقات الإحصائية
+function updateStatCards(userData, servicesData, revenueData) {
+    document.getElementById('total-users').textContent = formatNumber(userData.total_users);
+    document.getElementById('active-users').textContent = formatNumber(userData.active_users);
+    document.getElementById('total-requests').textContent = formatNumber(servicesData.total_requests);
+    document.getElementById('total-revenue').textContent = '$' + formatNumber(revenueData.total_revenue);
+}
+
+// دالة لإنشاء رسم بياني خطي
+function createLineChart(ctx, data, label, color = colors.primary) {
+    return new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: label,
+                data: data.data,
+                borderColor: color,
+                backgroundColor: color + '20',
+                tension: 0.1,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+// دالة لإنشاء رسم بياني دائري
+function createPieChart(ctx, data, label) {
+    const backgroundColors = Object.values(colors);
+    return new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                data: data.data,
+                backgroundColor: backgroundColors,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'right',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            const label = context.label || '';
+                            const value = context.parsed || 0;
+                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                            const percentage = ((value * 100) / total).toFixed(1);
+                            return `${label}: ${value} (${percentage}%)`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+// دالة لإنشاء رسم بياني شريطي
+function createBarChart(ctx, data, label) {
+    return new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: label,
+                data: data.data,
+                backgroundColor: colors.info,
+                borderColor: colors.info,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+
+// تحميل البيانات وإنشاء الرسوم البيانية
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        // جلب جميع الإحصائيات
+        const [userResponse, servicesResponse, revenueResponse] = await Promise.all([
+            fetch('/api/statistics/users'),
+            fetch('/api/statistics/services'),
+            fetch('/api/statistics/revenue')
+        ]);
+
+        const userData = await userResponse.json();
+        const servicesData = await servicesResponse.json();
+        const revenueData = await revenueResponse.json();
+
+        // تحديث البطاقات الإحصائية
+        updateStatCards(userData, servicesData, revenueData);
+        
+        // إنشاء الرسوم البيانية
+        const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
+        createLineChart(userGrowthCtx, userData.user_growth, 'نمو المستخدمين', colors.primary);
+        
+        const popularServicesCtx = document.getElementById('popularServicesChart').getContext('2d');
+        createBarChart(popularServicesCtx, servicesData.popular_services, 'الخدمات الأكثر طلباً');
+        
+        const requestStatusCtx = document.getElementById('requestStatusChart').getContext('2d');
+        createPieChart(requestStatusCtx, servicesData.request_status, 'حالة الطلبات');
+        
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        createLineChart(revenueCtx, revenueData.daily_revenue, 'الإيرادات اليومية', colors.success);
+        
+    } catch (error) {
+        console.error('Error loading statistics:', error);
+        alert('حدث خطأ أثناء تحميل الإحصائيات');
+    }
+});
+</script>
+{% endblock %} 

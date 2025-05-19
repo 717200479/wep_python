@@ -1,0 +1,176 @@
+تقرير تنفيذ نظام التوكن (Token) في المشروع
+====================================
+
+1. نظرة عامة
+-----------
+نظام التوكن المستخدم في المشروع هو JWT (JSON Web Tokens) وهو نظام آمن وفعال للمصادقة. 
+يتم استخدامه للتحقق من هوية المستخدمين وحماية المسارات والواجهات البرمجية.
+
+2. المكونات الرئيسية
+------------------
+2.1. إعداد التوكن:
+```python
+# إعداد مفتاح التوكن السري
+app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
+
+# دالة إنشاء التوكن
+def generate_jwt_token(user_id):
+    payload = {
+        'user_id': user_id,
+        'exp': datetime.utcnow() + timedelta(days=1)  # توكن صالح لمدة يوم
+    }
+    return jwt.encode(payload, app.config['JWT_SECRET_KEY'], algorithm='HS256')
+```
+
+2.2. تخزين التوكن:
+```python
+def save_token(user_id, token, timestamp):
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        INSERT INTO tokens (user_id, token, created_at, expiry_time, is_active)
+        VALUES (?, ?, ?, ?, ?)
+    ''', (user_id, token, timestamp, timestamp + timedelta(days=1), True))
+    conn.commit()
+    conn.close()
+```
+
+3. استخدام التوكن
+---------------
+3.1. تسجيل الدخول وإنشاء التوكن:
+```python
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        
+        # التحقق من صحة بيانات الدخول
+        user = authenticate_user(username, password)
+        if user:
+            # إنشاء التوكن
+            token = generate_jwt_token(user.id)
+            save_token(user.id, token, datetime.now())
+            
+            # تسجيل الدخول
+            login_user(user)
+            return redirect(url_for('home'))
+```
+
+3.2. حماية المسارات:
+```python
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.headers.get('Authorization')
+        if not token:
+            return jsonify({'message': 'التوكن مطلوب'}), 401
+        
+        try:
+            # التحقق من صحة التوكن
+            data = jwt.decode(token, app.config['JWT_SECRET_KEY'], algorithms=['HS256'])
+            current_user = get_user_by_id(data['user_id'])
+        except:
+            return jsonify({'message': 'توكن غير صالح'}), 401
+            
+        return f(current_user, *args, **kwargs)
+    return decorated
+```
+
+4. أمثلة على الاستخدام
+--------------------
+4.1. استخدام التوكن في API:
+```python
+@app.route('/api/protected-route')
+@token_required
+def protected_route(current_user):
+    return jsonify({
+        'message': 'تم الوصول بنجاح',
+        'user': current_user.username
+    })
+```
+
+4.2. التحقق من صلاحية التوكن:
+```python
+def check_token_validity(token):
+    try:
+        # فك تشفير التوكن
+        payload = jwt.decode(token, app.config['JWT_SECRET_KEY'], algorithms=['HS256'])
+        
+        # التحقق من تاريخ انتهاء الصلاحية
+        if datetime.fromtimestamp(payload['exp']) < datetime.now():
+            return False
+            
+        return True
+    except:
+        return False
+```
+
+5. إدارة التوكن
+-------------
+5.1. تسجيل الخروج وإلغاء التوكن:
+```python
+@app.route('/logout')
+@login_required
+def logout():
+    # تعطيل التوكن الحالي
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        UPDATE tokens 
+        SET is_active = 0 
+        WHERE user_id = ? AND is_active = 1
+    ''', (current_user.id,))
+    conn.commit()
+    conn.close()
+    
+    logout_user()
+    return redirect(url_for('login'))
+```
+
+5.2. تجديد التوكن:
+```python
+def refresh_token(old_token):
+    try:
+        # التحقق من التوكن القديم
+        payload = jwt.decode(old_token, app.config['JWT_SECRET_KEY'], algorithms=['HS256'])
+        user_id = payload['user_id']
+        
+        # إنشاء توكن جديد
+        new_token = generate_jwt_token(user_id)
+        save_token(user_id, new_token, datetime.now())
+        
+        return new_token
+    except:
+        return None
+```
+
+6. أفضل الممارسات
+---------------
+1. استخدام مفتاح سري قوي وفريد
+2. تحديد فترة صلاحية مناسبة للتوكن
+3. تخزين التوكن بشكل آمن في قاعدة البيانات
+4. التحقق من صلاحية التوكن في كل طلب
+5. إلغاء التوكن عند تسجيل الخروج
+6. استخدام HTTPS لنقل التوكن
+7. تجديد التوكن بشكل دوري
+8. تسجيل محاولات الوصول غير المصرح بها
+
+7. الأمان
+--------
+1. تشفير التوكن باستخدام خوارزمية HS256
+2. التحقق من توقيع التوكن
+3. التحقق من تاريخ انتهاء الصلاحية
+4. تخزين معلومات الجهاز مع التوكن
+5. تتبع التوكن النشط
+6. إمكانية إلغاء التوكن في أي وقت
+
+8. الخاتمة
+---------
+نظام التوكن المستخدم في المشروع يوفر طبقة أمان قوية وفعالة. 
+يتم استخدام أفضل الممارسات في مجال أمان التوكن ويوفر مرونة في إدارة الجلسات.
+يمكن توسيع النظام مستقبلاً لدعم المزيد من الميزات مثل:
+- دعم التوكن المتعدد للأجهزة
+- تجديد التوكن التلقائي
+- إدارة الصلاحيات المتقدمة
+- تتبع نشاط المستخدم 

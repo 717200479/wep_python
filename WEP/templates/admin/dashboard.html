@@ -1,0 +1,547 @@
+{% extends "base.html" %}
+{% block title %}لوحة تحكم المشرف{% endblock %}
+
+{% block extra_css %}
+<style>
+    .admin-dashboard {
+        padding: 20px;
+    }
+    
+    .stat-card {
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .stat-icon {
+        font-size: 2.5rem;
+        opacity: 0.7;
+    }
+    
+    .quick-actions .btn {
+        margin: 5px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .activity-feed {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .activity-item {
+        padding: 10px;
+        border-left: 4px solid transparent;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+    }
+    
+    .activity-item:hover {
+        background-color: rgba(0,0,0,0.05);
+    }
+    
+    .activity-item.success { border-left-color: #28a745; }
+    .activity-item.warning { border-left-color: #ffc107; }
+    .activity-item.danger { border-left-color: #dc3545; }
+    
+    .chart-container {
+        position: relative;
+        height: 300px;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard">
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-tachometer-alt"></i> لوحة تحكم المشرف</h2>
+            <div class="quick-actions">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal">
+                    <i class="fas fa-user-plus"></i> إضافة مستخدم
+                </button>
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+                    <i class="fas fa-plus-circle"></i> إضافة خدمة
+                </button>
+                <button class="btn btn-info" onclick="refreshStats()">
+                    <i class="fas fa-sync"></i> تحديث
+                </button>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card stat-card bg-primary text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">المستخدمين النشطين</h6>
+                                <h3 id="activeUsers">0</h3>
+                            </div>
+                            <i class="fas fa-users stat-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card bg-success text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">الإيرادات اليومية</h6>
+                                <h3 id="dailyRevenue">$0</h3>
+                            </div>
+                            <i class="fas fa-dollar-sign stat-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card bg-warning text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">الطلبات المعلقة</h6>
+                                <h3 id="pendingRequests">0</h3>
+                            </div>
+                            <i class="fas fa-clock stat-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card stat-card bg-info text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title">الخدمات النشطة</h6>
+                                <h3 id="activeServices">0</h3>
+                            </div>
+                            <i class="fas fa-cogs stat-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="row">
+            <!-- Charts -->
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">تحليل البيانات</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" href="#users">المستخدمين</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#revenue">الإيرادات</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" href="#services">الخدمات</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content mt-3">
+                            <div class="tab-pane fade show active" id="users">
+                                <div class="chart-container">
+                                    <canvas id="usersChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="revenue">
+                                <div class="chart-container">
+                                    <canvas id="revenueChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="services">
+                                <div class="chart-container">
+                                    <canvas id="servicesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Feed -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">النشاطات الأخيرة</h5>
+                    </div>
+                    <div class="card-body activity-feed" id="activityFeed">
+                        <!-- سيتم تحديث هذا القسم ديناميكياً -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Status -->
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">حالة النظام</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="fas fa-server fa-2x text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">حالة الخادم</h6>
+                                        <small class="text-success" id="serverStatus">نشط</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="fas fa-database fa-2x text-warning"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">قاعدة البيانات</h6>
+                                        <small class="text-success" id="dbStatus">متصل</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="fas fa-memory fa-2x text-info"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">الذاكرة</h6>
+                                        <small id="memoryUsage">45%</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <i class="fas fa-microchip fa-2x text-danger"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0">المعالج</h6>
+                                        <small id="cpuUsage">30%</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modals -->
+<!-- Add User Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">إضافة مستخدم جديد</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addUserForm">
+                    <div class="mb-3">
+                        <label class="form-label">اسم المستخدم</label>
+                        <input type="text" class="form-control" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">البريد الإلكتروني</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">كلمة المرور</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="isAdmin">
+                            <label class="form-check-label">صلاحيات مشرف</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-primary" onclick="addUser()">إضافة</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Service Modal -->
+<div class="modal fade" id="addServiceModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">إضافة خدمة جديدة</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addServiceForm">
+                    <div class="mb-3">
+                        <label class="form-label">اسم الخدمة</label>
+                        <input type="text" class="form-control" name="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">الفئة</label>
+                        <select class="form-select" name="category" required>
+                            <option value="">اختر الفئة</option>
+                            <option value="imei">خدمات IMEI</option>
+                            <option value="remote">خدمات عن بعد</option>
+                            <option value="tools">أدوات وصناديق</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">السعر</label>
+                        <input type="number" class="form-control" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">الوصف</label>
+                        <textarea class="form-control" name="description" rows="3" required></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn btn-primary" onclick="addService()">إضافة</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// تهيئة المتغيرات العامة
+let usersChart, revenueChart, servicesChart;
+
+// دالة التهيئة
+document.addEventListener('DOMContentLoaded', function() {
+    initCharts();
+    loadDashboardData();
+    setInterval(loadDashboardData, 30000); // تحديث كل 30 ثانية
+});
+
+// دالة تهيئة الرسوم البيانية
+function initCharts() {
+    const chartOptions = {
+        responsive: true,
+        maintainAspectRatio: false
+    };
+
+    // رسم بياني للمستخدمين
+    const usersCtx = document.getElementById('usersChart').getContext('2d');
+    usersChart = new Chart(usersCtx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'المستخدمين الجدد',
+                data: [],
+                borderColor: '#0d6efd',
+                tension: 0.1
+            }]
+        },
+        options: chartOptions
+    });
+
+    // رسم بياني للإيرادات
+    const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+    revenueChart = new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'الإيرادات اليومية',
+                data: [],
+                backgroundColor: '#198754'
+            }]
+        },
+        options: chartOptions
+    });
+
+    // رسم بياني للخدمات
+    const servicesCtx = document.getElementById('servicesChart').getContext('2d');
+    servicesChart = new Chart(servicesCtx, {
+        type: 'pie',
+        data: {
+            labels: [],
+            datasets: [{
+                data: [],
+                backgroundColor: [
+                    '#0d6efd',
+                    '#198754',
+                    '#ffc107',
+                    '#dc3545'
+                ]
+            }]
+        },
+        options: chartOptions
+    });
+}
+
+// دالة تحميل بيانات لوحة التحكم
+async function loadDashboardData() {
+    try {
+        const [statsData, activityData, systemStatus] = await Promise.all([
+            fetch('/api/admin/stats').then(r => r.json()),
+            fetch('/api/admin/activity').then(r => r.json()),
+            fetch('/api/admin/system-status').then(r => r.json())
+        ]);
+
+        updateStats(statsData);
+        updateActivityFeed(activityData);
+        updateSystemStatus(systemStatus);
+        updateCharts(statsData);
+    } catch (error) {
+        console.error('Error loading dashboard data:', error);
+        showAlert('حدث خطأ أثناء تحميل البيانات', 'danger');
+    }
+}
+
+// دالة تحديث الإحصائيات
+function updateStats(data) {
+    document.getElementById('activeUsers').textContent = data.activeUsers;
+    document.getElementById('dailyRevenue').textContent = `$${data.dailyRevenue}`;
+    document.getElementById('pendingRequests').textContent = data.pendingRequests;
+    document.getElementById('activeServices').textContent = data.activeServices;
+}
+
+// دالة تحديث سجل النشاطات
+function updateActivityFeed(activities) {
+    const feed = document.getElementById('activityFeed');
+    feed.innerHTML = activities.map(activity => `
+        <div class="activity-item ${activity.type}">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <strong>${activity.title}</strong>
+                    <p class="mb-0">${activity.description}</p>
+                </div>
+                <small class="text-muted">${activity.time}</small>
+            </div>
+        </div>
+    `).join('');
+}
+
+// دالة تحديث حالة النظام
+function updateSystemStatus(status) {
+    document.getElementById('serverStatus').textContent = status.server;
+    document.getElementById('dbStatus').textContent = status.database;
+    document.getElementById('memoryUsage').textContent = `${status.memory}%`;
+    document.getElementById('cpuUsage').textContent = `${status.cpu}%`;
+}
+
+// دالة تحديث الرسوم البيانية
+function updateCharts(data) {
+    // تحديث رسم المستخدمين
+    usersChart.data.labels = data.users.labels;
+    usersChart.data.datasets[0].data = data.users.data;
+    usersChart.update();
+
+    // تحديث رسم الإيرادات
+    revenueChart.data.labels = data.revenue.labels;
+    revenueChart.data.datasets[0].data = data.revenue.data;
+    revenueChart.update();
+
+    // تحديث رسم الخدمات
+    servicesChart.data.labels = data.services.labels;
+    servicesChart.data.datasets[0].data = data.services.data;
+    servicesChart.update();
+}
+
+// دالة إضافة مستخدم جديد
+async function addUser() {
+    const form = document.getElementById('addUserForm');
+    const formData = new FormData(form);
+    
+    try {
+        const response = await fetch('/api/admin/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(Object.fromEntries(formData))
+        });
+        
+        if (response.ok) {
+            showAlert('تم إضافة المستخدم بنجاح', 'success');
+            $('#addUserModal').modal('hide');
+            form.reset();
+            loadDashboardData();
+        } else {
+            throw new Error('فشل إضافة المستخدم');
+        }
+    } catch (error) {
+        showAlert(error.message, 'danger');
+    }
+}
+
+// دالة إضافة خدمة جديدة
+async function addService() {
+    const form = document.getElementById('addServiceForm');
+    const formData = new FormData(form);
+    
+    try {
+        const response = await fetch('/api/admin/services', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(Object.fromEntries(formData))
+        });
+        
+        if (response.ok) {
+            showAlert('تم إضافة الخدمة بنجاح', 'success');
+            $('#addServiceModal').modal('hide');
+            form.reset();
+            loadDashboardData();
+        } else {
+            throw new Error('فشل إضافة الخدمة');
+        }
+    } catch (error) {
+        showAlert(error.message, 'danger');
+    }
+}
+
+// دالة عرض التنبيهات
+function showAlert(message, type) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.querySelector('.admin-dashboard').insertAdjacentElement('afterbegin', alertDiv);
+    
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 5000);
+}
+
+// دالة تحديث البيانات يدوياً
+function refreshStats() {
+    loadDashboardData();
+    showAlert('تم تحديث البيانات', 'success');
+}
+</script>
+{% endblock %} 

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}الإشعارات{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-bell"></i> الإشعارات
+                        {% if notifications_count > 0 %}
+                            <span class="badge bg-danger float-end">{{ notifications_count }}</span>
+                        {% endif %}
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if notifications %}
+                        <div class="list-group">
+                            {% for notification in notifications %}
+                                <div class="list-group-item list-group-item-action {% if not notification[4] %}unread{% endif %}"
+                                     data-notification-id="{{ notification[0] }}">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">{{ notification[1] }}</h6>
+                                        <small class="text-muted">{{ notification[5] }}</small>
+                                    </div>
+                                    <p class="mb-1">{{ notification[2] }}</p>
+                                    <small class="text-{{ notification[3] }}">
+                                        <i class="fas fa-info-circle"></i> {{ notification[3] }}
+                                    </small>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-bell-slash fa-3x text-muted mb-3"></i>
+                            <p class="mb-0">لا توجد إشعارات جديدة</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .unread {
+        background-color: rgba(13, 110, 253, 0.05);
+        border-left: 4px solid var(--primary-color);
+    }
+    .list-group-item {
+        transition: all 0.3s ease;
+    }
+    .list-group-item:hover {
+        transform: translateX(-5px);
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // تحديث حالة الإشعارات عند النقر عليها
+    document.querySelectorAll('.list-group-item.unread').forEach(item => {
+        item.addEventListener('click', function() {
+            const notificationId = this.dataset.notificationId;
+            fetch(`/notifications/mark_read/${notificationId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        this.classList.remove('unread');
+                        // تحديث عداد الإشعارات
+                        fetch('/notifications/get_unread')
+                            .then(response => response.json())
+                            .then(data => {
+                                const badge = document.querySelector('.notification-badge');
+                                if (badge) {
+                                    if (data.count > 0) {
+                                        badge.textContent = data.count;
+                                        badge.style.display = 'inline';
+                                    } else {
+                                        badge.style.display = 'none';
+                                    }
+                                }
+                            });
+                    }
+                });
+        });
+    });
+});
+</script>
+{% endblock %} 

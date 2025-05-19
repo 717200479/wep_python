@@ -1,0 +1,189 @@
+تقرير محاكاة استخدام الاختبارات في المشروع
+=====================================
+
+1. مقدمة
+--------
+يستخدم المشروع ثلاثة أنواع من الاختبارات:
+- pytest: للاختبارات الرئيسية
+- doctest: للاختبارات المضمنة في التوثيق
+- unittest: للاختبارات المنظمة في classes
+
+2. اختبارات pytest
+----------------
+هي الاختبارات الرئيسية في المشروع وتوجد في الملفات التالية:
+
+```python
+# test_auth.py
+import pytest
+from flask import session
+
+class TestAuthentication:
+    def test_user_authentication(self, test_database):
+        """اختبار المصادقة"""
+        user = User()
+        result = user.authenticate('test_user', 'test_password')
+        assert result is not None
+        assert result['username'] == 'test_user'
+```
+
+مميزات pytest:
+- مرونة في كتابة الاختبارات
+- دعم fixtures
+- تقارير اختبار مفصلة
+- سهولة تشغيل الاختبارات
+
+3. اختبارات doctest
+-----------------
+تستخدم للاختبارات المضمنة في توثيق الدوال:
+
+```python
+def validate_imei(imei):
+    """
+    التحقق من صحة رقم IMEI
+    
+    >>> validate_imei('123456789012345')
+    True
+    >>> validate_imei('12345')
+    False
+    >>> validate_imei('abcdefghijklmno')
+    False
+    """
+    if not imei.isdigit() or len(imei) != 15:
+        return False
+    return True
+```
+
+مميزات doctest:
+- اختبارات مضمنة في التوثيق
+- سهلة القراءة والفهم
+- تساعد في توثيق كيفية استخدام الدوال
+- مناسبة للدوال البسيطة
+
+4. اختبارات unittest
+------------------
+تستخدم للاختبارات المنظمة في classes:
+
+```python
+class TestUserOperations(unittest.TestCase):
+    def setUp(self):
+        """تهيئة قاعدة البيانات للاختبار"""
+        self.conn = sqlite3.connect(':memory:')
+        self.cursor = self.conn.cursor()
+        self.cursor.execute('''
+            CREATE TABLE users (
+                id INTEGER PRIMARY KEY,
+                username TEXT UNIQUE,
+                password TEXT,
+                email TEXT,
+                credit REAL DEFAULT 0.0
+            )
+        ''')
+        self.conn.commit()
+
+    def test_user_creation(self):
+        """اختبار إنشاء مستخدم جديد"""
+        self.cursor.execute('''
+            INSERT INTO users (username, password, email)
+            VALUES (?, ?, ?)
+        ''', ('testuser', 'password123', 'test@example.com'))
+        self.conn.commit()
+
+        self.cursor.execute('SELECT * FROM users WHERE username = ?', ('testuser',))
+        user = self.cursor.fetchone()
+        self.assertIsNotNone(user)
+        self.assertEqual(user[1], 'testuser')
+```
+
+مميزات unittest:
+- هيكل منظم للاختبارات
+- دعم setUp و tearDown
+- اختبارات أكثر تعقيداً
+- متوافق مع JUnit
+
+5. كيفية تشغيل الاختبارات
+-----------------------
+1. تشغيل اختبارات pytest:
+```bash
+pytest
+```
+
+2. تشغيل اختبارات doctest:
+```bash
+python -m doctest tests/test_core_functions.py
+```
+
+3. تشغيل اختبارات unittest:
+```bash
+python -m unittest tests/test_unittest.py
+```
+
+6. أمثلة على الاختبارات
+--------------------
+1. اختبار المصادقة:
+```python
+def test_user_authentication(self, test_database):
+    user = User()
+    # اختبار تسجيل دخول صحيح
+    result = user.authenticate('test_user', 'test_password')
+    assert result is not None
+    assert result['username'] == 'test_user'
+
+    # اختبار تسجيل دخول خاطئ
+    result = user.authenticate('wrong_user', 'wrong_password')
+    assert result is None
+```
+
+2. اختبار عمليات الرصيد:
+```python
+def test_credit_operations(self):
+    # إنشاء مستخدم
+    self.cursor.execute('''
+        INSERT INTO users (username, password, email, credit)
+        VALUES (?, ?, ?, ?)
+    ''', ('credituser', 'pass123', 'credit@example.com', 100.0))
+    self.conn.commit()
+
+    # اختبار إضافة رصيد
+    self.cursor.execute('UPDATE users SET credit = credit + ? WHERE username = ?', 
+                      (50.0, 'credituser'))
+    self.conn.commit()
+
+    self.cursor.execute('SELECT credit FROM users WHERE username = ?', ('credituser',))
+    credit = self.cursor.fetchone()[0]
+    self.assertEqual(credit, 150.0)
+```
+
+7. أفضل الممارسات
+--------------
+1. استخدام fixtures في pytest:
+```python
+@pytest.fixture
+def test_database():
+    conn = sqlite3.connect(':memory:')
+    cursor = conn.cursor()
+    # إعداد قاعدة البيانات
+    yield conn
+    conn.close()
+```
+
+2. تنظيف بعد كل اختبار:
+```python
+def tearDown(self):
+    """تنظيف بعد كل اختبار"""
+    self.conn.close()
+```
+
+3. استخدام assertions مناسبة:
+```python
+self.assertIsNotNone(user)
+self.assertEqual(user[1], 'testuser')
+assert result is not None
+assert result['username'] == 'test_user'
+```
+
+8. الخلاصة
+--------
+- المشروع يستخدم ثلاثة أنواع من الاختبارات
+- كل نوع له مميزاته واستخداماته
+- الاختبارات تغطي الوظائف الرئيسية
+- يمكن إضافة المزيد من الاختبارات حسب الحاجة 

@@ -8,6 +8,8 @@ from datetime import datetime, timedelta
 from model import *
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from functools import wraps
+from api import init_api
+import logging
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -17,6 +19,11 @@ app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'  # المفتاح السر�
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+# تهيئة API
+init_api(app)
+
+logger = logging.getLogger(__name__)
 
 def admin_required(f):
     @wraps(f)
@@ -30,6 +37,14 @@ def admin_required(f):
 @app.context_processor
 def inject_now():
     return {'now': datetime.utcnow()}
+
+@app.context_processor
+def inject_notifications():
+    """إضافة الإشعارات لجميع القوالب"""
+    if current_user.is_authenticated:
+        unread_count = get_unread_notifications_count(current_user.id)
+        return {'notifications_count': unread_count}
+    return {'notifications_count': 0}
 
 # تعريف نموذج المستخدم
 class User(UserMixin):
@@ -212,37 +227,39 @@ def register():
         if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
-            email = request.form['email']
             phone = request.form['phone']
-
-            # تحقق من صحة المدخلات باستخدام Regex
-            if not re.match(r'^[a-zA-Z0-9_]{3,20}$', username):
-                flash('اسم المستخدم يجب أن يتكون من 3 إلى 20 حرفًا أو رقمًا.', 'error')
+            
+            logger.debug(f"Registration attempt - Username: {username}, Phone: {phone}")
+            logger.debug(f"Request headers: {dict(request.headers)}")
+            
+            # التحقق من وجود المستخدم
+            if get_user_by_username(username):
+                logger.warning(f"Registration failed - Username already exists: {username}")
+                flash('اسم المستخدم موجود بالفعل', 'error')
                 return render_template('register.html')
-
-            if not re.match(r'^[\w\.-]+@[\w\.-]+\.\w+$', email):
-                flash('البريد الإلكتروني غير صالح.', 'error')
+            
+            if get_user_by_phone(phone):
+                logger.warning(f"Registration failed - Phone already exists: {phone}")
+                flash('رقم الهاتف مسجل بالفعل', 'error')
                 return render_template('register.html')
-
-            if not re.match(r'^\+?[0-9]{10,15}$', phone):
-                flash('رقم الهاتف يجب أن يتكون من 10 إلى 15 رقمًا.', 'error')
-                return render_template('register.html')
-
+            
+            # إنشاء المستخدم
             try:
-                hashed_password = hash_password(password)
-                add_user(username, hashed_password, email, phone)
+                create_user(username, password, phone)
                 logger.info(f"New user registered: {username}")
-                flash('تم التسجيل بنجاح! يمكنك الآن تسجيل الدخول', 'success')
+                logger.debug(f"User registration details - Username: {username}, Phone: {phone}")
+                flash('تم إنشاء الحساب بنجاح!', 'success')
                 return redirect(url_for('login'))
-            except sqlite3.IntegrityError:
-                logger.warning(f"Registration failed - duplicate username/email/phone: {username}")
-                flash('اسم المستخدم أو البريد الإلكتروني أو رقم الهاتف مستخدم بالفعل', 'error')
             except Exception as e:
-                logger.error(f"Registration error: {str(e)}")
-                flash('حدث خطأ أثناء التسجيل', 'error')
+                logger.error(f"Error creating user: {str(e)}")
+                logger.debug(f"User creation error details: {e.__class__.__name__}: {str(e)}")
+                flash('حدث خطأ أثناء إنشاء الحساب', 'error')
+                return render_template('register.html')
+                
         return render_template('register.html')
     except Exception as e:
         logger.error(f"Error in register route: {str(e)}")
+        logger.debug(f"Register route error details: {e.__class__.__name__}: {str(e)}")
         flash('حدث خطأ غير متوقع', 'error')
         return render_template('register.html')
 
@@ -258,17 +275,29 @@ def login():
             username = request.form['username']
             password = request.form['password']
             
-            logger.info(f"محاولة تسجيل دخول للمستخدم: {username}")
+            logger.debug(f"Login attempt - Username: {username}")
+            logger.debug(f"Request headers: {dict(request.headers)}")
             
             user_data = get_user_by_username(username)
             if not user_data:
-                logger.warning(f"فشل تسجيل الدخول: المستخدم غير موجود - {username}")
+                logger.warning(f"Login failed - User not found: {username}")
                 flash('اسم المستخدم أو كلمة المرور غير صحيحة', 'error')
                 return render_template('login.html')
             
-            if verify_password(password, user_data[2]):  # user_data[2] هو كلمة المرور المشفرة
+            if verify_password(password, user_data[2]):
                 user = User(user_data)
                 login_user(user)
+                
+                logger.debug(f"User authenticated successfully: {username}")
+                logger.debug(f"User session data: {dict(session)}")
+                
+                # إضافة إشعار ترحيب
+                add_notification(
+                    user_id=user.id,
+                    title="مرحباً بعودتك!",
+                    message=f"تم تسجيل دخولك بنجاح، {user.username}",
+                    type="success"
+                )
                 
                 # إنشاء توكن جديد
                 token = str(uuid.uuid4())
@@ -278,6 +307,9 @@ def login():
                 # جمع معلومات الجهاز
                 user_agent = request.headers.get('User-Agent', 'غير معروف')
                 device_info = f"المتصفح: {user_agent}"
+                
+                logger.debug(f"Generated new token for user {username}: {token}")
+                logger.debug(f"Device info: {device_info}")
                 
                 try:
                     # حفظ التوكن في قاعدة البيانات
@@ -291,6 +323,8 @@ def login():
                     conn.commit()
                     conn.close()
                     
+                    logger.debug(f"Token saved successfully for user {username}")
+                    
                     # تخزين معلومات التوكن في الجلسة
                     session['token'] = token
                     session['expiration'] = expiry_time.strftime('%Y-%m-%d %H:%M:%S')
@@ -300,14 +334,16 @@ def login():
                     return redirect(url_for('home'))
                 except Exception as e:
                     logger.error(f"خطأ في حفظ التوكن: {str(e)}")
+                    logger.debug(f"Token save error details: {e.__class__.__name__}: {str(e)}")
                     flash('حدث خطأ أثناء تسجيل الدخول', 'error')
                     return render_template('login.html')
             else:
-                logger.warning(f"فشل تسجيل الدخول: كلمة مرور غير صحيحة - {username}")
+                logger.warning(f"Login failed - Invalid password for user: {username}")
                 flash('اسم المستخدم أو كلمة المرور غير صحيحة', 'error')
         return render_template('login.html')
     except Exception as e:
         logger.error(f"خطأ في عملية تسجيل الدخول: {str(e)}")
+        logger.debug(f"Login error details: {e.__class__.__name__}: {str(e)}")
         flash('حدث خطأ أثناء تسجيل الدخول', 'error')
         return render_template('login.html')
 
@@ -327,6 +363,15 @@ def increase_credit():
     user_data = get_user_by_username(username)
     if user_data and user_data[2] == hash_password(password):
         update_user_credit(user_data[0], credit_to_add)
+        
+        # إضافة إشعار للمستخدم عن زيادة الرصيد
+        add_notification(
+            user_id=user_data[0],
+            title="تم زيادة الرصيد",
+            message=f"تم إضافة {credit_to_add}$ إلى رصيدك",
+            type="success"
+        )
+        
         flash('تم زيادة الرصيد بنجاح!', 'success')
         logger.info(f"Credit increased for user: {username}")
     else:
@@ -420,13 +465,11 @@ def manage_services():
 
 @app.route('/api/services', methods=['POST'])
 @admin_required
-def add_service():
+def add_specialized_service():
     try:
-        # التحقق من وجود الخدمة مسبقاً
         category = request.form.get('serviceType')
         name = request.form.get('name')
         
-        # البحث عن الخدمة في قاعدة البيانات
         conn = sqlite3.connect('users.db')
         cursor = conn.cursor()
         cursor.execute('''
@@ -442,7 +485,6 @@ def add_service():
                 'error': 'هذه الخدمة موجودة مسبقاً'
             })
         
-        # إضافة الخدمة الجديدة
         cursor.execute('''
             INSERT INTO specialized_services (category, name, price, description, requirements, is_active)
             VALUES (?, ?, ?, ?, ?, 1)
@@ -454,8 +496,19 @@ def add_service():
             request.form.get('requirements')
         ))
         conn.commit()
-        conn.close()
         
+        # إضافة إشعار للمشرفين
+        admin_users = get_all_users()
+        for user in admin_users:
+            if user[5]:  # is_admin
+                add_notification(
+                    user_id=user[0],
+                    title="تم إضافة خدمة جديدة",
+                    message=f"تم إضافة خدمة جديدة: {name}",
+                    type="info"
+                )
+        
+        conn.close()
         return jsonify({
             'success': True,
             'message': 'تم إضافة الخدمة بنجاح'
@@ -558,20 +611,38 @@ def submit_imei_request():
                 'error': 'جميع الحقول مطلوبة'
             })
         
-        # التحقق من صحة رقم IMEI
         if not re.match(r'^\d{15}$', imei):
             return jsonify({
                 'success': False,
                 'error': 'رقم IMEI غير صالح'
             })
         
-        # حفظ الطلب في قاعدة البيانات
         conn = sqlite3.connect('users.db')
         cursor = conn.cursor()
         cursor.execute('''
             INSERT INTO imei_requests (user_id, service_id, device, imei, status, created_at)
             VALUES (?, ?, ?, ?, 'pending', datetime('now'))
         ''', (current_user.id, service_id, device, imei))
+        
+        # إضافة إشعار للمستخدم
+        add_notification(
+            user_id=current_user.id,
+            title="تم استلام طلب IMEI",
+            message=f"تم استلام طلبك للجهاز {device} برقم IMEI: {imei}",
+            type="success"
+        )
+        
+        # إضافة إشعار للمشرفين
+        admin_users = get_all_users()
+        for user in admin_users:
+            if user[5]:  # is_admin
+                add_notification(
+                    user_id=user[0],
+                    title="طلب IMEI جديد",
+                    message=f"طلب جديد من {current_user.username} للجهاز {device}",
+                    type="info"
+                )
+        
         conn.commit()
         conn.close()
         
@@ -584,6 +655,389 @@ def submit_imei_request():
             'success': False,
             'error': str(e)
         })
+
+@app.route('/statistics')
+@login_required
+@admin_required
+def statistics():
+    """عرض صفحة الإحصائيات"""
+    return render_template('statistics.html')
+
+@app.route('/api/statistics/users')
+@login_required
+@admin_required
+def get_user_statistics():
+    """جلب إحصائيات المستخدمين"""
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    
+    # إحصائيات المستخدمين الجدد حسب التاريخ
+    cursor.execute('''
+        SELECT date(created_at) as reg_date, COUNT(*) as count 
+        FROM users 
+        GROUP BY date(created_at) 
+        ORDER BY reg_date 
+        LIMIT 30
+    ''')
+    user_stats = cursor.fetchall()
+    
+    # إجمالي عدد المستخدمين
+    cursor.execute('SELECT COUNT(*) FROM users')
+    total_users = cursor.fetchone()[0]
+    
+    # عدد المستخدمين النشطين (لديهم توكن نشط)
+    cursor.execute('''
+        SELECT COUNT(DISTINCT user_id) 
+        FROM tokens 
+        WHERE is_active = 1 AND expiry_time > datetime('now')
+    ''')
+    active_users = cursor.fetchone()[0]
+    
+    conn.close()
+    
+    return jsonify({
+        'user_growth': {
+            'labels': [date for date, _ in user_stats],
+            'data': [count for _, count in user_stats]
+        },
+        'total_users': total_users,
+        'active_users': active_users
+    })
+
+@app.route('/api/statistics/services')
+@login_required
+@admin_required
+def get_service_statistics():
+    """جلب إحصائيات الخدمات"""
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    
+    try:
+        # الخدمات الأكثر طلباً
+        cursor.execute('''
+            SELECT s.name, COUNT(ir.id) as count 
+            FROM specialized_services s
+            LEFT JOIN imei_requests ir ON ir.service_id = s.id
+            WHERE s.is_active = 1
+            GROUP BY s.name 
+            ORDER BY count DESC 
+            LIMIT 10
+        ''')
+        service_stats = cursor.fetchall()
+        
+        # إحصائيات حسب حالة الطلب
+        cursor.execute('''
+            SELECT status, COUNT(*) as count 
+            FROM imei_requests 
+            GROUP BY status
+        ''')
+        status_stats = cursor.fetchall()
+
+        # إجمالي عدد الطلبات
+        cursor.execute('SELECT COUNT(*) FROM imei_requests')
+        total_requests = cursor.fetchone()[0]
+        
+        conn.close()
+        
+        return jsonify({
+            'popular_services': {
+                'labels': [service[0] for service in service_stats] if service_stats else [],
+                'data': [service[1] for service in service_stats] if service_stats else []
+            },
+            'request_status': {
+                'labels': [status[0] for status in status_stats] if status_stats else [],
+                'data': [status[1] for status in status_stats] if status_stats else []
+            },
+            'total_requests': total_requests
+        })
+    except Exception as e:
+        conn.close()
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/statistics/revenue')
+@login_required
+@admin_required
+def get_revenue_statistics():
+    """جلب إحصائيات الإيرادات"""
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    
+    try:
+        # الإيرادات اليومية
+        cursor.execute('''
+            SELECT date(created_at) as tx_date, 
+                   SUM(CASE WHEN type = 'credit' THEN amount ELSE -amount END) as daily_revenue 
+            FROM transactions 
+            GROUP BY date(created_at) 
+            ORDER BY tx_date 
+            LIMIT 30
+        ''')
+        revenue_stats = cursor.fetchall()
+        
+        # إجمالي الإيرادات
+        cursor.execute('''
+            SELECT SUM(CASE WHEN type = 'credit' THEN amount ELSE -amount END) 
+            FROM transactions
+        ''')
+        total_revenue = cursor.fetchone()[0] or 0
+        
+        conn.close()
+        
+        return jsonify({
+            'daily_revenue': {
+                'labels': [date for date, _ in revenue_stats] if revenue_stats else [],
+                'data': [float(amount) for _, amount in revenue_stats] if revenue_stats else []
+            },
+            'total_revenue': float(total_revenue)
+        })
+    except Exception as e:
+        conn.close()
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/notifications')
+@login_required
+def notifications():
+    """صفحة الإشعارات"""
+    user_notifications = get_user_notifications(current_user.id)
+    return render_template('notifications.html', notifications=user_notifications)
+
+@app.route('/notifications/mark_read/<int:notification_id>')
+@login_required
+def mark_notification_read(notification_id):
+    """تحديث حالة الإشعار إلى مقروء"""
+    mark_notification_as_read(notification_id)
+    return jsonify({'success': True})
+
+@app.route('/notifications/get_unread')
+@login_required
+def get_unread_count():
+    """جلب عدد الإشعارات غير المقروءة"""
+    count = get_unread_notifications_count(current_user.id)
+    return jsonify({'count': count})
+
+@app.route('/admin/dashboard')
+@login_required
+@admin_required
+def admin_dashboard():
+    """عرض لوحة تحكم المشرف"""
+    return render_template('admin/dashboard.html')
+
+@app.route('/api/admin/stats')
+@login_required
+@admin_required
+def get_admin_stats():
+    """جلب إحصائيات لوحة التحكم"""
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    
+    try:
+        # إحصائيات المستخدمين النشطين
+        cursor.execute('''
+            SELECT COUNT(DISTINCT user_id) 
+            FROM tokens 
+            WHERE is_active = 1 AND expiry_time > datetime('now')
+        ''')
+        active_users = cursor.fetchone()[0]
+
+        # الإيرادات اليومية
+        cursor.execute('''
+            SELECT SUM(amount) 
+            FROM transactions 
+            WHERE date(created_at) = date('now')
+        ''')
+        daily_revenue = cursor.fetchone()[0] or 0
+
+        # الطلبات المعلقة
+        cursor.execute('SELECT COUNT(*) FROM imei_requests WHERE status = "pending"')
+        pending_requests = cursor.fetchone()[0]
+
+        # الخدمات النشطة
+        cursor.execute('SELECT COUNT(*) FROM specialized_services WHERE is_active = 1')
+        active_services = cursor.fetchone()[0]
+
+        # بيانات المستخدمين للرسم البياني
+        cursor.execute('''
+            SELECT date(created_at) as reg_date, COUNT(*) as count 
+            FROM users 
+            GROUP BY date(created_at) 
+            ORDER BY reg_date DESC 
+            LIMIT 30
+        ''')
+        users_data = cursor.fetchall()
+
+        # بيانات الإيرادات للرسم البياني
+        cursor.execute('''
+            SELECT date(created_at) as tx_date, SUM(amount) as daily_amount 
+            FROM transactions 
+            GROUP BY date(created_at) 
+            ORDER BY tx_date DESC 
+            LIMIT 30
+        ''')
+        revenue_data = cursor.fetchall()
+
+        # بيانات الخدمات للرسم البياني
+        cursor.execute('''
+            SELECT category, COUNT(*) as count 
+            FROM specialized_services 
+            GROUP BY category
+        ''')
+        services_data = cursor.fetchall()
+
+        return jsonify({
+            'activeUsers': active_users,
+            'dailyRevenue': daily_revenue,
+            'pendingRequests': pending_requests,
+            'activeServices': active_services,
+            'users': {
+                'labels': [row[0] for row in users_data],
+                'data': [row[1] for row in users_data]
+            },
+            'revenue': {
+                'labels': [row[0] for row in revenue_data],
+                'data': [row[1] for row in revenue_data]
+            },
+            'services': {
+                'labels': [row[0] for row in services_data],
+                'data': [row[1] for row in services_data]
+            }
+        })
+    finally:
+        conn.close()
+
+@app.route('/api/admin/activity')
+@login_required
+@admin_required
+def get_admin_activity():
+    """جلب سجل النشاطات الأخيرة"""
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    
+    try:
+        # جلب آخر النشاطات من جدول النشاطات
+        cursor.execute('''
+            SELECT title, description, type, created_at 
+            FROM activities 
+            ORDER BY created_at DESC 
+            LIMIT 10
+        ''')
+        activities = cursor.fetchall()
+        
+        return jsonify([{
+            'title': activity[0],
+            'description': activity[1],
+            'type': activity[2],
+            'time': activity[3]
+        } for activity in activities])
+    finally:
+        conn.close()
+
+@app.route('/api/admin/system-status')
+@login_required
+@admin_required
+def get_system_status():
+    """جلب حالة النظام"""
+    import psutil
+    
+    return jsonify({
+        'server': 'نشط',
+        'database': 'متصل',
+        'memory': round(psutil.virtual_memory().percent),
+        'cpu': round(psutil.cpu_percent())
+    })
+
+@app.route('/api/admin/users', methods=['POST'])
+@login_required
+@admin_required
+def add_user():
+    """إضافة مستخدم جديد"""
+    data = request.get_json()
+    
+    if not all(key in data for key in ['username', 'email', 'password']):
+        return jsonify({'error': 'البيانات غير مكتملة'}), 400
+    
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+        
+        # التحقق من عدم وجود المستخدم
+        cursor.execute('SELECT id FROM users WHERE username = ? OR email = ?',
+                      (data['username'], data['email']))
+        if cursor.fetchone():
+            return jsonify({'error': 'اسم المستخدم أو البريد الإلكتروني مستخدم بالفعل'}), 400
+        
+        # إضافة المستخدم
+        cursor.execute('''
+            INSERT INTO users (username, email, password, is_admin, created_at)
+            VALUES (?, ?, ?, ?, datetime('now'))
+        ''', (
+            data['username'],
+            data['email'],
+            hash_password(data['password']),
+            bool(data.get('isAdmin', False))
+        ))
+        
+        # تسجيل النشاط
+        user_id = cursor.lastrowid
+        cursor.execute('''
+            INSERT INTO activities (title, description, type, created_at)
+            VALUES (?, ?, ?, datetime('now'))
+        ''', (
+            'إضافة مستخدم جديد',
+            f'تم إضافة المستخدم {data["username"]}',
+            'success'
+        ))
+        
+        conn.commit()
+        return jsonify({'success': True}), 201
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
+
+@app.route('/api/admin/services', methods=['POST'])
+@login_required
+@admin_required
+def admin_add_service():
+    """إضافة خدمة جديدة"""
+    data = request.get_json()
+    
+    if not all(key in data for key in ['name', 'category', 'price', 'description']):
+        return jsonify({'error': 'البيانات غير مكتملة'}), 400
+    
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+        
+        # إضافة الخدمة
+        cursor.execute('''
+            INSERT INTO specialized_services (name, category, price, description, is_active, created_at)
+            VALUES (?, ?, ?, ?, 1, datetime('now'))
+        ''', (
+            data['name'],
+            data['category'],
+            float(data['price']),
+            data['description']
+        ))
+        
+        # تسجيل النشاط
+        service_id = cursor.lastrowid
+        cursor.execute('''
+            INSERT INTO activities (title, description, type, created_at)
+            VALUES (?, ?, ?, datetime('now'))
+        ''', (
+            'إضافة خدمة جديدة',
+            f'تم إضافة خدمة {data["name"]}',
+            'success'
+        ))
+        
+        conn.commit()
+        return jsonify({'success': True}), 201
+    
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        conn.close()
 
 if __name__ == '__main__':
     app.run(debug=True)

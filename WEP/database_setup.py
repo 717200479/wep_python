@@ -8,12 +8,13 @@ def init_db():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL UNIQUE,
+            username TEXT UNIQUE NOT NULL,
             password TEXT NOT NULL,
-            email TEXT NOT NULL UNIQUE,
-            phone TEXT NOT NULL UNIQUE,
-            credit INTEGER DEFAULT 0,
-            is_admin BOOLEAN DEFAULT 0
+            email TEXT UNIQUE NOT NULL,
+            phone TEXT,
+            credit REAL DEFAULT 0,
+            is_admin BOOLEAN DEFAULT 0,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
         )
     ''')
 
@@ -26,6 +27,30 @@ def init_db():
             price REAL NOT NULL,
             description TEXT NOT NULL,
             requirements TEXT
+        )
+    ''')
+
+    # إنشاء جدول النشاطات
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS activities (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            description TEXT,
+            type TEXT CHECK(type IN ('success', 'warning', 'danger', 'info')) NOT NULL,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    # إنشاء جدول المعاملات المالية
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS transactions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
+            amount REAL NOT NULL,
+            type TEXT CHECK(type IN ('credit', 'debit')) NOT NULL,
+            description TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id)
         )
     ''')
 

@@ -281,4 +281,262 @@
 2025-05-17 22:11:58,497 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 
 
-f
+f2025-05-18 17:48:56,670 - werkzeug - INFO -  * Restarting with stat
+2025-05-18 17:49:00,445 - werkzeug - WARNING -  * Debugger is active!
+2025-05-18 17:49:00,466 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-18 17:49:00,616 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-18 17:49:05,573 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 17:49:05] "GET / HTTP/1.1" 200 -
+2025-05-18 17:49:05,828 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 17:49:05] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-05-18 17:49:08,391 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 17:49:08] "GET /login HTTP/1.1" 200 -
+2025-05-18 17:49:17,094 - model - INFO - „Õ«Ê·…  ”ÃÌ· œŒÊ· ··„” Œœ„: mohammedali
+2025-05-18 17:49:17,894 - model - INFO -  „  ”ÃÌ· œŒÊ· «·„” Œœ„ »‰Ã«Õ: mohammedali
+2025-05-18 17:49:17,898 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 17:49:17] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-18 17:49:17,928 - werkzeug - INFO - 127.0.0.1 - - [18/May/2025 17:49:17] "GET / HTTP/1.1" 200 -
+2025-05-19 07:50:08,645 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 07:50:10,752 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 07:50:10,761 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 07:50:10,836 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 07:50:13,022 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 07:50:13] "GET / HTTP/1.1" 200 -
+2025-05-19 07:50:13,597 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 07:50:13] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-05-19 07:50:16,271 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 07:50:16] "GET /login HTTP/1.1" 200 -
+2025-05-19 07:50:33,822 - model - INFO - „Õ«Ê·…  ”ÃÌ· œŒÊ· ··„” Œœ„: mohammedali
+2025-05-19 07:50:34,640 - model - INFO -  „  ”ÃÌ· œŒÊ· «·„” Œœ„ »‰Ã«Õ: mohammedali
+2025-05-19 07:50:34,645 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 07:50:34] "[32mPOST /login HTTP/1.1[0m" 302 -
+2025-05-19 07:50:34,675 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 07:50:34] "GET / HTTP/1.1" 200 -
+2025-05-19 07:55:07,110 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 07:55:10,380 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 07:55:10,396 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 07:55:10,471 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 07:55:11,438 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 07:55:11] "GET / HTTP/1.1" 200 -
+2025-05-19 07:55:20,685 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 07:55:20] "GET / HTTP/1.1" 200 -
+2025-05-19 07:57:18,240 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 07:57:18] "GET / HTTP/1.1" 200 -
+2025-05-19 07:58:50,561 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 07:58:50] "GET / HTTP/1.1" 200 -
+2025-05-19 08:02:23,010 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:02:23] "GET / HTTP/1.1" 200 -
+2025-05-19 08:14:12,158 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\model.py', reloading
+2025-05-19 08:14:12,337 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:14:13,885 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:14:14,734 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:14:14,734 - model - DEBUG - Database connection closed
+2025-05-19 08:14:14,748 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:14:14,756 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:14:14,832 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:14:43,307 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\controller.py', reloading
+2025-05-19 08:14:43,394 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:14:44,724 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:14:45,568 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:14:45,568 - model - DEBUG - Database connection closed
+2025-05-19 08:14:45,583 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:14:45,601 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:14:45,676 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:14:56,883 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\tests\\unittest_test.py', reloading
+2025-05-19 08:14:56,954 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:14:58,258 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:14:59,182 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:14:59,182 - model - DEBUG - Database connection closed
+2025-05-19 08:14:59,210 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:14:59,230 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:14:59,323 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:18:55,972 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\model.py', reloading
+2025-05-19 08:18:56,033 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:18:57,378 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:18:58,141 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:18:58,141 - model - DEBUG - Database connection closed
+2025-05-19 08:18:58,153 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:18:58,160 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:18:58,225 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:24:00,668 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\tests\\test_login.py', reloading
+2025-05-19 08:24:00,790 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:24:02,129 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:24:02,831 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:24:02,831 - model - DEBUG - Database connection closed
+2025-05-19 08:24:02,854 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:24:02,860 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:24:02,916 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:26:14,055 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\tests\\test_auth.py', reloading
+2025-05-19 08:26:14,180 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:26:15,522 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:26:16,391 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:26:16,391 - model - DEBUG - Database connection closed
+2025-05-19 08:26:16,407 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:26:16,414 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:26:16,528 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:26:24,473 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\tests\\test_services.py', reloading
+2025-05-19 08:26:24,541 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:26:26,071 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:26:26,765 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:26:26,765 - model - DEBUG - Database connection closed
+2025-05-19 08:26:26,783 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:26:26,794 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:26:26,850 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:26:34,624 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\tests\\test_tokens.py', reloading
+2025-05-19 08:26:34,723 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:26:36,303 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:26:37,087 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:26:37,087 - model - DEBUG - Database connection closed
+2025-05-19 08:26:37,099 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:26:37,109 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:26:37,161 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:28:20,347 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\tests\\test_core_functions.py', reloading
+2025-05-19 08:28:20,448 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:28:21,863 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:28:22,646 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:28:22,646 - model - DEBUG - Database connection closed
+2025-05-19 08:28:22,661 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:28:22,677 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:28:22,772 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:28:32,886 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\tests\\test_unittest.py', reloading
+2025-05-19 08:28:33,037 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:28:34,748 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:28:35,592 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:28:35,592 - model - DEBUG - Database connection closed
+2025-05-19 08:28:35,605 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:28:35,613 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:28:35,702 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:30:04,084 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\tests\\test_core_functions.py', reloading
+2025-05-19 08:30:04,164 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:30:05,562 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:30:06,493 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:30:06,493 - model - DEBUG - Database connection closed
+2025-05-19 08:30:06,514 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:30:06,529 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:30:06,651 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:32:03,313 - werkzeug - INFO -  * Detected change in 'c:\\Users\\pc\\Desktop\\project_end\\WEP\\tests\\test_tokens.py', reloading
+2025-05-19 08:32:03,389 - werkzeug - INFO -  * Restarting with stat
+2025-05-19 08:32:05,025 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:32:05,812 - model - DEBUG - Database operation completed successfully: init_db
+2025-05-19 08:32:05,812 - model - DEBUG - Database connection closed
+2025-05-19 08:32:05,824 - werkzeug - WARNING -  * Debugger is active!
+2025-05-19 08:32:05,827 - werkzeug - INFO -  * Debugger PIN: 299-829-411
+2025-05-19 08:32:05,887 - werkzeug - INFO -  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+2025-05-19 08:36:40,833 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:36:40,837 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:36:40,838 - model - DEBUG - Database connection closed
+2025-05-19 08:36:40,987 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:36:40] "GET / HTTP/1.1" 200 -
+2025-05-19 08:36:46,538 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:36:46,539 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:36:46,539 - model - DEBUG - Database connection closed
+2025-05-19 08:36:46,602 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:36:46] "GET / HTTP/1.1" 200 -
+2025-05-19 08:38:23,598 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:38:23,603 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:38:23,604 - model - DEBUG - Database connection closed
+2025-05-19 08:38:23,696 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:38:23] "GET / HTTP/1.1" 200 -
+2025-05-19 08:39:06,118 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:39:06,119 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:39:06,119 - model - DEBUG - Database connection closed
+2025-05-19 08:39:06,125 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:39:06] "GET / HTTP/1.1" 200 -
+2025-05-19 08:39:15,813 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:39:15,815 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:39:15,815 - model - DEBUG - Database connection closed
+2025-05-19 08:39:15,823 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:39:15] "GET / HTTP/1.1" 200 -
+2025-05-19 08:39:22,692 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:39:22,696 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:39:22,697 - model - DEBUG - Database connection closed
+2025-05-19 08:39:22,783 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:39:22] "GET / HTTP/1.1" 200 -
+2025-05-19 08:40:23,323 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:40:23,324 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:40:23,324 - model - DEBUG - Database connection closed
+2025-05-19 08:40:23,334 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:40:23] "GET / HTTP/1.1" 200 -
+2025-05-19 08:40:36,531 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:40:36,534 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:40:36,534 - model - DEBUG - Database connection closed
+2025-05-19 08:40:36,596 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:40:36] "GET / HTTP/1.1" 200 -
+2025-05-19 08:41:16,620 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:41:16,623 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:41:16,624 - model - DEBUG - Database connection closed
+2025-05-19 08:41:16,639 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:41:16] "GET / HTTP/1.1" 200 -
+2025-05-19 08:41:27,760 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:41:27,763 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:41:27,764 - model - DEBUG - Database connection closed
+2025-05-19 08:41:27,834 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:41:27] "GET /admin/dashboard HTTP/1.1" 200 -
+2025-05-19 08:41:31,332 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:41:31,338 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:41:31,338 - model - DEBUG - Database connection closed
+2025-05-19 08:41:31,358 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:41:31] "GET /statistics HTTP/1.1" 200 -
+2025-05-19 08:41:31,489 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:41:31,491 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:41:31,496 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:41:31,497 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:41:31,497 - model - DEBUG - Database connection closed
+2025-05-19 08:41:31,498 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:41:31,498 - model - DEBUG - Database connection closed
+2025-05-19 08:41:31,498 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:41:31,499 - model - DEBUG - Database connection closed
+2025-05-19 08:41:31,500 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:41:31] "[35m[1mGET /api/statistics/revenue HTTP/1.1[0m" 500 -
+2025-05-19 08:41:31,501 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:41:31] "GET /api/statistics/services HTTP/1.1" 200 -
+2025-05-19 08:41:31,527 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:41:31] "[35m[1mGET /api/statistics/users HTTP/1.1[0m" 500 -
+2025-05-19 08:41:41,110 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:41:41,113 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:41:41,113 - model - DEBUG - Database connection closed
+2025-05-19 08:41:41,153 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:41:41] "GET /notifications HTTP/1.1" 200 -
+2025-05-19 08:41:53,147 - controller - INFO - Accessed IMEI services page.
+2025-05-19 08:41:53,147 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:41:53,147 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:41:53,147 - model - DEBUG - Database connection closed
+2025-05-19 08:41:53,195 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:41:53] "GET /imei_services HTTP/1.1" 200 -
+2025-05-19 08:42:18,671 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:42:18,675 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:42:18,675 - model - DEBUG - Database connection closed
+2025-05-19 08:42:18,690 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:42:18] "GET / HTTP/1.1" 200 -
+2025-05-19 08:43:43,746 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:43:43,748 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:43:43,748 - model - DEBUG - Database connection closed
+2025-05-19 08:43:43,771 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:43:43] "GET / HTTP/1.1" 200 -
+2025-05-19 08:43:50,384 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:43:50,386 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:43:50,387 - model - DEBUG - Database connection closed
+2025-05-19 08:43:50,393 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:43:50] "GET / HTTP/1.1" 200 -
+2025-05-19 08:43:59,113 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:43:59,117 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:43:59,118 - model - DEBUG - Database connection closed
+2025-05-19 08:43:59,177 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:43:59] "GET / HTTP/1.1" 200 -
+2025-05-19 08:44:59,710 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:44:59,713 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:44:59,713 - model - DEBUG - Database connection closed
+2025-05-19 08:44:59,796 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:44:59] "GET / HTTP/1.1" 200 -
+2025-05-19 08:46:18,423 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:46:18,424 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:46:18,424 - model - DEBUG - Database connection closed
+2025-05-19 08:46:18,489 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:46:18] "GET / HTTP/1.1" 200 -
+2025-05-19 08:46:55,567 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:46:55,571 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:46:55,572 - model - DEBUG - Database connection closed
+2025-05-19 08:46:55,635 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:46:55] "GET / HTTP/1.1" 200 -
+2025-05-19 08:47:03,706 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:47:03,708 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:47:03,708 - model - DEBUG - Database connection closed
+2025-05-19 08:47:03,749 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:47:03] "GET / HTTP/1.1" 200 -
+2025-05-19 08:47:47,467 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:47:47,470 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:47:47,471 - model - DEBUG - Database connection closed
+2025-05-19 08:47:47,484 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:47:47] "GET / HTTP/1.1" 200 -
+2025-05-19 08:47:50,755 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:47:50,759 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:47:50,760 - model - DEBUG - Database connection closed
+2025-05-19 08:47:50,765 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:47:50,770 - model - DEBUG - Database operation completed successfully: get_specialized_services
+2025-05-19 08:47:50,771 - model - DEBUG - Database connection closed
+2025-05-19 08:47:50,771 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:47:50,774 - model - DEBUG - Database operation completed successfully: get_all_users
+2025-05-19 08:47:50,775 - model - DEBUG - Database connection closed
+2025-05-19 08:47:50,850 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:47:50] "GET /admin/services HTTP/1.1" 200 -
+2025-05-19 08:48:12,761 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:48:12,763 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:48:12,764 - model - DEBUG - Database connection closed
+2025-05-19 08:48:12,784 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:48:12,791 - model - DEBUG - Database operation completed successfully: get_all_users
+2025-05-19 08:48:12,791 - model - DEBUG - Database connection closed
+2025-05-19 08:48:12,822 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:48:12] "POST /api/services HTTP/1.1" 200 -
+2025-05-19 08:48:14,337 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:48:14,343 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:48:14,344 - model - DEBUG - Database connection closed
+2025-05-19 08:48:14,347 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:48:14,350 - model - DEBUG - Database operation completed successfully: get_specialized_services
+2025-05-19 08:48:14,351 - model - DEBUG - Database connection closed
+2025-05-19 08:48:14,352 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:48:14,353 - model - DEBUG - Database operation completed successfully: get_all_users
+2025-05-19 08:48:14,354 - model - DEBUG - Database connection closed
+2025-05-19 08:48:14,363 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:48:14] "GET /admin/services HTTP/1.1" 200 -
+2025-05-19 08:48:21,547 - model - DEBUG - Attempting database connection to: users.db
+2025-05-19 08:48:21,547 - model - DEBUG - Database operation completed successfully: get_user_by_id
+2025-05-19 08:48:21,551 - model - DEBUG - Database connection closed
+2025-05-19 08:48:21,560 - werkzeug - INFO - 127.0.0.1 - - [19/May/2025 08:48:21] "GET /admin/dashboard HTTP/1.1" 200 -

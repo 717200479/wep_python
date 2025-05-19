@@ -8,7 +8,7 @@ import bcrypt
 # Configure logging
 logging.basicConfig(
     filename='app.log',
-    level=logging.INFO,
+    level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
@@ -18,17 +18,21 @@ def db_connection(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
         db_path = kwargs.pop('db_path', 'users.db')
+        logger.debug(f"Attempting database connection to: {db_path}")
         conn = sqlite3.connect(db_path)
         try:
             result = func(conn, *args, **kwargs)
             conn.commit()
+            logger.debug(f"Database operation completed successfully: {func.__name__}")
             return result
         except sqlite3.Error as e:
             conn.rollback()
             logger.error(f"Database error: {str(e)}")
+            logger.debug(f"Error occurred in function: {func.__name__} with args: {args}, kwargs: {kwargs}")
             raise
         finally:
             conn.close()
+            logger.debug("Database connection closed")
     return wrapper
 
 @db_connection
@@ -49,7 +53,8 @@ def init_db(conn, db_path='users.db'):
             email TEXT NOT NULL UNIQUE,
             phone TEXT NOT NULL UNIQUE,
             credit REAL DEFAULT 0,
-            is_admin BOOLEAN DEFAULT 0
+            is_admin BOOLEAN DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
     
@@ -107,6 +112,20 @@ def init_db(conn, db_path='users.db'):
             updated_at DATETIME,
             FOREIGN KEY (user_id) REFERENCES users (id),
             FOREIGN KEY (service_id) REFERENCES specialized_services (id)
+        )
+    ''')
+    
+    # Create notifications table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS notifications (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            title TEXT NOT NULL,
+            message TEXT NOT NULL,
+            type TEXT NOT NULL,
+            is_read BOOLEAN DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id)
         )
     ''')
     
@@ -324,6 +343,138 @@ def add_test_service(conn):
         )
     except sqlite3.IntegrityError:
         pass
+
+def create_tables():
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+
+    # إنشاء جدول المستخدمين
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            phone TEXT UNIQUE NOT NULL,
+            credit REAL DEFAULT 0,
+            is_admin BOOLEAN DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    # إنشاء جدول الإشعارات
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS notifications (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            title TEXT NOT NULL,
+            message TEXT NOT NULL,
+            type TEXT NOT NULL,
+            is_read BOOLEAN DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )
+    ''')
+
+    conn.commit()
+    conn.close()
+
+def add_notification(user_id, title, message, type='info'):
+    """إضافة إشعار جديد"""
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        INSERT INTO notifications (user_id, title, message, type)
+        VALUES (?, ?, ?, ?)
+    ''', (user_id, title, message, type))
+    conn.commit()
+    conn.close()
+
+def get_user_notifications(user_id, limit=10):
+    """جلب إشعارات المستخدم"""
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT id, title, message, type, is_read, created_at
+        FROM notifications
+        WHERE user_id = ?
+        ORDER BY created_at DESC
+        LIMIT ?
+    ''', (user_id, limit))
+    notifications = cursor.fetchall()
+    conn.close()
+    return notifications
+
+def mark_notification_as_read(notification_id):
+    """تحديث حالة الإشعار إلى مقروء"""
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        UPDATE notifications
+        SET is_read = 1
+        WHERE id = ?
+    ''', (notification_id,))
+    conn.commit()
+    conn.close()
+
+def get_unread_notifications_count(user_id):
+    """جلب عدد الإشعارات غير المقروءة"""
+    conn = sqlite3.connect('users.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT COUNT(*)
+        FROM notifications
+        WHERE user_id = ? AND is_read = 0
+    ''', (user_id,))
+    count = cursor.fetchone()[0]
+    conn.close()
+    return count
+
+def initialize_database():
+    try:
+        conn = sqlite3.connect('users.db')
+        cursor = conn.cursor()
+        
+        logger.debug("Starting database initialization")
+        
+        # Create users table
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL,
+                phone TEXT UNIQUE NOT NULL,
+                is_admin INTEGER DEFAULT 0,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            )
+        ''')
+        logger.debug("Users table created/verified")
+        
+        # Create tokens table
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS tokens (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER NOT NULL,
+                token TEXT NOT NULL,
+                created_at TIMESTAMP NOT NULL,
+                expiry_time TIMESTAMP NOT NULL,
+                is_active INTEGER DEFAULT 1,
+                device_info TEXT,
+                FOREIGN KEY (user_id) REFERENCES users (id)
+            )
+        ''')
+        logger.debug("Tokens table created/verified")
+        
+        conn.commit()
+        logger.info("Database initialized successfully!")
+        return True
+    except sqlite3.Error as e:
+        logger.error(f"Database initialization error: {str(e)}")
+        logger.debug(f"Full error details: {e.__class__.__name__}: {str(e)}")
+        return False
+    finally:
+        conn.close()
+        logger.debug("Database connection closed after initialization")
 
 if __name__ == '__main__':
     # Initialize database when running directly

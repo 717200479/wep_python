@@ -14,12 +14,14 @@
     <!-- Custom CSS -->
     <style>
         :root {
-            --primary-color: #0d6efd;
-            --secondary-color: #6c757d;
-            --success-color: #198754;
-            --info-color: #0dcaf0;
-            --warning-color: #ffc107;
-            --danger-color: #dc3545;
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --hover-color: #2980b9;
+            --text-light: #ecf0f1;
+            --text-dark: #2c3e50;
+            --gradient-start: #2c3e50;
+            --gradient-end: #3498db;
         }
 
         body {
@@ -27,26 +29,155 @@
             background-color: #f8f9fa;
         }
 
+        /* Header Styles */
         .navbar {
-            box-shadow: 0 2px 4px rgba(0,0,0,.1);
-            background: linear-gradient(135deg, var(--primary-color), #0056b3);
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
             padding: 1rem 0;
-        }
-
-        .navbar-brand {
-            color: white !important;
-            font-weight: bold;
-            font-size: 1.5rem;
-        }
-
-        .nav-link {
-            color: rgba(255,255,255,0.9) !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
             transition: all 0.3s ease;
         }
 
-        .nav-link:hover {
-            color: white !important;
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            background: rgba(44, 62, 80, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar-brand {
+            color: var(--text-light) !important;
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover {
             transform: translateY(-2px);
+        }
+
+        .navbar-brand i {
+            font-size: 2rem;
+            color: #e74c3c;
+            transition: all 0.3s ease;
+            text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+        }
+
+        .navbar-brand:hover i {
+            transform: rotate(15deg);
+            color: #c0392b;
+        }
+
+        .navbar-brand .brand-text {
+            color: #3498db;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+
+        .navbar-brand:hover .brand-text {
+            color: #2980b9;
+        }
+
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            margin: 0 0.2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::before {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .nav-link i {
+            margin-left: 0.5rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover i {
+            transform: scale(1.2);
+        }
+
+        .badge {
+            padding: 0.4em 0.8em;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: scale(1.1);
+        }
+
+        .notification-badge {
+            font-size: 0.7rem;
+            padding: 0.25em 0.6em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+            }
+            70% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background: rgba(44, 62, 80, 0.95);
+                padding: 1rem;
+                border-radius: 10px;
+                margin-top: 1rem;
+            }
+
+            .nav-link {
+                margin: 0.5rem 0;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .card {
@@ -88,46 +219,133 @@
             transition: width 0.3s ease;
         }
 
-        .badge {
-            padding: 0.5em 1em;
-        }
-
         footer {
-            background: linear-gradient(135deg, var(--primary-color), #0056b3);
-            color: white;
-            padding: 2rem 0;
-            margin-top: 3rem;
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 60px 0 20px;
+            margin-top: 50px;
         }
 
-        .alert {
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,.05);
+        .footer-main {
+            margin-bottom: 40px;
         }
 
-        /* تحسينات للشاشات الصغيرة */
+        .footer-brand {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .footer-brand i {
+            font-size: 40px;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+
+        .footer-brand h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .footer-brand p {
+            color: #999;
+            line-height: 1.6;
+        }
+
+        .footer h4 {
+            color: #fff;
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #3498db;
+        }
+
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #3498db;
+        }
+
+        .footer-contact p {
+            color: #999;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-contact i {
+            margin-left: 10px;
+            color: #3498db;
+        }
+
+        .social-icons {
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: #999;
+            font-size: 20px;
+            margin-left: 15px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #3498db;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+        }
+
+        .footer-bottom p {
+            color: #999;
+            margin: 0;
+        }
+
         @media (max-width: 768px) {
-            .navbar-brand {
-                font-size: 1.2rem;
+            .footer {
+                text-align: center;
             }
 
-            .card {
-                margin-bottom: 15px;
+            .footer h4::after {
+                left: 50%;
+                transform: translateX(-50%);
             }
 
-            .container {
-                padding: 0 15px;
+            .footer-contact p {
+                justify-content: center;
             }
-        }
 
-        /* تأثيرات إضافية */
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            .social-icons {
+                justify-content: center;
+                display: flex;
+            }
         }
     </style>
 
@@ -138,7 +356,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ url_for('home') }}">
-                <i class="fas fa-shield-alt"></i> WEP
+                <i class="fas fa-shield-alt"></i>
+                <span class="">ArabTech</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -147,29 +366,34 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('home') }}">
-                            <i class="fas fa-home"></i> الرئيسية
+                            <i class="fas fa-home"></i>
+                            <span>الرئيسية</span>
                         </a>
                     </li>
                     {% if current_user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('tools_boxes') }}">
-                                <i class="fas fa-tools"></i> الأدوات والصناديق
+                                <i class="fas fa-tools"></i>
+                                <span>الأدوات والصناديق</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('imei_services') }}">
-                                <i class="fas fa-mobile-alt"></i> خدمات IMEI
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>خدمات IMEI</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('remote') }}">
-                                <i class="fas fa-globe"></i> الخدمات عن بعد
+                                <i class="fas fa-globe"></i>
+                                <span>الخدمات عن بعد</span>
                             </a>
                         </li>
                         {% if current_user.is_admin %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('manage_services') }}">
-                                <i class="fas fa-cogs"></i> إدارة الخدمات
+                                <i class="fas fa-cogs"></i>
+                                <span>إدارة الخدمات</span>
                             </a>
                         </li>
                         {% endif %}
@@ -179,33 +403,56 @@
                     {% if current_user.is_authenticated %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('user_details') }}">
-                                <i class="fas fa-user-circle"></i> حسابي
+                                <i class="fas fa-user-circle"></i>
+                                <span>حسابي</span>
                                 {% if current_user.credit %}
                                     <span class="badge bg-success">{{ current_user.credit }}$</span>
                                 {% endif %}
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" href="{{ url_for('notifications') }}">
+                                <i class="fas fa-bell"></i>
+                                <span>الإشعارات</span>
+                                {% if notifications_count > 0 %}
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge">
+                                        {{ notifications_count }}
+                                        <span class="visually-hidden">إشعارات غير مقروءة</span>
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </li>
                         {% if current_user.is_admin %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('manage_services') }}">
-                                    <i class="fas fa-cog"></i> إدارة الخدمات
+                                <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                    <span>لوحة التحكم</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('statistics') }}">
+                                    <i class="fas fa-chart-bar"></i>
+                                    <span>الإحصائيات</span>
                                 </a>
                             </li>
                         {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('logout') }}">
-                                <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>تسجيل الخروج</span>
                             </a>
                         </li>
                     {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('login') }}">
-                                <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                                <i class="fas fa-sign-in-alt"></i>
+                                <span>تسجيل الدخول</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('register') }}">
-                                <i class="fas fa-user-plus"></i> تسجيل جديد
+                                <i class="fas fa-user-plus"></i>
+                                <span>تسجيل جديد</span>
                             </a>
                         </li>
                     {% endif %}
@@ -234,29 +481,45 @@
     </main>
 
     <!-- Footer -->
-    <footer class="mt-auto">
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5><i class="fas fa-shield-alt"></i> WEP</h5>
-                    <p>نظام متكامل لإدارة الخدمات والأدوات</p>
-                </div>
-                <div class="col-md-4">
-                    <h5><i class="fas fa-link"></i> روابط سريعة</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ url_for('home') }}" class="text-white">الرئيسية</a></li>
-                        <li><a href="{{ url_for('tools_boxes') }}" class="text-white">الأدوات والصناديق</a></li>
-                        <li><a href="{{ url_for('imei_services') }}" class="text-white">خدمات IMEI</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5><i class="fas fa-headset"></i> الدعم الفني</h5>
-                    <p>متوفر على مدار الساعة</p>
-                    <p><i class="fas fa-envelope"></i> support@wep.com</p>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-main">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="footer-brand">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>WEP</h3>
+                            <p>نظام متكامل لإدارة الخدمات والأدوات</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="footer-links">
+                            <h4>روابط سريعة</h4>
+                            <ul>
+                                <li><a href="{{ url_for('home') }}">الرئيسية</a></li>
+                                <li><a href="{{ url_for('tools_boxes') }}">الأدوات والصناديق</a></li>
+                                <li><a href="{{ url_for('imei_services') }}">خدمات IMEI</a></li>
+                                <li><a href="{{ url_for('remote') }}">الخدمات عن بعد</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="footer-contact">
+                            <h4>تواصل معنا</h4>
+                            <p><i class="fas fa-envelope"></i> support@wep.com</p>
+                            <p><i class="fas fa-phone"></i> +966 123 456 789</p>
+                            <div class="social-icons">
+                                <a href="#"><i class="fab fa-facebook"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <hr class="my-4" style="border-color: rgba(255,255,255,0.1);">
-            <p class="mb-0">&copy; {{ now.year }} WEP. جميع الحقوق محفوظة.</p>
+            <div class="footer-bottom">
+                <p>&copy; {{ now.year }} WEP. جميع الحقوق محفوظة</p>
+            </div>
         </div>
     </footer>
 
@@ -267,13 +530,23 @@
     {% block scripts %}{% endblock %}
 
     <script>
-        // تفعيل كل tooltips
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Initialize tooltips
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         });
 
-        // تأثير ظهور تدريجي للعناصر
+        // Add fade-in effect
         document.addEventListener('DOMContentLoaded', function() {
             document.body.classList.add('fade-in');
         });
